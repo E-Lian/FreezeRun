@@ -18,7 +18,6 @@ public abstract class Character {
     // MODIFIES: this
     // EFFECT: move the character by its dx and dy
     public void update() {
-        // TODO: Characters cannot be out of bound
         cx += dx;
         cy += dy;
     }

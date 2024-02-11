@@ -6,6 +6,7 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.*;
@@ -65,6 +66,8 @@ public class TerminalGame {
     // EFFECTS: watch and respond to user's inputs
     private void handleUserInput() throws IOException {
         // TODO: implement pause and resume
+        //  shooting fireball
+        //  freeze game time
         KeyStroke stroke = screen.pollInput();
 
         if (stroke == null) {
@@ -72,18 +75,18 @@ public class TerminalGame {
         }
 
         if (stroke.getCharacter() != null) {
-            return;
-        }
-
-        switch (stroke.getKeyType()) {
-            case ArrowUp:
-                game.playerJump();
-            case ArrowRight:
-                game.playerWalk("right");
-                break;
-            case ArrowLeft:
-                game.playerWalk("left");
-                break;
+            char c = stroke.getCharacter();
+            System.out.println(c);
+            switch (c) {
+                case 'w':
+                    game.playerJump();
+                case 'a':
+                    game.playerWalk("left");
+                    break;
+                case 'd':
+                    game.playerWalk("right");
+                    break;
+            }
         }
     }
 
