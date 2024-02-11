@@ -41,7 +41,9 @@ public abstract class Character {
     // MODIFIES: this
     // EFFECTS: simulates gravity and pulls all characters to the ground
     public void refresh(double gravity) {
-        this.dy += gravity;
+        if (this.dy != 0) {
+            this.dy += gravity;
+        }
     }
 
     // EFFECT: returns true if hp <= 0

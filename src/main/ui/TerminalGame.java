@@ -12,17 +12,21 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class TerminalGame {
     private Game game;
     private Screen screen;
     private WindowBasedTextGUI endGui;
+    private TextGraphics text;
 
     public void start() throws IOException, InterruptedException {
         screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
 
         TerminalSize terminalSize = screen.getTerminalSize();
+        this.text = screen.newTextGraphics();
 
         game = new Game(
                 // divide the columns in two
@@ -40,8 +44,13 @@ public class TerminalGame {
     // game has ended and the endGui has been exited.
     private void beginTicks() throws IOException, InterruptedException {
         while (!game.isEnded() || endGui.getActiveWindow() != null) {
-            tick();
-            Thread.sleep(1000L / Game.TICKS_PER_SECOND);
+            if (!game.isPaused()) {
+                tick();
+                Thread.sleep(1000L / Game.TICKS_PER_SECOND);
+            } else {
+                onPause();
+                Thread.sleep(1000L / Game.TICKS_PER_SECOND);
+            }
         }
 
         System.exit(0);
@@ -62,22 +71,39 @@ public class TerminalGame {
         screen.setCursorPosition(new TerminalPosition(screen.getTerminalSize().getColumns() - 1, 0));
     }
 
+    // EFFECTS: render game but doesn't update when on pause
+    private void onPause() throws IOException {
+        handleUserInput();
+
+        screen.setCursorPosition(new TerminalPosition(0, 0));
+        screen.clear();
+        renderPause();
+        screen.refresh();
+
+        screen.setCursorPosition(new TerminalPosition(screen.getTerminalSize().getColumns() - 1, 0));
+    }
+
     // MODIFIES: this
     // EFFECTS: watch and respond to user's inputs
     private void handleUserInput() throws IOException {
-        // TODO: implement pause and resume
         //  shooting fireball
-        //  freeze game time
         KeyStroke stroke = screen.pollInput();
 
         if (stroke == null) {
             return;
         }
 
-        if (stroke.getCharacter() != null) {
+        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
+            game.pause();
+        }
+
+        if (stroke.getCharacter() != null && !game.isPaused()) {
             char c = stroke.getCharacter();
-            System.out.println(c);
             switch (c) {
+                case ' ':
+                    // TODO: implements shoot fireballs
+                case 'f':
+                    // TODO: implements freeze time
                 case 'w':
                     game.playerJump();
                 case 'a':
@@ -90,16 +116,22 @@ public class TerminalGame {
         }
     }
 
+    // EFFECTS: draw pause screen
+    private void renderPause() {
+        drawPlayer();
+        drawEnemies();
+        text.setForegroundColor(TextColor.ANSI.CYAN);
+        text.putString(20, 20, "PAUSED");
+    }
+
     // EFFECTS: draw everything on screen
     private void render() {
-        // TODO: draw enemies
         drawPlayer();
-        //drawEnemies();
+        drawEnemies();
     }
 
     // EFFECTS: print the player coordinates
     private void drawPlayer() {
-        TextGraphics text = screen.newTextGraphics();
         text.setForegroundColor(TextColor.ANSI.YELLOW);
         text.putString(1, 0, "Player: ");
 
@@ -110,7 +142,21 @@ public class TerminalGame {
 
     // EFFECTS: print the enemies' coordinates
     private void drawEnemies() {
-        // TODO: get enemies from Game and draw all enemies
+        ArrayList<Enemy> enemies = game.getEnemies();
+        if (enemies.isEmpty()) {
+            text.setForegroundColor(TextColor.ANSI.RED);
+            text.putString(1, 8, "No Enemies");
+        }
+
+        for (Enemy e : enemies) {
+            text.setForegroundColor(TextColor.ANSI.RED);
+            text.putString(1, 8, "Enemy: ");
+
+            text = screen.newTextGraphics();
+            text.setForegroundColor(TextColor.ANSI.WHITE);
+            text.putString(8, 8, String.valueOf(e.getCx()) + "," + String.valueOf(e.getCy()));
+        }
+
     }
 
 }

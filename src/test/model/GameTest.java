@@ -20,6 +20,15 @@ public class GameTest {
     }
 
     @Test
+    public void isPaused() {
+        assertFalse(g.isPaused());
+        g.pause();
+        assertTrue(g.isPaused());
+    }
+
+    // TODO: test frozen in the future
+
+    @Test
     public void isEndedTest() {
         assertFalse(g.isEnded());
     }

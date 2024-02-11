@@ -20,6 +20,6 @@ public class Player extends Character {
     @Override
     public void refresh(double gravity) {
         this.dx = 0;
-        this.dy += gravity;
+        super.refresh(gravity);
     }
 }
