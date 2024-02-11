@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // manages the inside of the game, changing and updating information
 public class Game {
@@ -28,7 +29,7 @@ public class Game {
         this.maxY = maxY;
         this.player = new Player();
         this.enemies = new ArrayList<Enemy>();
-        this.enemies.add(new Enemy(50, 22, 3, 0));
+        this.enemies.add(new Enemy(50, 22, ENEMY_SPEED, 0));
         this.frozen = false;
         this.paused = false;
         this.ended = false;
@@ -37,7 +38,7 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: sets the player's dx
     public void playerWalk(String dir) {
-        if (dir == "left") {
+        if (Objects.equals(dir, "left")) {
             player.setDx(-PLAYER_SPEED);
         } else {
             player.setDx(PLAYER_SPEED);
