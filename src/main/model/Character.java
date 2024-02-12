@@ -12,29 +12,39 @@ public abstract class Character {
     // dy: negative - up
     // dy: positive - down
     protected double dy;
+    protected char dir;
     protected int hp;
 
 
     // MODIFIES: this
     // EFFECT: move the character by its dx and dy
-    public void update() {
+    public void update(int maxX, int maxY, double gravity) {
         cx += dx;
         cy += dy;
+
+        if (this.dx < 0) {
+            this.dir = 'l';
+        } else if (this.dx > 0) {
+            this.dir = 'r';
+        }
+
+        inBound(maxX, maxY);
+        refresh(gravity);
     }
 
     // MODIFIES: this
     // EFFECTS: keeps the character in bound
     public void inBound(int maxX, int maxY) {
-        if (cx > maxX) {
-            cx = maxX;
-        } else if (cx < 0) {
-            cx = 0;
+        if (this.cx < 0) {
+            this.cx = 0;
+        } else if (this.cx > maxX) {
+            this.cx = maxX;
         }
 
-        if (cy > maxY) {
-            cy = maxY;
-        } else if (cy < 0) {
-            cy = 0;
+        if (this.cy < 0) {
+            this.cy = 0;
+        } else if (this.cy > maxY) {
+            this.cy = maxY;
         }
     }
 
@@ -65,6 +75,10 @@ public abstract class Character {
 
     public int getCy() {
         return cy;
+    }
+
+    public char getDir() {
+        return dir;
     }
 
 }

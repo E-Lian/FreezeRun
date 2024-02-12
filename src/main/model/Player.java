@@ -12,7 +12,14 @@ public class Player extends Character {
         this.cy = playerY;
         this.dx = 0;
         this.dy = 0;
+        this.dir = 'r';
         this.hp = playerHP;
+    }
+
+    // EFFECTS: create a new Fireball at player's position, and returns the Fireball
+    public Fireball fire() {
+        // TODO: part of firing feature
+        return new Fireball(getCx(), getCy(), getDir());
     }
 
     // MODIFIES: this

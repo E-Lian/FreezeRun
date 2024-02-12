@@ -86,7 +86,6 @@ public class TerminalGame {
     // MODIFIES: this
     // EFFECTS: watch and respond to user's inputs
     private void handleUserInput() throws IOException {
-        //  shooting fireball
         KeyStroke stroke = screen.pollInput();
 
         if (stroke == null) {
@@ -100,19 +99,28 @@ public class TerminalGame {
         if (stroke.getCharacter() != null && !game.isPaused()) {
             char c = stroke.getCharacter();
             switch (c) {
-                case ' ':
-                    // TODO: implements shoot fireballs
-                case 'f':
-                    // TODO: implements freeze time
                 case 'w':
                     game.playerJump();
-                case 'a':
-                    game.playerWalk("left");
                     break;
-                case 'd':
-                    game.playerWalk("right");
+                case 'f':
+                    // TODO: implements freeze time
                     break;
+                case ' ':
+                    // TODO: implements shoot fireballs
+                    game.playerFire();
+                default:
+                    gameWalk(c);
             }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: control player to walk left or right based on input char
+    private void gameWalk(char c) {
+        if (c == 'a') {
+            game.playerWalk('l');
+        } else if (c == 'd') {
+            game.playerWalk('r');
         }
     }
 
@@ -128,6 +136,7 @@ public class TerminalGame {
     private void render() {
         drawPlayer();
         drawEnemies();
+        drawFireballs();
     }
 
     // EFFECTS: print the player coordinates
@@ -145,18 +154,34 @@ public class TerminalGame {
         ArrayList<Enemy> enemies = game.getEnemies();
         if (enemies.isEmpty()) {
             text.setForegroundColor(TextColor.ANSI.RED);
-            text.putString(1, 8, "No Enemies");
+            text.putString(1, 2, "No Enemies");
         }
 
         for (Enemy e : enemies) {
             text.setForegroundColor(TextColor.ANSI.RED);
-            text.putString(1, 8, "Enemy: ");
+            text.putString(1, 2, "Enemy: ");
 
             text = screen.newTextGraphics();
             text.setForegroundColor(TextColor.ANSI.WHITE);
-            text.putString(8, 8, String.valueOf(e.getCx()) + "," + String.valueOf(e.getCy()));
+            text.putString(8, 2, String.valueOf(e.getCx()) + "," + String.valueOf(e.getCy()));
         }
 
+    }
+
+    // EFFECTS: print the fireballs' coordinates
+    private void drawFireballs() {
+        ArrayList<Fireball> fireballs = game.getFireballs();
+        if (!fireballs.isEmpty()) {
+            for (Fireball f : fireballs) {
+                int i = fireballs.indexOf(f);
+                text.setForegroundColor(TextColor.ANSI.BLUE);
+                text.putString(1, 4 + i, "Fireball " + String.valueOf(fireballs.indexOf(f)) + ":");
+
+                text = screen.newTextGraphics();
+                text.setForegroundColor(TextColor.ANSI.WHITE);
+                text.putString(8, 4 + i, String.valueOf(f.getCx()) + "," + String.valueOf(f.getCy()));
+            }
+        }
     }
 
 }

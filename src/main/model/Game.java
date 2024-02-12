@@ -20,6 +20,8 @@ public class Game {
     private static final int ENEMY_SPEED = 1;
     private static final int ENEMY_MAX_X = 70;
 
+    private ArrayList<Fireball> fireballs;
+
     private boolean frozen;
     private boolean paused;
     private boolean ended;
@@ -30,6 +32,7 @@ public class Game {
         this.player = new Player();
         this.enemies = new ArrayList<Enemy>();
         this.enemies.add(new Enemy(50, 22, ENEMY_SPEED, 0));
+        this.fireballs = new ArrayList<Fireball>();
         this.frozen = false;
         this.paused = false;
         this.ended = false;
@@ -37,8 +40,8 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: sets the player's dx
-    public void playerWalk(String dir) {
-        if (Objects.equals(dir, "left")) {
+    public void playerWalk(char dir) {
+        if (Objects.equals(dir, 'l')) {
             player.setDx(-PLAYER_SPEED);
         } else {
             player.setDx(PLAYER_SPEED);
@@ -52,20 +55,30 @@ public class Game {
     }
 
     // MODIFIES: this
+    // EFFECTS: create new Fireball and add it to fireballs
+    public void playerFire() {
+        // TODO: part of firing feature
+        this.fireballs.add(player.fire());
+    }
+
+    // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
         // update Characters
-        player.update();
-        player.inBound(maxX, maxY);
-
+        player.update(maxX, maxY, GRAVITY);
+        System.out.println(player.getDir());
         for (Enemy e : enemies) {
-            e.update();
-            e.inBound(ENEMY_MAX_X, maxY);
-            e.refresh(GRAVITY);
+            e.update(ENEMY_MAX_X, maxY, GRAVITY);
         }
 
-        // refresh info
-        player.refresh(GRAVITY);
+        for (int i = 0; i < fireballs.size(); i++) {
+            fireballs.get(i).update(maxX);
+            if (fireballs.get(i).isOutOfBound()) {
+                fireballs.remove(i);
+                i--;
+            }
+        }
+
     }
 
     public int getPlayerX() {
@@ -78,6 +91,10 @@ public class Game {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public ArrayList<Fireball> getFireballs() {
+        return fireballs;
     }
 
     public boolean isPaused() {

@@ -8,6 +8,7 @@ public class Enemy extends Character {
         this.dx = dx;
         this.dy = dy;
         this.hp = 1;
+        this.dir = 'r';
     }
 
     // MODIFIES: this
