@@ -30,7 +30,6 @@ public class Fireball {
         if (getCx() <= 0 || getCx() >= maxX) {
             outOfBound = true;
         }
-        // TODO: detect if the bullet hits anything
     }
 
     // MODIFIES: this
@@ -53,5 +52,9 @@ public class Fireball {
 
     public boolean isOutOfBound() {
         return outOfBound;
+    }
+
+    public char getDir() {
+        return dir;
     }
 }

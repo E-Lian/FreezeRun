@@ -98,6 +98,7 @@ public class TerminalGame {
 
         if (stroke.getCharacter() != null && !game.isPaused()) {
             char c = stroke.getCharacter();
+            gameWalk(c);
             switch (c) {
                 case 'w':
                     game.playerJump();
@@ -106,10 +107,7 @@ public class TerminalGame {
                     // TODO: implements freeze time
                     break;
                 case ' ':
-                    // TODO: implements shoot fireballs
                     game.playerFire();
-                default:
-                    gameWalk(c);
             }
         }
     }
@@ -146,7 +144,7 @@ public class TerminalGame {
 
         text = screen.newTextGraphics();
         text.setForegroundColor(TextColor.ANSI.WHITE);
-        text.putString(8, 0, String.valueOf(game.getPlayerX()) + "," + String.valueOf(game.getPlayerY()));
+        text.putString(8, 0, game.getPlayerX() + "," + game.getPlayerY());
     }
 
     // EFFECTS: print the enemies' coordinates
@@ -163,7 +161,7 @@ public class TerminalGame {
 
             text = screen.newTextGraphics();
             text.setForegroundColor(TextColor.ANSI.WHITE);
-            text.putString(8, 2, String.valueOf(e.getCx()) + "," + String.valueOf(e.getCy()));
+            text.putString(8, 2, e.getCx() + "," + e.getCy());
         }
 
     }
@@ -173,13 +171,12 @@ public class TerminalGame {
         ArrayList<Fireball> fireballs = game.getFireballs();
         if (!fireballs.isEmpty()) {
             for (Fireball f : fireballs) {
-                int i = fireballs.indexOf(f);
                 text.setForegroundColor(TextColor.ANSI.BLUE);
-                text.putString(1, 4 + i, "Fireball " + String.valueOf(fireballs.indexOf(f)) + ":");
+                text.putString(1, 4 + fireballs.indexOf(f), "Fireball " + ":");
 
                 text = screen.newTextGraphics();
                 text.setForegroundColor(TextColor.ANSI.WHITE);
-                text.putString(8, 4 + i, String.valueOf(f.getCx()) + "," + String.valueOf(f.getCy()));
+                text.putString(10, 4 + fireballs.indexOf(f), f.getCx() + "," + f.getCy());
             }
         }
     }

@@ -57,8 +57,9 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: create new Fireball and add it to fireballs
     public void playerFire() {
-        // TODO: part of firing feature
+        // store the Fireball created by Player and empty the enemies list
         this.fireballs.add(player.fire());
+        this.enemies = new ArrayList<Enemy>();
     }
 
     // MODIFIES: this
@@ -66,7 +67,6 @@ public class Game {
     public void tick() {
         // update Characters
         player.update(maxX, maxY, GRAVITY);
-        System.out.println(player.getDir());
         for (Enemy e : enemies) {
             e.update(ENEMY_MAX_X, maxY, GRAVITY);
         }

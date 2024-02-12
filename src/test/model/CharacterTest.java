@@ -39,9 +39,81 @@ public class CharacterTest {
         assertEquals(0, c.getCx());
     }
 
-    // TODO: (2) tests for inBound
-    // TODO: tests for refresh
+    @Test
+    public void inBoundInside() {
+        c.inBound(100, 100);
+        assertEquals(1, c.getCx());
+        assertEquals(2, c.getCy());
+    }
 
+    @Test
+    public void inBoundOutside1() {
+        c.setDx(100);
+        c.setDy(100);
+        c.update(50, 50, 1);
+        c.inBound(50, 50);
+        assertEquals(50, c.getCx());
+        assertEquals(50, c.getCy());
+    }
 
+    @Test
+    public void inBoundOutside2() {
+        c.setDx(-100);
+        c.setDy(-100);
+        c.update(40, 40, 1);
+        c.inBound(40, 40);
+        assertEquals(0, c.getCx());
+        assertEquals(0, c.getCy());
+    }
 
+    @Test
+    public void refreshTest() {
+        c.setDy(6);
+        c.refresh(4);
+        c.update(40, 40, 4);
+        assertEquals(12, c.getCy());
+    }
+
+    @Test
+    public void updateTestDir() {
+        assertEquals('r', c.getDir());
+        c.setDx(-5);
+        c.update(50, 50, 1);
+        assertEquals('l', c.getDir());
+        c.setDx(10);
+        c.update(50, 50, 1);
+        assertEquals('r', c.getDir());
+    }
+
+    @Test
+    public void updateInside() {
+        c.update(50, 50, 1);
+        assertEquals(1, c.getCx());
+        assertEquals(4, c.getCy());
+    }
+
+    @Test
+    public void updateOutside1() {
+        c.setDx(100);
+        c.setDy(90);
+        c.update(50, 50, 1);
+        assertEquals(50, c.getCx());
+        assertEquals(50, c.getCy());
+    }
+
+    @Test
+    public void updateOutside2() {
+        c.setDx(-100);
+        c.setDy(-90);
+        c.update(50, 50, 1);
+        assertEquals(0, c.getCx());
+        assertEquals(0, c.getCy());
+    }
+
+    @Test
+    public void updateGravityTest() {
+        c.setDy(6);
+        c.update(40, 40, 4);
+        assertEquals(8, c.getCy());
+    }
 }
