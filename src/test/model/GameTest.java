@@ -92,5 +92,36 @@ public class GameTest {
         assertTrue(g.getFireballs().isEmpty());
     }
 
-    // TODO: isFrozen test
+    @Test
+    public void tickFrozenTest() throws InterruptedException {
+        g.freeze();
+        g.tick();
+        assertEquals(50, g.getPlayerX());
+        assertEquals(100, g.getPlayerY());
+        assertEquals(50, g.getEnemies().get(0).getCx());
+        assertEquals(22, g.getEnemies().get(0).getCy());
+        Thread.sleep(4000L);
+        g.tick();
+        assertFalse(g.isFrozen());
+        g.tick();
+        assertEquals(51, g.getEnemies().get(0).getCx());
+        assertEquals(22, g.getEnemies().get(0).getCy());
+    }
+
+    @Test
+    public void isFrozenTest() {
+        assertFalse(g.isFrozen());
+        g.freeze();
+        assertTrue(g.isFrozen());
+    }
+
+    @Test
+    public void freezeTest() throws InterruptedException {
+        assertFalse(g.isFrozen());
+        g.freeze();
+        assertTrue(g.isFrozen());
+        Thread.sleep(3000L);
+        g.tick();
+        assertFalse(g.isFrozen());
+    }
 }

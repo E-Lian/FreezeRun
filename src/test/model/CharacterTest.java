@@ -41,13 +41,15 @@ public class CharacterTest {
 
     @Test
     public void inBoundInside() {
+        c = new Player();
         c.inBound(100, 100);
-        assertEquals(1, c.getCx());
-        assertEquals(2, c.getCy());
+        assertEquals(50, c.getCx());
+        assertEquals(100, c.getCy());
     }
 
     @Test
     public void inBoundOutside1() {
+        c = new Player();
         c.setDx(100);
         c.setDy(100);
         c.update(50, 50, 1);
@@ -58,8 +60,9 @@ public class CharacterTest {
 
     @Test
     public void inBoundOutside2() {
+        c = new Player();
         c.setDx(-100);
-        c.setDy(-100);
+        c.setDy(-200);
         c.update(40, 40, 1);
         c.inBound(40, 40);
         assertEquals(0, c.getCx());

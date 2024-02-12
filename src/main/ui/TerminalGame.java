@@ -104,7 +104,7 @@ public class TerminalGame {
                     game.playerJump();
                     break;
                 case 'f':
-                    // TODO: implements freeze time
+                    game.freeze();
                     break;
                 case ' ':
                     game.playerFire();

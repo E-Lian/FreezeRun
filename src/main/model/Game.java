@@ -22,6 +22,8 @@ public class Game {
 
     private ArrayList<Fireball> fireballs;
 
+    private long timeOfFreeze;
+
     private boolean frozen;
     private boolean paused;
     private boolean ended;
@@ -63,10 +65,25 @@ public class Game {
     }
 
     // MODIFIES: this
+    // EFFECTS: freeze the game
+    public void freeze() {
+        this.frozen = true;
+        this.timeOfFreeze = System.currentTimeMillis();
+    }
+
+    // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
         // update Characters
         player.update(maxX, maxY, GRAVITY);
+
+        if (isFrozen()) {
+            if (System.currentTimeMillis() - timeOfFreeze >= 3000) {
+                this.frozen = false;
+            }
+            return;
+        }
+
         for (Enemy e : enemies) {
             e.update(ENEMY_MAX_X, maxY, GRAVITY);
         }
