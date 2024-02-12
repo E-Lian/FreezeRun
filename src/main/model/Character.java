@@ -45,6 +45,7 @@ public abstract class Character {
             this.cy = 0;
         } else if (this.cy > maxY) {
             this.cy = maxY;
+            setDy(0);
         }
     }
 

@@ -32,6 +32,7 @@ public class Fireball {
         }
     }
 
+    // REQUIRES: !isOutOfBound()
     // MODIFIES: this
     // EFFECTS: move the bullet
     public void move() {

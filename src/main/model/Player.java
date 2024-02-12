@@ -28,4 +28,8 @@ public class Player extends Character {
         this.dx = 0;
         super.refresh(gravity);
     }
+
+    public double getPlayerDy() {
+        return this.dy;
+    }
 }

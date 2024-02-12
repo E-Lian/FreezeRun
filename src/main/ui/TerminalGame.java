@@ -21,6 +21,8 @@ public class TerminalGame {
     private WindowBasedTextGUI endGui;
     private TextGraphics text;
 
+    // MODIFIES: this
+    // EFFECTS: initiates the game
     public void start() throws IOException, InterruptedException {
         screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
@@ -40,6 +42,7 @@ public class TerminalGame {
         beginTicks();
     }
 
+    // MODIFIES: this
     // EFFECTS:Begins the game cycle. Ticks once every Game.TICKS_PER_SECOND until
     // game has ended and the endGui has been exited.
     private void beginTicks() throws IOException, InterruptedException {
@@ -56,6 +59,7 @@ public class TerminalGame {
         System.exit(0);
     }
 
+    // MODIFIES: this
     // EFFECTS: Handles one cycle in the game by taking user input,
     // ticking the game internally, and rendering the effects
     private void tick() throws IOException {
@@ -71,6 +75,7 @@ public class TerminalGame {
         screen.setCursorPosition(new TerminalPosition(screen.getTerminalSize().getColumns() - 1, 0));
     }
 
+    // MODIFIES: this
     // EFFECTS: render game but doesn't update when on pause
     private void onPause() throws IOException {
         handleUserInput();

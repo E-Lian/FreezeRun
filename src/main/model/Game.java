@@ -50,10 +50,13 @@ public class Game {
         }
     }
 
+    // REQUIRES: player.dy == 0
     // MODIFIES: this
     // EFFECTS: make the player jump
     public void playerJump() {
-        player.setDy(JUMP_STRENGTH);
+        if (player.getPlayerDy() == 0) {
+            player.setDy(JUMP_STRENGTH);
+        }
     }
 
     // MODIFIES: this
@@ -64,11 +67,14 @@ public class Game {
         this.enemies = new ArrayList<Enemy>();
     }
 
+    // REQUIRES: System.currentTimeMillis() - timeOfFreeze > 80000
     // MODIFIES: this
     // EFFECTS: freeze the game
     public void freeze() {
-        this.frozen = true;
-        this.timeOfFreeze = System.currentTimeMillis();
+        if (System.currentTimeMillis() - timeOfFreeze >= 8000) {
+            this.frozen = true;
+            this.timeOfFreeze = System.currentTimeMillis();
+        }
     }
 
     // MODIFIES: this
@@ -118,6 +124,8 @@ public class Game {
         return paused;
     }
 
+    // MODIFIES: this
+    // EFFECTS: switch paused between true and false
     public void pause() {
         paused = !paused;
     }

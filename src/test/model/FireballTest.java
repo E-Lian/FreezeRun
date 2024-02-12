@@ -15,6 +15,13 @@ public class FireballTest {
     }
 
     @Test
+    public void leftFireball() {
+        f = new Fireball(10, 10, 'l');
+        f.update(20);
+        assertEquals(9, f.getCx());
+    }
+
+    @Test
     public void getDirTest() {
         assertEquals('r', f.getDir());
     }

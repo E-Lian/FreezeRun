@@ -123,5 +123,15 @@ public class GameTest {
         Thread.sleep(3000L);
         g.tick();
         assertFalse(g.isFrozen());
+        setup();
+        g.freeze();
+        Thread.sleep(4000L);
+        g.freeze();
+        g.tick();
+        assertFalse(g.isFrozen());
+        Thread.sleep(5000L);
+        g.freeze();
+        g.tick();
+        assertTrue(g.isFrozen());
     }
 }
