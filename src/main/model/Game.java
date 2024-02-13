@@ -28,6 +28,7 @@ public class Game {
     private boolean paused;
     private boolean ended;
 
+    // EFFECTS: instantiates a running Game with a player and enemy
     public Game(int maxX, int maxY) {
         this.maxX = maxX;
         this.maxY = maxY;
@@ -40,6 +41,8 @@ public class Game {
         this.ended = false;
     }
 
+
+    // REQUIRES: dir == 'l' || dir == 'r'
     // MODIFIES: this
     // EFFECTS: sets the player's dx
     public void playerWalk(char dir) {

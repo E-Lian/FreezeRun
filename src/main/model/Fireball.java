@@ -2,6 +2,7 @@ package model;
 
 // a fireball shot by the player
 public class Fireball {
+
     private int cx;
     private int cy;
     private char dir;
@@ -10,6 +11,8 @@ public class Fireball {
     private boolean outOfBound;
     private static final int SPEED = 1;
 
+    // REQUIRES: dir == 'l' || idr == 'r'
+    // EFFECTS: instantiates a Fireball at given position facing given direction and sets its speed accordingly
     public Fireball(int cx, int cy, char dir) {
         this.cx = cx;
         this.cy = cy;
@@ -24,7 +27,7 @@ public class Fireball {
     }
 
     // MODIFIES: this
-    // EFFECTS: update the bullet, detect if it hits bounds or the enemy
+    // EFFECTS: update the bullet, detect if it hits bounds
     public void update(int maxX) {
         move();
         if (getCx() <= 0 || getCx() >= maxX) {

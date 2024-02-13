@@ -4,6 +4,7 @@ package model;
 // some common fields and methods that characters
 // in a game (enemies, players...) have
 public abstract class Character {
+
     protected int cx;
     protected int cy;
     // dx: negative - left
@@ -14,7 +15,6 @@ public abstract class Character {
     protected double dy;
     protected char dir;
     protected int hp;
-
 
     // MODIFIES: this
     // EFFECT: move the character by its dx and dy

@@ -6,7 +6,7 @@ public class Player extends Character {
     final int playerY = 100;
     final int playerHP = 3;
 
-    // set Player's initial values
+    // instantiate a Player at set position, standing still, facing right, with desired hp
     public Player() {
         this.cx = playerX;
         this.cy = playerY;
