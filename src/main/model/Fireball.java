@@ -4,20 +4,20 @@ package model;
 public class Fireball {
 
     private int cx;
-    private int cy;
-    private char dir;
-    private int speed;
+    private final int cy;
+    private final boolean isRight;
+    private final int speed;
     private boolean hit;
     private boolean outOfBound;
+
     private static final int SPEED = 1;
 
-    // REQUIRES: dir == 'l' || idr == 'r'
     // EFFECTS: instantiates a Fireball at given position facing given direction and sets its speed accordingly
-    public Fireball(int cx, int cy, char dir) {
+    public Fireball(int cx, int cy, boolean isRight) {
         this.cx = cx;
         this.cy = cy;
-        this.dir = dir;
-        if (dir == 'l') {
+        this.isRight = isRight;
+        if (!isRight) {
             this.speed = -SPEED;
         } else {
             this.speed = SPEED;
@@ -58,7 +58,7 @@ public class Fireball {
         return outOfBound;
     }
 
-    public char getDir() {
-        return dir;
+    public boolean getIsRight() {
+        return isRight;
     }
 }

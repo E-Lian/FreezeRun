@@ -13,7 +13,7 @@ public abstract class Character {
     // dy: negative - up
     // dy: positive - down
     protected double dy;
-    protected char dir;
+    protected boolean isRight;
     protected int hp;
 
     // MODIFIES: this
@@ -23,9 +23,9 @@ public abstract class Character {
         cy += dy;
 
         if (this.dx < 0) {
-            this.dir = 'l';
+            this.isRight = false;
         } else if (this.dx > 0) {
-            this.dir = 'r';
+            this.isRight = true;
         }
 
         inBound(maxX, maxY);
@@ -78,8 +78,8 @@ public abstract class Character {
         return cy;
     }
 
-    public char getDir() {
-        return dir;
+    public boolean getIsRight() {
+        return isRight;
     }
 
 }

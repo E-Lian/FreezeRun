@@ -11,19 +11,19 @@ public class FireballTest {
 
     @BeforeEach
     public void setup() {
-        f = new Fireball(10, 10, 'r');
+        f = new Fireball(10, 10, true);
     }
 
     @Test
     public void leftFireball() {
-        f = new Fireball(10, 10, 'l');
+        f = new Fireball(10, 10, false);
         f.update(20);
         assertEquals(9, f.getCx());
     }
 
     @Test
-    public void getDirTest() {
-        assertEquals('r', f.getDir());
+    public void getIsRightTest() {
+        assertTrue(f.getIsRight());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FireballTest {
     public void move() {
         f.move();
         assertEquals(11, f.getCx());
-        f = new Fireball(10, 10, 'l');
+        f = new Fireball(10, 10, false);
         f.move();
         assertEquals(9, f.getCx());
     }
@@ -67,7 +67,7 @@ public class FireballTest {
 
     @Test
     public void updateOutside2() {
-        f = new Fireball(1, 5, 'l');
+        f = new Fireball(1, 5, false);
         f.update(10);
         assertEquals(0, f.getCx());
         assertTrue(f.isOutOfBound());

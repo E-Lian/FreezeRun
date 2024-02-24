@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+// the system that present info to user
+// accepts user inputs and change data in game accordingly
+// Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class TerminalGame {
     private Game game;
     private Screen screen;
@@ -121,9 +124,9 @@ public class TerminalGame {
     // EFFECTS: control player to walk left or right based on input char
     private void gameWalk(char c) {
         if (c == 'a') {
-            game.playerWalk('l');
+            game.playerWalk(false);
         } else if (c == 'd') {
-            game.playerWalk('r');
+            game.playerWalk(true);
         }
     }
 

@@ -26,8 +26,8 @@ public class CharacterTest {
     }
 
     @Test
-    public void getDirTest() {
-        assertEquals('r', c.getDir());
+    public void getIsRightTest() {
+        assertTrue(c.getIsRight());
     }
 
     @Test
@@ -79,13 +79,13 @@ public class CharacterTest {
 
     @Test
     public void updateTestDir() {
-        assertEquals('r', c.getDir());
+        assertTrue(c.getIsRight());
         c.setDx(-5);
         c.update(50, 50, 1);
-        assertEquals('l', c.getDir());
+        assertFalse(c.getIsRight());
         c.setDx(10);
         c.update(50, 50, 1);
-        assertEquals('r', c.getDir());
+        assertTrue(c.getIsRight());
     }
 
     @Test

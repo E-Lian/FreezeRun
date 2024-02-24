@@ -15,14 +15,14 @@ public class GameTest {
 
     @Test
     public void playerWalkLeft() {
-        g.playerWalk('l');
+        g.playerWalk(false);
         g.tick();
         assertEquals(46, g.getPlayerX());
     }
 
     @Test
     public void playerWalkRight() {
-        g.playerWalk('r');
+        g.playerWalk(true);
         g.tick();
         assertEquals(54, g.getPlayerX());
     }

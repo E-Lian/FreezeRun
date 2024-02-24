@@ -42,19 +42,18 @@ public class Game {
     }
 
 
-    // REQUIRES: dir == 'l' || dir == 'r'
-    // MODIFIES: this
+    // MODIFIES: player
     // EFFECTS: sets the player's dx
-    public void playerWalk(char dir) {
-        if (Objects.equals(dir, 'l')) {
-            player.setDx(-PLAYER_SPEED);
-        } else {
+    public void playerWalk(boolean isRight) {
+        if (isRight) {
             player.setDx(PLAYER_SPEED);
+        } else {
+            player.setDx(-PLAYER_SPEED);
         }
     }
 
     // REQUIRES: player.dy == 0
-    // MODIFIES: this
+    // MODIFIES: player
     // EFFECTS: make the player jump
     public void playerJump() {
         if (player.getPlayerDy() == 0) {

@@ -21,7 +21,7 @@ public class PlayerTest {
         assertEquals(p.getCy(), p.fire().getCy());
         p.setDx(-5);
         p.update(40, 40, 1);
-        assertEquals('l', p.fire().getDir());
+        assertFalse(p.fire().getIsRight());
     }
 
     @Test

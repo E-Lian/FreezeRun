@@ -6,19 +6,19 @@ public class Player extends Character {
     final int playerY = 100;
     final int playerHP = 3;
 
-    // instantiate a Player at set position, standing still, facing right, with desired hp
+    // EFFECTS: instantiate a Player at set position, standing still, facing right, with desired hp
     public Player() {
         this.cx = playerX;
         this.cy = playerY;
         this.dx = 0;
         this.dy = 0;
-        this.dir = 'r';
+        this.isRight = true;
         this.hp = playerHP;
     }
 
     // EFFECTS: create a new Fireball at player's position, and returns the Fireball
     public Fireball fire() {
-        return new Fireball(getCx(), getCy(), getDir());
+        return new Fireball(getCx(), getCy(), getIsRight());
     }
 
     // MODIFIES: this
