@@ -35,7 +35,7 @@ public class TerminalGame {
 
         game = new Game(
                 // divide the columns in two
-                // this is so we can make the each part of
+                // this is so we can make each part of
                 // the snake wide, since terminal characters are
                 // taller than they are wide
                 (terminalSize.getColumns() - 1) / 2,

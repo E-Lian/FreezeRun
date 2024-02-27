@@ -16,4 +16,5 @@ traps and soldiers, and eventually beat the boss.
 - As a user, I want to be able to shoot a fireball and make my enemies disappear.
 - As a user, I want to be able to stop time (in the game) for 3 seconds.
 - As a user, I want to be able to pause the game and resume.
-- As a user, I want to be able to save my progress and start where I left it next time I play the game.
+- As a user, I want to be able to save my progress in game to file(if I so choose).
+- As a user, I want to be able to load my progress from a file (if I so choose).
