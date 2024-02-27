@@ -107,11 +107,10 @@ public class TerminalGame {
             return;
         }
 
+
         if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Enter) {
             saveGame();
-        }
-
-        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
+        } else if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
             game.pause();
         }
 
@@ -140,6 +139,8 @@ public class TerminalGame {
             System.out.println("Saved game to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        } catch (IllegalStateException ended) {
+            System.out.println("Cannot save an ended game!");
         }
     }
 
@@ -157,9 +158,10 @@ public class TerminalGame {
     private void renderPause() {
         drawPlayer();
         drawEnemies();
+        drawFireballs();
         text.setForegroundColor(TextColor.ANSI.CYAN);
-        text.putString(20, 10, "PAUSED");
-        text.putString(20, 12, "Press ENTER to save the game");
+        text.putString(35, 10, "PAUSED");
+        text.putString(25, 12, "Press ENTER to save the game");
     }
 
     // EFFECTS: draw everything on screen

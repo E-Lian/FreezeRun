@@ -1,0 +1,20 @@
+{
+    "frozen": true,
+    "enemies": [{
+        "isRight": true,
+        "dx": 1,
+        "cx": 69,
+        "dy": 0,
+        "cy": 22,
+        "hp": 1
+    }],
+    "fireballs": [],
+    "player": {
+        "isRight": true,
+        "dx": 0,
+        "cx": 39,
+        "dy": 0,
+        "cy": 22,
+        "hp": 3
+    }
+}

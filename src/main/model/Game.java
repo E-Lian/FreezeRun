@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 // manages the inside of the game, changing and updating information
-public class Game {
+public class Game implements Writable {
 
     public static final int TICKS_PER_SECOND = 30;
     private final int maxX;
@@ -41,6 +45,40 @@ public class Game {
         this.ended = false;
     }
 
+    // EFFECTS: put game information into JSON representation and return it
+    @Override
+    public JSONObject toJson() {
+        if (ended) {
+            throw new IllegalStateException();
+        }
+        // TODO: making all models writable
+        JSONObject json = new JSONObject();
+        json.put("frozen", frozen);
+        json.put("player", player.toJson());
+        json.put("enemies", enemiesToJson());
+        json.put("fireballs", fireballsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns a JSONArray containing fireballs information in current game
+    private JSONArray fireballsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Fireball f : fireballs) {
+            jsonArray.put(f.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns a JSONArray containing enemies information in current game
+    private JSONArray enemiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Enemy e : enemies) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
+    }
 
     // MODIFIES: player
     // EFFECTS: sets the player's dx
@@ -139,4 +177,6 @@ public class Game {
     public boolean isFrozen() {
         return frozen;
     }
+
+
 }

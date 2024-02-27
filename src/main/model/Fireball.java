@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // a fireball shot by the player
-public class Fireball {
+public class Fireball implements Writable {
 
     private int cx;
     private final int cy;
@@ -24,6 +27,18 @@ public class Fireball {
         }
         this.hit = false;
         this.outOfBound = false;
+    }
+
+    // EFFECTS: returns the fireball's fields as a JSONObject
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cx", cx);
+        jsonObject.put("cy", cy);
+        jsonObject.put("isRight", isRight);
+        jsonObject.put("isHit", hit);
+        jsonObject.put("outOfBound", outOfBound);
+        return jsonObject;
     }
 
     // MODIFIES: this

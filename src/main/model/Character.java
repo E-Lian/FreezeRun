@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Character is an abstract class that consists
 // some common fields and methods that characters
 // in a game (enemies, players...) have
-public abstract class Character {
+public abstract class Character implements Writable {
 
     protected int cx;
     protected int cy;
@@ -15,6 +18,19 @@ public abstract class Character {
     protected double dy;
     protected boolean isRight;
     protected int hp;
+
+    // EFFECTS: returns current fields as a JSONObject
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cx", cx);
+        jsonObject.put("cy", cy);
+        jsonObject.put("dx", dx);
+        jsonObject.put("dy", dy);
+        jsonObject.put("isRight", isRight);
+        jsonObject.put("hp", hp);
+        return jsonObject;
+    }
 
     // MODIFIES: this
     // EFFECT: move the character by its dx and dy

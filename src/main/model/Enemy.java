@@ -2,7 +2,6 @@ package model;
 
 // represents an Enemy in the game
 public class Enemy extends Character {
-
     // EFFECTS: instantiates an Enemy object wit hp of 1 and facing right
     public Enemy(int cx, int cy, int dx, int dy) {
         this.cx = cx;
