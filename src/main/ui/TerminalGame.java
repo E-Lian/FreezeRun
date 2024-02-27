@@ -10,7 +10,9 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.*;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -24,6 +26,9 @@ public class TerminalGame {
     private WindowBasedTextGUI endGui;
     private TextGraphics text;
 
+    private static final String JSON_STORE = "./data/game.json";
+    private JsonWriter jsonWriter;
+
     // MODIFIES: this
     // EFFECTS: initiates the game
     public void start() throws IOException, InterruptedException {
@@ -32,6 +37,8 @@ public class TerminalGame {
 
         TerminalSize terminalSize = screen.getTerminalSize();
         this.text = screen.newTextGraphics();
+
+        jsonWriter = new JsonWriter(JSON_STORE);
 
         game = new Game(
                 // divide the columns in two
@@ -100,6 +107,10 @@ public class TerminalGame {
             return;
         }
 
+        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Enter) {
+            saveGame();
+        }
+
         if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
             game.pause();
         }
@@ -120,6 +131,18 @@ public class TerminalGame {
         }
     }
 
+    // EFFECTS: saves the game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(game);
+            jsonWriter.close();
+            System.out.println("Saved game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: control player to walk left or right based on input char
     private void gameWalk(char c) {
@@ -135,7 +158,8 @@ public class TerminalGame {
         drawPlayer();
         drawEnemies();
         text.setForegroundColor(TextColor.ANSI.CYAN);
-        text.putString(20, 20, "PAUSED");
+        text.putString(20, 10, "PAUSED");
+        text.putString(20, 12, "Press ENTER to save the game");
     }
 
     // EFFECTS: draw everything on screen
