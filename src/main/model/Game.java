@@ -51,8 +51,9 @@ public class Game implements Writable {
         if (ended) {
             throw new IllegalStateException();
         }
-        // TODO: making all models writable
         JSONObject json = new JSONObject();
+        json.put("maxX", maxX);
+        json.put("maxY", maxY);
         json.put("frozen", frozen);
         json.put("player", player.toJson());
         json.put("enemies", enemiesToJson());
@@ -144,6 +145,26 @@ public class Game implements Writable {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: add the given fireball to fireballs
+    public void addFireball(Fireball fireball) {
+        fireballs.add(fireball);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: add the given enemy to enemies
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
     public int getPlayerX() {
         return player.getCx();
     }
@@ -176,6 +197,10 @@ public class Game implements Writable {
 
     public boolean isFrozen() {
         return frozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 
 

@@ -98,4 +98,8 @@ public abstract class Character implements Writable {
         return isRight;
     }
 
+    public void setIsRight(boolean isRight) {
+        this.isRight = isRight;
+    }
+
 }

@@ -36,8 +36,6 @@ public class Fireball implements Writable {
         jsonObject.put("cx", cx);
         jsonObject.put("cy", cy);
         jsonObject.put("isRight", isRight);
-        jsonObject.put("isHit", hit);
-        jsonObject.put("outOfBound", outOfBound);
         return jsonObject;
     }
 
