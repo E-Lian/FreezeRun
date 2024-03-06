@@ -5,18 +5,18 @@
     "enemies": [{
         "isRight": true,
         "dx": 1,
-        "cx": 36,
+        "cx": 20,
         "dy": 0,
         "cy": 22,
         "hp": 1
     }],
     "fireballs": [],
     "player": {
-        "isRight": false,
+        "isRight": true,
         "dx": 0,
-        "cx": 15,
-        "dy": 3.5,
-        "cy": 3,
+        "cx": 39,
+        "dy": 0,
+        "cy": 22,
         "hp": 3
     }
 }
