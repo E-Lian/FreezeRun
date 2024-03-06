@@ -10,6 +10,7 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.*;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
@@ -28,6 +29,7 @@ public class TerminalGame {
 
     private static final String JSON_STORE = "./data/game.json";
     private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // MODIFIES: this
     // EFFECTS: initiates the game
@@ -39,6 +41,7 @@ public class TerminalGame {
         this.text = screen.newTextGraphics();
 
         jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         game = new Game(
                 // divide the columns in two
@@ -88,7 +91,7 @@ public class TerminalGame {
     // MODIFIES: this
     // EFFECTS: render game but doesn't update when on pause
     private void onPause() throws IOException {
-        handleUserInput();
+        handleUserInputPaused();
 
         screen.setCursorPosition(new TerminalPosition(0, 0));
         screen.clear();
@@ -107,11 +110,9 @@ public class TerminalGame {
             return;
         }
 
-
-        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Enter) {
-            saveGame();
-        } else if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
+        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
             game.pause();
+            return;
         }
 
         if (stroke.getCharacter() != null && !game.isPaused()) {
@@ -130,6 +131,24 @@ public class TerminalGame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handle user inputs differently since the game is on paused
+    public void handleUserInputPaused() throws IOException {
+        KeyStroke stroke = screen.pollInput();
+
+        if (stroke == null) {
+            return;
+        }
+
+        if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Escape) {
+            game.pause();
+        } else if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Enter) {
+            saveGame();
+        } else if (Objects.requireNonNull(stroke.getKeyType()) == KeyType.Backspace) {
+            loadGame();
+        }
+    }
+
     // EFFECTS: saves the game to file
     private void saveGame() {
         try {
@@ -141,6 +160,17 @@ public class TerminalGame {
             System.out.println("Unable to write to file: " + JSON_STORE);
         } catch (IllegalStateException ended) {
             System.out.println("Cannot save an ended game!");
+        }
+    }
+
+    // MDIFIES: this
+    // EFFECTS: load the game from file
+    private void loadGame() {
+        try {
+            game = jsonReader.read();
+            game.load();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -162,6 +192,7 @@ public class TerminalGame {
         text.setForegroundColor(TextColor.ANSI.CYAN);
         text.putString(35, 10, "PAUSED");
         text.putString(25, 12, "Press ENTER to save the game");
+        text.putString(17, 13, "Press BACKSPACE to load previously saved game");
     }
 
     // EFFECTS: draw everything on screen

@@ -1,0 +1,19 @@
+{
+    "maxY": 100,
+    "maxX": 100,
+    "frozen": false,
+    "enemies": [],
+    "fireballs": [{
+        "isRight": true,
+        "cx": 51,
+        "cy": 100
+    }],
+    "player": {
+        "isRight": true,
+        "dx": 0,
+        "cx": 50,
+        "dy": 0,
+        "cy": 100,
+        "hp": 3
+    }
+}

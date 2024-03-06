@@ -94,6 +94,14 @@ public abstract class Character implements Writable {
         return cy;
     }
 
+    public void setCx(int cx) {
+        this.cx = cx;
+    }
+
+    public void setCy(int cy) {
+        this.cy = cy;
+    }
+
     public boolean getIsRight() {
         return isRight;
     }

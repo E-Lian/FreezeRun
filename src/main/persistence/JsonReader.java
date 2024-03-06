@@ -12,7 +12,7 @@ import org.json.*;
 // Reference: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads game data from JSON file
 public class JsonReader {
-    private String source;
+    private final String source;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
@@ -40,13 +40,27 @@ public class JsonReader {
 
     // EFFECTS: parses game from JSON object and returns it
     private Game parseGame(JSONObject gameData) {
-        // TODO: check and test reader
         Game game = new Game(gameData.getInt("maxX"), gameData.getInt("maxY"));
         game.setFrozen(gameData.getBoolean("frozen"));
+        addPlayer(game, gameData);
         addFireballs(game, gameData);
         addEnemies(game, gameData);
 
         return game;
+    }
+
+    // MODIFIES: g
+    // EFFECTS: parses player from JSON object and adds it to game
+    private void addPlayer(Game g, JSONObject gameData) {
+        JSONObject playerData = gameData.getJSONObject("player");
+        Player player = new Player();
+        player.setDx(playerData.getInt("dx"));
+        player.setDy(playerData.getInt("dy"));
+        player.setCx(playerData.getInt("cx"));
+        player.setCy(playerData.getInt("cy"));
+        player.setIsRight(playerData.getBoolean("isRight"));
+
+        g.setPlayer(player);
     }
 
     // MODIFIES: g

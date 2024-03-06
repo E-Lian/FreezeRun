@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 // manages the inside of the game, changing and updating information
+// Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class Game implements Writable {
 
     public static final int TICKS_PER_SECOND = 30;
@@ -146,6 +147,12 @@ public class Game implements Writable {
     }
 
     // MODIFIES: this
+    // EFFECTS: removes the first enemy in enemies that was initialised in constructor since the game loads from a file
+    public void load() {
+        enemies.remove(0);
+    }
+
+    // MODIFIES: this
     // EFFECTS: add the given fireball to fireballs
     public void addFireball(Fireball fireball) {
         fireballs.add(fireball);
@@ -155,6 +162,16 @@ public class Game implements Writable {
     // EFFECTS: add the given enemy to enemies
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: switch paused between true and false
+    public void pause() {
+        paused = !paused;
     }
 
     public int getMaxX() {
@@ -173,22 +190,16 @@ public class Game implements Writable {
         return player.getCy();
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
     public ArrayList<Fireball> getFireballs() {
         return fireballs;
-    }
-
-    public boolean isPaused() {
-        return paused;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: switch paused between true and false
-    public void pause() {
-        paused = !paused;
     }
 
     public boolean isEnded() {

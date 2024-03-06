@@ -1,22 +1,22 @@
 {
-    "maxY": 22,
-    "maxX": 39,
+    "maxY": 100,
+    "maxX": 100,
     "frozen": false,
     "enemies": [{
         "isRight": true,
         "dx": 1,
-        "cx": 36,
+        "cx": 50,
         "dy": 0,
         "cy": 22,
         "hp": 1
     }],
     "fireballs": [],
     "player": {
-        "isRight": false,
+        "isRight": true,
         "dx": 0,
-        "cx": 15,
-        "dy": 3.5,
-        "cy": 3,
+        "cx": 50,
+        "dy": 0,
+        "cy": 100,
         "hp": 3
     }
 }
