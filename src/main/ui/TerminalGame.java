@@ -45,7 +45,7 @@ public class TerminalGame {
 
         game = new Game(
                 // divide the columns in two
-                // this is so we can make each part of
+                // so we can make each part of
                 // the snake wide, since terminal characters are
                 // taller than they are wide
                 (terminalSize.getColumns() - 1) / 2,
@@ -163,7 +163,7 @@ public class TerminalGame {
         }
     }
 
-    // MDIFIES: this
+    // MODIFIES: this
     // EFFECTS: load the game from file
     private void loadGame() {
         try {
