@@ -43,9 +43,8 @@ public class TerminalGame {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
-        game = new Game(
-                // divide the columns in two
-                // so we can make each part of
+        game = new Game(// divide the columns in two
+                // this is so we can make each part of
                 // the snake wide, since terminal characters are
                 // taller than they are wide
                 (terminalSize.getColumns() - 1) / 2,

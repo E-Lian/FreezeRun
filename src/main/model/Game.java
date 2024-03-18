@@ -1,22 +1,30 @@
 package model;
 
+import com.googlecode.lanterna.input.KeyType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.image.BufferedImage;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static ui.GraphicsGame.*;
 
 // manages the inside of the game, changing and updating information
 // Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class Game implements Writable {
 
     public static final int TICKS_PER_SECOND = 30;
-    private final int maxX;
-    private final int maxY;
+    // TODO: lots of stuff to tinker here
+    private int maxX;
+    private int ground;
     private static final double GRAVITY = 1.5;
 
     private Player player;
+    private static final int PLAYER_INIT_X = BLOCK_SIZE;
+    private static final int PLAYER_INIT_Y = SCREEN_HEIGHT - 2 * BLOCK_SIZE;
     private static final int PLAYER_SPEED = 4;
     private static final double JUMP_STRENGTH = -7;
 
@@ -34,10 +42,10 @@ public class Game implements Writable {
     private boolean ended;
 
     // EFFECTS: instantiates a running Game with a player and enemy
-    public Game(int maxX, int maxY) {
+    public Game(int maxX, int ground) {
         this.maxX = maxX;
-        this.maxY = maxY;
-        this.player = new Player();
+        this.ground = ground;
+        this.player = new Player(PLAYER_INIT_X, PLAYER_INIT_Y);
         this.enemies = new ArrayList<Enemy>();
         this.enemies.add(new Enemy(50, 22, ENEMY_SPEED, 0));
         this.fireballs = new ArrayList<Fireball>();
@@ -54,7 +62,7 @@ public class Game implements Writable {
         }
         JSONObject json = new JSONObject();
         json.put("maxX", maxX);
-        json.put("maxY", maxY);
+        json.put("maxY", ground);
         json.put("frozen", frozen);
         json.put("player", player.toJson());
         json.put("enemies", enemiesToJson());
@@ -123,7 +131,7 @@ public class Game implements Writable {
     // EFFECTS: progress the game
     public void tick() {
         // update Characters
-        player.update(maxX, maxY, GRAVITY);
+        player.update(maxX, ground, GRAVITY);
 
         if (isFrozen()) {
             if (System.currentTimeMillis() - timeOfFreeze >= 3000) {
@@ -133,7 +141,7 @@ public class Game implements Writable {
         }
 
         for (Enemy e : enemies) {
-            e.update(ENEMY_MAX_X, maxY, GRAVITY);
+            e.update(ENEMY_MAX_X, ground, GRAVITY);
         }
 
         for (int i = 0; i < fireballs.size(); i++) {
@@ -144,6 +152,48 @@ public class Game implements Writable {
             }
         }
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles user input
+    public void keyPressed(int keyCode) {
+        if (keyCode == 27) {
+            pause();
+            return;
+        }
+        if (keyCode == 65 || keyCode == 68) {
+            playerWalk(keyCode == 68);
+        }
+        if (keyCode == 87) {
+            playerJump();
+        }
+        if (keyCode == 70) {
+            freeze();
+        }
+        if (keyCode == 32) {
+            playerFire();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: same as keyPressed, but behaves slightly differently since game is on pause
+    public void keyPressedPaused(int keyCode) {
+        // TODO: pause behavior
+        if (keyCode == 27) {
+            pause();
+        }
+        if (keyCode == 10) {
+            // TODO: save game
+            // save();
+        }
+        if (keyCode == 8) {
+            // TODO: load game
+            // load();
+        }
+    }
+
+    public BufferedImage getPlayerImage() {
+        return this.player.getImg();
     }
 
     // MODIFIES: this
@@ -172,14 +222,6 @@ public class Game implements Writable {
     // EFFECTS: switch paused between true and false
     public void pause() {
         paused = !paused;
-    }
-
-    public int getMaxX() {
-        return maxX;
-    }
-
-    public int getMaxY() {
-        return maxY;
     }
 
     public int getPlayerX() {

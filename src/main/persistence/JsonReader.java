@@ -9,6 +9,8 @@ import java.util.stream.Stream;
 import model.*;
 import org.json.*;
 
+import static ui.GraphicsGame.*;
+
 // Reference: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads game data from JSON file
 public class JsonReader {
@@ -40,7 +42,7 @@ public class JsonReader {
 
     // EFFECTS: parses game from JSON object and returns it
     private Game parseGame(JSONObject gameData) {
-        Game game = new Game(gameData.getInt("maxX"), gameData.getInt("maxY"));
+        Game game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT); // TODO: removed parameters here
         game.pause();
         game.setFrozen(gameData.getBoolean("frozen"));
         addPlayer(game, gameData);
@@ -54,7 +56,7 @@ public class JsonReader {
     // EFFECTS: parses player from JSON object and adds it to game
     private void addPlayer(Game g, JSONObject gameData) {
         JSONObject playerData = gameData.getJSONObject("player");
-        Player player = new Player();
+        Player player = new Player(0, 0);
         player.setDx(playerData.getInt("dx"));
         player.setDy(playerData.getInt("dy"));
         player.setCx(playerData.getInt("cx"));

@@ -3,13 +3,9 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-// Character is an abstract class that consists
-// some common fields and methods that characters
-// in a game (enemies, players...) have
-public abstract class Character implements Writable {
+// represents blocks in game that can move and have some animation
+public abstract class Character extends Block implements Writable {
 
-    protected int cx;
-    protected int cy;
     // dx: negative - left
     // dx: positive - right
     protected int dx;
@@ -17,7 +13,6 @@ public abstract class Character implements Writable {
     // dy: positive - down
     protected double dy;
     protected boolean isRight;
-    protected int hp;
 
     // EFFECTS: returns current fields as a JSONObject
     @Override
@@ -84,22 +79,6 @@ public abstract class Character implements Writable {
 
     public void setDy(double dy) {
         this.dy = dy;
-    }
-
-    public int getCx() {
-        return cx;
-    }
-
-    public int getCy() {
-        return cy;
-    }
-
-    public void setCx(int cx) {
-        this.cx = cx;
-    }
-
-    public void setCy(int cy) {
-        this.cy = cy;
     }
 
     public boolean getIsRight() {

@@ -1,5 +1,8 @@
 package model;
 
+import javax.imageio.ImageIO;
+import java.io.FileInputStream;
+
 // represents an Enemy in the game
 public class Enemy extends Character {
     // EFFECTS: instantiates an Enemy object wit hp of 1 and facing right
@@ -10,6 +13,7 @@ public class Enemy extends Character {
         this.dy = dy;
         this.hp = 1;
         this.isRight = true;
+        loadImg();
     }
 
     // MODIFIES: this
@@ -28,6 +32,14 @@ public class Enemy extends Character {
             cy = maxY;
         } else if (cy < 0) {
             cy = 0;
+        }
+    }
+
+    private void loadImg() {
+        try {
+            img = ImageIO.read(new FileInputStream("./data/img/enemy/enemy_still1.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

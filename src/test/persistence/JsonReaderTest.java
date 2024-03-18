@@ -5,7 +5,6 @@ import model.Game;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.Reader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +26,8 @@ public class JsonReaderTest {
         try {
             JsonReader reader = new JsonReader("./data/testWriterGeneralGame.json");
             Game g = reader.read();
-            assertEquals(100, g.getMaxX());
-            assertEquals(100, g.getMaxY());
+            assertEquals(100, g.getWIDTH());
+            assertEquals(100, g.getHEIGHT());
             assertFalse(g.isFrozen());
             assertEquals(2, g.getEnemies().size());
             assertEquals(50, g.getPlayerX());
@@ -46,8 +45,8 @@ public class JsonReaderTest {
             Game g = reader.read();
 
             assertEquals(2, g.getEnemies().size());
-            assertEquals(100, g.getMaxX());
-            assertEquals(100, g.getMaxY());
+            assertEquals(100, g.getWIDTH());
+            assertEquals(100, g.getHEIGHT());
             assertTrue(g.isFrozen());
             assertEquals(50, g.getPlayerX());
             assertEquals(100, g.getPlayerY());
@@ -68,8 +67,8 @@ public class JsonReaderTest {
             Game g = reader.read();
 
             assertEquals(1, g.getEnemies().size());
-            assertEquals(100, g.getMaxX());
-            assertEquals(100, g.getMaxY());
+            assertEquals(100, g.getWIDTH());
+            assertEquals(100, g.getHEIGHT());
             assertFalse(g.isFrozen());
             assertEquals(50, g.getPlayerX());
             assertEquals(100, g.getPlayerY());
