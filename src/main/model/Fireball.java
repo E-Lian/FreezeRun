@@ -3,8 +3,11 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import javax.imageio.ImageIO;
+import java.io.FileInputStream;
+
 // a fireball shot by the player
-public class Fireball implements Writable {
+public class Fireball extends Block implements Writable {
 
     private int cx;
     private final int cy;
@@ -27,6 +30,7 @@ public class Fireball implements Writable {
         }
         this.hit = false;
         this.outOfBound = false;
+        loadimg();
     }
 
     // EFFECTS: returns the fireball's fields as a JSONObject
@@ -45,6 +49,16 @@ public class Fireball implements Writable {
         move();
         if (getCx() <= 0 || getCx() >= maxX) {
             outOfBound = true;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: load fireball image
+    private void loadimg() {
+        try {
+            img = ImageIO.read(new FileInputStream("./data/img/fireball/fireball1.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

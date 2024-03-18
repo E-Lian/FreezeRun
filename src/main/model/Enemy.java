@@ -35,6 +35,8 @@ public class Enemy extends Character {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the enemy image
     private void loadImg() {
         try {
             img = ImageIO.read(new FileInputStream("./data/img/enemy/enemy_still1.png"));

@@ -1,6 +1,7 @@
 package ui;
 
 import model.Enemy;
+import model.Fireball;
 import model.Game;
 
 import javax.swing.*;
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel {
     private void drawGame(Graphics g) {
         drawPlayer(g);
         drawEnemies(g);
+        drawFireballs(g);
     }
 
     // MODIFIES: g
@@ -60,6 +62,21 @@ public class GamePanel extends JPanel {
     private void drawEnemy(Graphics g, Enemy e) {
         BufferedImage enemyImg = e.getImg();
         g.drawImage(enemyImg, e.getCx(), e.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+    }
+
+    // MODIFIES: g
+    // EFFECTS: draws all fireballs onto g
+    private void drawFireballs(Graphics g) {
+        for (Fireball next : game.getFireballs()) {
+            drawFireball(g, next);
+        }
+    }
+
+    // MODIFIES: g
+    // EFFECTS: draws the given fireball onto g
+    private void drawFireball(Graphics g, Fireball f) {
+        BufferedImage fireballImg = f.getImg();
+        g.drawImage(fireballImg, f.getCx(), f.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 
     // Draws the "game over" message and replay instructions

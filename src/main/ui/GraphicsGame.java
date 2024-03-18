@@ -34,7 +34,7 @@ public class GraphicsGame extends JFrame {
         super("Freeze Runner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
-        game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT - 2 * BLOCK_SIZE);
+        game = new Game(SCREEN_WIDTH - BLOCK_SIZE, SCREEN_HEIGHT - 2 * BLOCK_SIZE);
         gp = new GamePanel(game);
         add(gp);
         addKeyListener(new KeyHandler());
