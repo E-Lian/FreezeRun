@@ -1,7 +1,7 @@
 {
-    "maxY": 100,
-    "maxX": 100,
+    "maxX": 480,
     "frozen": false,
+    "ground": 448,
     "enemies": [{
         "isRight": true,
         "dx": 1,
@@ -14,9 +14,9 @@
     "player": {
         "isRight": true,
         "dx": 0,
-        "cx": 50,
+        "cx": 32,
         "dy": 0,
-        "cy": 100,
+        "cy": 448,
         "hp": 3
     }
 }

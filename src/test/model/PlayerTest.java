@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @BeforeEach
     public void setup() {
-        p = new Player();
+        p = new Player(50, 100);
     }
 
     @Test
@@ -32,5 +32,10 @@ public class PlayerTest {
         p.update(100, 200, 1);
         assertEquals(50, p.getCx());
         assertEquals(104, p.getCy());
+    }
+
+    @Test
+    public void loadImgTestSuccessful() {
+        // TODO: write test for image loader methods
     }
 }

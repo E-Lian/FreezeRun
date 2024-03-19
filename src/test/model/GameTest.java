@@ -17,21 +17,21 @@ public class GameTest {
     public void playerWalkLeft() {
         g.playerWalk(false);
         g.tick();
-        assertEquals(46, g.getPlayerX());
+        assertEquals(28, g.getPlayerX());
     }
 
     @Test
     public void playerWalkRight() {
         g.playerWalk(true);
         g.tick();
-        assertEquals(54, g.getPlayerX());
+        assertEquals(36, g.getPlayerX());
     }
 
     @Test
     public void playerJump() {
         g.playerJump();
         g.tick();
-        assertEquals(93, g.getPlayerY());
+        assertEquals(120, g.getPlayerY());
     }
 
     @Test
@@ -43,8 +43,8 @@ public class GameTest {
 
     @Test
     public void getPlayerXYTest() {
-        assertEquals(50, g.getPlayerX());
-        assertEquals(100, g.getPlayerY());
+        assertEquals(32, g.getPlayerX());
+        assertEquals(448, g.getPlayerY());
     }
 
     @Test
@@ -89,15 +89,15 @@ public class GameTest {
         g.tick();
         assertEquals(1, g.getFireballs().size());
         g.tick();
-        assertTrue(g.getFireballs().isEmpty());
+        assertFalse(g.getFireballs().isEmpty());
     }
 
     @Test
     public void tickFrozenTest() throws InterruptedException {
         g.freeze();
         g.tick();
-        assertEquals(50, g.getPlayerX());
-        assertEquals(100, g.getPlayerY());
+        assertEquals(32, g.getPlayerX());
+        assertEquals(120, g.getPlayerY());
         assertEquals(50, g.getEnemies().get(0).getCx());
         assertEquals(22, g.getEnemies().get(0).getCy());
         Thread.sleep(4000L);

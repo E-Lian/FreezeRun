@@ -26,12 +26,12 @@ public class JsonReaderTest {
         try {
             JsonReader reader = new JsonReader("./data/testWriterGeneralGame.json");
             Game g = reader.read();
-            assertEquals(100, g.getWIDTH());
-            assertEquals(100, g.getHEIGHT());
+            assertEquals(480, g.getMaxX());
+            assertEquals(448, g.getGround());
             assertFalse(g.isFrozen());
             assertEquals(2, g.getEnemies().size());
-            assertEquals(50, g.getPlayerX());
-            assertEquals(100, g.getPlayerY());
+            assertEquals(32, g.getPlayerX());
+            assertEquals(448, g.getPlayerY());
             assertTrue(g.getFireballs().isEmpty());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");
@@ -45,15 +45,15 @@ public class JsonReaderTest {
             Game g = reader.read();
 
             assertEquals(2, g.getEnemies().size());
-            assertEquals(100, g.getWIDTH());
-            assertEquals(100, g.getHEIGHT());
+            assertEquals(480, g.getMaxX());
+            assertEquals(448, g.getGround());
             assertTrue(g.isFrozen());
-            assertEquals(50, g.getPlayerX());
-            assertEquals(100, g.getPlayerY());
+            assertEquals(32, g.getPlayerX());
+            assertEquals(448, g.getPlayerY());
             assertTrue(g.getFireballs().isEmpty());
 
-            Enemy enemy = g.getEnemies().get(0);
-            assertEquals(50, enemy.getCx());
+            Enemy enemy = g.getEnemies().get(1);
+            assertEquals(21, enemy.getCx());
             assertEquals(22, enemy.getCy());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");
@@ -67,11 +67,11 @@ public class JsonReaderTest {
             Game g = reader.read();
 
             assertEquals(1, g.getEnemies().size());
-            assertEquals(100, g.getWIDTH());
-            assertEquals(100, g.getHEIGHT());
+            assertEquals(480, g.getMaxX());
+            assertEquals(448, g.getGround());
             assertFalse(g.isFrozen());
-            assertEquals(50, g.getPlayerX());
-            assertEquals(100, g.getPlayerY());
+            assertEquals(32, g.getPlayerX());
+            assertEquals(448, g.getPlayerY());
             assertFalse(g.getFireballs().isEmpty());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");

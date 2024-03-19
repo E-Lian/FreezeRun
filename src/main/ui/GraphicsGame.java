@@ -1,6 +1,8 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // represents the main window which the game is drawn and played
 // Reference: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase/
@@ -28,6 +32,10 @@ public class GraphicsGame extends JFrame {
     private Game game;
     private GamePanel gp;
 
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+    private static final String JSON_STORE = "./data/game.json";
+
     // Constructs main window
     // effects: sets up window in which Space Invaders game will be played
     public GraphicsGame() {
@@ -38,6 +46,8 @@ public class GraphicsGame extends JFrame {
         gp = new GamePanel(game);
         add(gp);
         addKeyListener(new KeyHandler());
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         pack();
         centreOnScreen();
         setVisible(true);
@@ -77,10 +87,71 @@ public class GraphicsGame extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (game.isPaused()) {
-                game.keyPressedPaused(e.getKeyCode());
+                handleUserInputPaused(e.getKeyCode());
             } else {
-                game.keyPressed(e.getKeyCode());
+                handleUserInput(e.getKeyCode());
             }
+        }
+
+        // MODIFIES: game
+        // EFFECTS: handles user input
+        public void handleUserInput(int keyCode) {
+            if (keyCode == 27) {
+                game.pause();
+                return;
+            }
+            if (keyCode == 65 || keyCode == 68) {
+                game.playerWalk(keyCode == 68);
+            }
+            if (keyCode == 87) {
+                game.playerJump();
+            }
+            if (keyCode == 70) {
+                game.freeze();
+            }
+            if (keyCode == 32) {
+                game.playerFire();
+            }
+        }
+
+
+        // MODIFIES: game
+        // EFFECTS: same as keyPressed, but behaves slightly differently since game is on pause
+        public void handleUserInputPaused(int keyCode) {
+            // TODO: pause behavior
+            if (keyCode == 27) {
+                game.pause();
+            }
+            if (keyCode == 10) {
+                saveGame();
+            }
+            if (keyCode == 8) {
+                loadGame();
+            }
+        }
+    }
+
+    // EFFECTS: saves the game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(game);
+            jsonWriter.close();
+            System.out.println("Saved game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        } catch (IllegalStateException ended) {
+            System.out.println("Cannot save an ended game!");
+        }
+    }
+
+    // MODIFIES: game
+    // EFFECTS: load the game from file
+    private void loadGame() {
+        try {
+            this.game = jsonReader.read();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

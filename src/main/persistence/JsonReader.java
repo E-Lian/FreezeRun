@@ -42,7 +42,7 @@ public class JsonReader {
 
     // EFFECTS: parses game from JSON object and returns it
     private Game parseGame(JSONObject gameData) {
-        Game game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT); // TODO: removed parameters here
+        Game game = new Game(gameData.getInt("maxX"), gameData.getInt("ground"));
         game.pause();
         game.setFrozen(gameData.getBoolean("frozen"));
         addPlayer(game, gameData);

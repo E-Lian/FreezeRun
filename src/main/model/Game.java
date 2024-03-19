@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -62,7 +63,7 @@ public class Game implements Writable {
         }
         JSONObject json = new JSONObject();
         json.put("maxX", maxX);
-        json.put("maxY", ground);
+        json.put("ground", ground);
         json.put("frozen", frozen);
         json.put("player", player.toJson());
         json.put("enemies", enemiesToJson());
@@ -154,44 +155,6 @@ public class Game implements Writable {
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: handles user input
-    public void keyPressed(int keyCode) {
-        if (keyCode == 27) {
-            pause();
-            return;
-        }
-        if (keyCode == 65 || keyCode == 68) {
-            playerWalk(keyCode == 68);
-        }
-        if (keyCode == 87) {
-            playerJump();
-        }
-        if (keyCode == 70) {
-            freeze();
-        }
-        if (keyCode == 32) {
-            playerFire();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: same as keyPressed, but behaves slightly differently since game is on pause
-    public void keyPressedPaused(int keyCode) {
-        // TODO: pause behavior
-        if (keyCode == 27) {
-            pause();
-        }
-        if (keyCode == 10) {
-            // TODO: save game
-            // save();
-        }
-        if (keyCode == 8) {
-            // TODO: load game
-            // load();
-        }
-    }
-
     public BufferedImage getPlayerImage() {
         return this.player.getImg();
     }
@@ -222,6 +185,14 @@ public class Game implements Writable {
     // EFFECTS: switch paused between true and false
     public void pause() {
         paused = !paused;
+    }
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getGround() {
+        return ground;
     }
 
     public int getPlayerX() {

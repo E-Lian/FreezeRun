@@ -20,6 +20,8 @@ public class Player extends Character {
         loadImg();
     }
 
+    // MODIFIES: this
+    // EFFECTS: load player's image
     private void loadImg() {
         try {
             img = ImageIO.read(new FileInputStream("./data/img/player/player_still1.png"));
