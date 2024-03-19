@@ -24,8 +24,8 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         drawGame(g);
+        // paintComponent isn't being called after loading
 
         if (game.isEnded()) {
             // TODO: change this i think
@@ -98,5 +98,9 @@ public class GamePanel extends JPanel {
     private void centreString(String str, Graphics g, FontMetrics fm, int y) {
         int width = fm.stringWidth(str);
         g.drawString(str, (SCREEN_WIDTH - width) / 2, y);
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 }

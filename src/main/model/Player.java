@@ -1,6 +1,9 @@
 package model;
 
+import ui.GraphicsGame;
+
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.nio.Buffer;
@@ -23,11 +26,7 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: load player's image
     private void loadImg() {
-        try {
-            img = ImageIO.read(new FileInputStream("./data/img/player/player_still1.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        super.loadImg("./data/img/player/player_still1.png");
     }
 
     // EFFECTS: create a new Fireball at player's position, and returns the Fireball
@@ -45,5 +44,13 @@ public class Player extends Character {
 
     public double getPlayerDy() {
         return this.dy;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the bound
+    @Override
+    public void makeBound() {
+        this.bound = new Rectangle(this.cx + scale * 4, this.cy + scale,
+                10 * scale, 15 * scale);
     }
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class GraphicsGame extends JFrame {
     // screen fields
     static final int ORIGINAL_BLOCK_SIZE = 16; // 16 pixel block
-    static final int SCALE = 2;
+    public static final int SCALE = 2;
     // size of each block = (originalBlockSize * scale)^2
     public static final int BLOCK_SIZE = ORIGINAL_BLOCK_SIZE * SCALE;
     public static final int row = 16;
@@ -62,10 +62,12 @@ public class GraphicsGame extends JFrame {
         Timer t = new Timer(INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                // TODO: problem might be in here
                 if (!game.isPaused()) {
                     game.tick();
                 }
                 gp.repaint();
+                // actionPerformed is still being called normally after loading
             }
         });
 
@@ -74,7 +76,7 @@ public class GraphicsGame extends JFrame {
 
     // Centres frame on desktop
     // modifies: this
-    // effects:  location of frame is set so frame is centred on desktop
+    // effects: location of frame is set so frame is centred on desktop
     private void centreOnScreen() {
         Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
@@ -91,6 +93,7 @@ public class GraphicsGame extends JFrame {
             } else {
                 handleUserInput(e.getKeyCode());
             }
+            // keyPressed is still being called and updates game normally after loading
         }
 
         // MODIFIES: game
@@ -118,14 +121,13 @@ public class GraphicsGame extends JFrame {
         // MODIFIES: game
         // EFFECTS: same as keyPressed, but behaves slightly differently since game is on pause
         public void handleUserInputPaused(int keyCode) {
-            // TODO: pause behavior
             if (keyCode == 27) {
                 game.pause();
             }
             if (keyCode == 10) {
                 saveGame();
             }
-            if (keyCode == 8) {
+            if (keyCode == 32) {
                 loadGame();
             }
         }
@@ -149,7 +151,10 @@ public class GraphicsGame extends JFrame {
     // EFFECTS: load the game from file
     private void loadGame() {
         try {
+            // TODO: fix loading issue
             this.game = jsonReader.read();
+            this.gp = new GamePanel(this.game);
+            System.out.println("Loaded game from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

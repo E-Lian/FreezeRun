@@ -2,8 +2,10 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
+import ui.GraphicsGame;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.FileInputStream;
 
 // a fireball shot by the player
@@ -30,7 +32,7 @@ public class Fireball extends Block implements Writable {
         }
         this.hit = false;
         this.outOfBound = false;
-        loadimg();
+        loadImg();
     }
 
     // EFFECTS: returns the fireball's fields as a JSONObject
@@ -54,12 +56,8 @@ public class Fireball extends Block implements Writable {
 
     // MODIFIES: this
     // EFFECTS: load fireball image
-    private void loadimg() {
-        try {
-            img = ImageIO.read(new FileInputStream("./data/img/fireball/fireball1.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected void loadImg() {
+        super.loadImg("./data/img/fireball/fireball1.png");
     }
 
     // REQUIRES: !isOutOfBound()
@@ -67,6 +65,13 @@ public class Fireball extends Block implements Writable {
     // EFFECTS: move the bullet
     public void move() {
         this.cx += this.speed;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the bound
+    @Override
+    public void makeBound() {
+        this.bound = new Rectangle(this.cx + scale * 4, this.cy + scale * 4, scale * 11, scale * 7);
     }
 
     public int getCx() {

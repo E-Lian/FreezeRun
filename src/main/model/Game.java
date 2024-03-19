@@ -152,6 +152,7 @@ public class Game implements Writable {
                 i--;
             }
         }
+        // game still updates after loading
 
     }
 
@@ -185,6 +186,7 @@ public class Game implements Writable {
     // EFFECTS: switch paused between true and false
     public void pause() {
         paused = !paused;
+        System.out.println(paused);
     }
 
     public int getMaxX() {

@@ -1,6 +1,9 @@
 package model;
 
+import ui.GraphicsGame;
+
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.FileInputStream;
 
 // represents an Enemy in the game
@@ -38,10 +41,14 @@ public class Enemy extends Character {
     // MODIFIES: this
     // EFFECTS: loads the enemy image
     private void loadImg() {
-        try {
-            img = ImageIO.read(new FileInputStream("./data/img/enemy/enemy_still1.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        super.loadImg("./data/img/enemy/enemy_still1.png");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the bound
+    @Override
+    public void makeBound() {
+        this.bound = new Rectangle(this.cx + scale * 3, this.cy + scale * 2,
+                scale * 14, scale * 9);
     }
 }

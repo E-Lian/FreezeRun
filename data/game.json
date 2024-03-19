@@ -2,16 +2,19 @@
     "maxX": 480,
     "frozen": false,
     "ground": 448,
-    "enemies": [],
-    "fireballs": [{
+    "enemies": [{
         "isRight": true,
-        "cx": 93,
-        "cy": 448
+        "dx": 1,
+        "cx": 35,
+        "dy": 0,
+        "cy": 22,
+        "hp": 1
     }],
+    "fireballs": [],
     "player": {
         "isRight": true,
         "dx": 0,
-        "cx": 32,
+        "cx": 116,
         "dy": 0,
         "cy": 448,
         "hp": 3
