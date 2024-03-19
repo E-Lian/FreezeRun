@@ -1,5 +1,6 @@
 package ui;
 
+import model.Block;
 import model.Enemy;
 import model.Fireball;
 import model.Game;
@@ -7,6 +8,7 @@ import model.Game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static ui.GraphicsGame.*;
 
@@ -37,9 +39,21 @@ public class GamePanel extends JPanel {
     // modifies: g
     // effects:  draws the game onto g
     private void drawGame(Graphics g) {
+        drawMap(g);
         drawPlayer(g);
         drawEnemies(g);
         drawFireballs(g);
+    }
+
+    // MODIFIES: g
+    // EFFECTS: draws the map
+    private void drawMap(Graphics g) {
+        // TODO: draw map
+        ArrayList<Block> map = game.getMap();
+        for (Block b: map) {
+            BufferedImage blockImg = b.getImg();
+            g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+        }
     }
 
     // MODIFIES: g

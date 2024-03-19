@@ -23,6 +23,8 @@ public class Game implements Writable {
     private int ground;
     private static final double GRAVITY = 1.5;
 
+    private ArrayList<Block> map;
+
     private Player player;
     private static final int PLAYER_INIT_X = BLOCK_SIZE;
     private static final int PLAYER_INIT_Y = SCREEN_HEIGHT - 2 * BLOCK_SIZE;
@@ -53,6 +55,8 @@ public class Game implements Writable {
         this.frozen = false;
         this.paused = false;
         this.ended = false;
+        Level level = new Level();
+        this.map = level.realizeMap();
     }
 
     // EFFECTS: put game information into JSON representation and return it
@@ -229,5 +233,7 @@ public class Game implements Writable {
         this.frozen = frozen;
     }
 
-
+    public ArrayList<Block> getMap() {
+        return map;
+    }
 }
