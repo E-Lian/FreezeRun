@@ -54,11 +54,28 @@ public abstract class Block {
         return hitBox;
     }
 
-    public abstract Rectangle getLeftBox();
+    // TODO: change the boxes
+    public Rectangle getLeftBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) hitBox.x, (int) hitBox.y + hitBox.height / 4,
+                hitBox.width / 4, hitBox.height / 2);
+    }
 
-    public abstract Rectangle getRightBox();
+    public Rectangle getRightBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) hitBox.x + 3 * hitBox.width / 4, (int) hitBox.y + hitBox.height / 4,
+                hitBox.width / 4, hitBox.height / 2);
+    }
 
-    public abstract Rectangle getTopBox();
+    public Rectangle getTopBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) hitBox.x + hitBox.width / 6, (int) hitBox.y,
+                2 * hitBox.width / 3, hitBox.height / 2);
+    }
 
-    public abstract Rectangle getBottomBox();
+    public Rectangle getBottomBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) hitBox.x + hitBox.width / 6, (int) hitBox.y + hitBox.height / 2,
+                2 * hitBox.width / 3, hitBox.height / 2);
+    }
 }

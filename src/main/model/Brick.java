@@ -22,31 +22,6 @@ public class Brick extends Block {
                 scale * width, scale * height);
     }
 
-    @Override
-    public Rectangle getLeftBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle(getCx(), getCy(), 6, (int) hitBox.getHeight());
-    }
-
-    @Override
-    public Rectangle getRightBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle(getCx() + 8, getCy(), 6, (int) hitBox.getHeight());
-    }
-
-    @Override
-    public Rectangle getTopBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle(getCx() + 6, getCy(), 2, (int) (hitBox.getHeight() / 2));
-    }
-
-    @Override
-    public Rectangle getBottomBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle(getCx() + 6, (int) (getCy() + hitBox.getHeight() / 2),
-                2, (int) (hitBox.getHeight() / 2));
-    }
-
     // MODIFIES: this
     // EFFECTS: load image
     public void loadImg() {

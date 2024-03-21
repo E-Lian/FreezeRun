@@ -5,6 +5,7 @@ import java.awt.*;
 // represents the Player in the game
 public class Player extends Character {
     final int playerHP = 3;
+    final double jumpStrength = 16;
 
     // EFFECTS: instantiate a Player at set position, standing still, facing right, with desired hp
     public Player(int cx, int cy) {
@@ -17,6 +18,15 @@ public class Player extends Character {
         this.isRight = true;
         this.hp = playerHP;
         loadImg();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: make the player jump if applicable
+    public void jump() {
+        if (!isJumping() && !isFalling()) {
+            setJumping(true);
+            setDy(jumpStrength);
+        }
     }
 
     // MODIFIES: this
@@ -43,29 +53,4 @@ public class Player extends Character {
                 width * scale, height * scale);
     }
 
-    @Override
-    public Rectangle getLeftBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle((int) hitBox.getX(), (int) hitBox.getY(), 4, height);
-    }
-
-    @Override
-    public Rectangle getRightBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle((int) (hitBox.getX() + 6), (int) hitBox.getY(),
-                4, height);
-    }
-
-    @Override
-    public Rectangle getTopBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle((int) (hitBox.getX() + 4), (int) hitBox.getY(), 2, height / 2);
-    }
-
-    @Override
-    public Rectangle getBottomBox() {
-        Rectangle hitBox = getHitBox();
-        return new Rectangle((int) (hitBox.getX() + 4), (int) (hitBox.getY() + height / 2),
-                2, (int) (hitBox.getHeight() / 2));
-    }
 }

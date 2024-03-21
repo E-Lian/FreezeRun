@@ -15,6 +15,8 @@ public abstract class Character extends Block implements Writable {
     // dy: positive - down
     protected double dy;
     protected boolean isRight;
+    protected boolean jumping = false;
+    protected boolean falling = true;
 
     // EFFECTS: returns current fields as a JSONObject
     @Override
@@ -26,14 +28,28 @@ public abstract class Character extends Block implements Writable {
         jsonObject.put("dy", dy);
         jsonObject.put("isRight", isRight);
         jsonObject.put("hp", hp);
+        jsonObject.put("jumping", jumping);
+        jsonObject.put("falling", falling);
         return jsonObject;
     }
 
     // MODIFIES: this
     // EFFECT: move the character by its dx and dy
     public void update(int maxX, int maxY, double gravity) {
+        if (jumping && dy <= 0) {
+            jumping = false;
+            falling = true;
+        } else if (jumping) {
+            dy = dy - gravity;
+            cy += dy;
+        }
+
+        if (falling) {
+            cy += dy;
+            dy += gravity;
+        }
+
         cx += dx;
-        cy += dy;
 
         if (this.dx < 0) {
             this.isRight = false;
@@ -41,23 +57,6 @@ public abstract class Character extends Block implements Writable {
             this.isRight = true;
         }
     }
-
-    // EFFECTS: return 1 if this collides with given BLock from up,
-    // 2 if from underneath, 3 if horizontally, 0 if they don't collide
-    public int collisionCheck(Block b) {
-        Rectangle r1 = getHitBox();
-        Rectangle r2 = b.getHitBox();
-        // TODO: finish collision detection
-        double bottom2 = r2.getY() + r2.getHeight();
-        double right2 = r2.getX() + r2.getWidth();
-//        if (!r1.intersects(r2)) {
-//             return 0;
-//        } else {
-//            if ()
-//        }
-        return 0;
-    }
-
 
     // EFFECT: returns true if hp <= 0
     public boolean isDead() {
@@ -86,6 +85,22 @@ public abstract class Character extends Block implements Writable {
 
     public void setIsRight(boolean isRight) {
         this.isRight = isRight;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
     }
 
 }

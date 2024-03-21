@@ -54,8 +54,8 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the map
     private void drawMap(Graphics g) {
-        ArrayList<Block> map = this.game.getMap();
-        for (Block b: map) {
+        ArrayList<Block> map = this.game.getBlocks();
+        for (Block b : map) {
             BufferedImage blockImg = b.getImg();
             g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }

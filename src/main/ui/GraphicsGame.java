@@ -91,10 +91,8 @@ public class GraphicsGame extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (game.isPaused()) {
-                System.out.println("isPaused");
                 handleUserInputPaused(e.getKeyCode());
             } else {
-                System.out.println("Normal");
                 handleUserInput(e.getKeyCode());
             }
             // keyPressed is still being called and updates game normally after loading

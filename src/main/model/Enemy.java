@@ -18,26 +18,6 @@ public class Enemy extends Character {
     }
 
     // MODIFIES: this
-    // EFFECTS: change direction when touching bounds
-    // TODO: might delete later
-//    @Override
-//    public void inBound(int maxX, int maxY) {
-//        if (cx > maxX) {
-//            cx = maxX;
-//            dx = -dx;
-//        } else if (cx < 0) {
-//            cx = 0;
-//            dx = -dx;
-//        }
-//
-//        if (cy > maxY) {
-//            cy = maxY;
-//        } else if (cy < 0) {
-//            cy = 0;
-//        }
-//    }
-
-    // MODIFIES: this
     // EFFECTS: loads the enemy image
     private void loadImg() {
         super.loadImg("./data/img/enemy/enemy_still1.png");
@@ -49,25 +29,5 @@ public class Enemy extends Character {
     public void makeHitBox() {
         this.hitBox = new Rectangle(this.cx + scale * 3, this.cy + scale * 2,
                 scale * width, scale * height);
-    }
-
-    @Override
-    public Rectangle getLeftBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getRightBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getTopBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getBottomBox() {
-        return null;
     }
 }

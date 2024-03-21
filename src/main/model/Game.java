@@ -17,15 +17,14 @@ public class Game implements Writable {
     // TODO: lots of stuff to tinker here
     private int maxX;
     private int ground;
-    private static final double GRAVITY = 2.0;
+    public static final double GRAVITY = 0.5;
 
-    private ArrayList<Block> map;
+    private ArrayList<Block> blocks;
 
     private Player player;
     private static final int PLAYER_INIT_X = BLOCK_SIZE;
     private static final int PLAYER_INIT_Y = SCREEN_HEIGHT - 2 * BLOCK_SIZE;
-    private static final int PLAYER_SPEED = 5;
-    private static final double JUMP_STRENGTH = -16;
+    private static final int PLAYER_SPEED = 2;
 
     // temp enemy variables for Phase 1
     private ArrayList<Enemy> enemies;
@@ -33,6 +32,8 @@ public class Game implements Writable {
     private static final int ENEMY_MAX_X = 70;
 
     private ArrayList<Fireball> fireballs;
+
+    private CollisionChecker collisionChecker;
 
     private long timeOfFreeze;
 
@@ -51,8 +52,9 @@ public class Game implements Writable {
         this.frozen = false;
         this.paused = false;
         this.ended = false;
+        this.collisionChecker = new CollisionChecker();
         Level level = new Level();
-        this.map = level.realizeMap();
+        this.blocks = level.realizeMap();
     }
 
     // EFFECTS: put game information into JSON representation and return it
@@ -105,9 +107,7 @@ public class Game implements Writable {
     // MODIFIES: player
     // EFFECTS: make the player jump
     public void playerJump() {
-        if (player.getPlayerDy() == 0) {
-            player.setDy(JUMP_STRENGTH);
-        }
+        player.jump();
     }
 
     // MODIFIES: this
@@ -115,7 +115,6 @@ public class Game implements Writable {
     public void playerFire() {
         // store the Fireball created by Player and empty the enemies list
         this.fireballs.add(player.fire());
-        this.enemies = new ArrayList<Enemy>();
     }
 
     // REQUIRES: System.currentTimeMillis() - timeOfFreeze > 80000
@@ -131,9 +130,6 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
-        // check for collisions
-        checkAllCollision(player);
-        //checkEnemyCollision();
         // update Characters
         player.update(maxX, ground, GRAVITY);
         player.setDx(0);
@@ -156,61 +152,24 @@ public class Game implements Writable {
                 i--;
             }
         }
-        // game still updates after loading
 
+
+        // check for collisions
+        checkCollisions();
     }
 
     // MODIFIES: this
-    // EFFECTS: check all enemies's collisions
-    private void checkEnemyCollision() {
-        // TODO: fireball collision, left/right collision, bottom collision
-        //checkFireballCollision();
-        for (Enemy e: enemies) {
-            checkAllCollision(e);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: check collisions in all directions of the Player
-    private void checkAllCollision(Character c) {
-        //c.setDy(c.getDy() + GRAVITY);
-        for (Block block : map) {
-            checkBottomCollision(c, block);
-            checkTopCollision(c, block);
-            checkHorizontalCollision(c,block);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: check collisions in horizontal directions of the player,
-    // if it does, set dx = 0 and set player's x correctly
-    private void checkHorizontalCollision(Character b1, Block b2) {
-        if (b1.getLeftBox().intersects(b2.getHitBox())) {
-            b1.setDx(0);
-            b1.setCx(b2.getCx() + BLOCK_SIZE);
-        } else if (b1.getRightBox().intersects(b2.getHitBox())) {
-            b1.setDx(0);
-            b1.setCx(b2.getCx() - BLOCK_SIZE);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: check if player's top hits anything,
-    // if it does, set dy = -dy and set player's y correctly
-    private void checkTopCollision(Character b1, Block b2) {
-        if (b1.getTopBox().intersects(b2.getBottomBox())) {
-            b1.setDy(GRAVITY);
-            b1.setCy(b2.getCy() + BLOCK_SIZE);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: check if player's bottom hits anything,
-    // if it does, set dy to 0 and set player's y correctly
-    private void checkBottomCollision(Character b1, Block b2) {
-        if (b1.getBottomBox().intersects(b2.getHitBox())) {
-            b1.setDy(0);
-            b1.setCy(b2.getCy() - BLOCK_SIZE);
+    // EFFECTS: check all types of collisions
+    public void checkCollisions() {
+        collisionChecker.checkBlockCollision(player, blocks);
+        // TODO: enemy is not falling naturally
+        for (int i = 0; i < enemies.size(); i++) {
+            if (collisionChecker.checkEnemyFireballCollsion(enemies.get(i), fireballs)) {
+                enemies.remove(i);
+                i--;
+            } else {
+                collisionChecker.checkBlockCollision(enemies.get(i), blocks);
+            }
         }
     }
 
@@ -286,7 +245,12 @@ public class Game implements Writable {
         this.frozen = frozen;
     }
 
-    public ArrayList<Block> getMap() {
-        return map;
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
+
+    // TODO: delete later
+    public Player getPlayer() {
+        return player;
     }
 }
