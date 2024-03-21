@@ -41,7 +41,6 @@ public class Level {
 
     // EFFECTS: make blocks based on the map
     public ArrayList<Block> realizeMap() {
-        // TODO: finish realizeMap
         int x = 0;
         int y = 0;
 

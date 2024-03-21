@@ -4,10 +4,14 @@ import model.Block;
 import model.Enemy;
 import model.Fireball;
 import model.Game;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static ui.GraphicsGame.*;
@@ -16,21 +20,23 @@ import static ui.GraphicsGame.*;
 public class GamePanel extends JPanel {
 
     private Game game;
+    private GraphicsGame gg;
 
-    public GamePanel(Game g) {
+    public GamePanel(Game g, GraphicsGame gg) {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setBackground(Color.DARK_GRAY);
         this.game = g;
+        this.gg = gg;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        // it is painting
+        // this method isn't getting the right data
         super.paintComponent(g);
         drawGame(g);
-        // paintComponent isn't being called after loading
 
         if (game.isEnded()) {
-            // TODO: change this i think
             gameOver(g);
         }
     }
@@ -48,8 +54,7 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the map
     private void drawMap(Graphics g) {
-        // TODO: draw map
-        ArrayList<Block> map = game.getMap();
+        ArrayList<Block> map = this.game.getMap();
         for (Block b: map) {
             BufferedImage blockImg = b.getImg();
             g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
@@ -59,14 +64,14 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the player onto g
     private void drawPlayer(Graphics g) {
-        BufferedImage playerImg = game.getPlayerImage();
-        g.drawImage(playerImg, game.getPlayerX(), game.getPlayerY(), BLOCK_SIZE, BLOCK_SIZE, null);
+        BufferedImage playerImg = this.game.getPlayerImage();
+        g.drawImage(playerImg, this.game.getPlayerX(), this.game.getPlayerY(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 
     // MODIFIES: g
     // EFFECTS: draws all enemies onto g
     private void drawEnemies(Graphics g) {
-        for (Enemy next : game.getEnemies()) {
+        for (Enemy next : this.game.getEnemies()) {
             drawEnemy(g, next);
         }
     }
@@ -81,7 +86,7 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws all fireballs onto g
     private void drawFireballs(Graphics g) {
-        for (Fireball next : game.getFireballs()) {
+        for (Fireball next : this.game.getFireballs()) {
             drawFireball(g, next);
         }
     }
@@ -112,6 +117,29 @@ public class GamePanel extends JPanel {
     private void centreString(String str, Graphics g, FontMetrics fm, int y) {
         int width = fm.stringWidth(str);
         g.drawString(str, (SCREEN_WIDTH - width) / 2, y);
+    }
+
+    public void saveGame(JsonWriter writer) {
+        try {
+            writer.open();
+            writer.write(this.game);
+            writer.close();
+            System.out.println("Saved game");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write file");
+        } catch (IllegalStateException ended) {
+            System.out.println("Cannot save an ended game!");
+        }
+    }
+
+    public void loadGame(JsonReader reader) {
+        try {
+            this.game = reader.read();
+            this.gg.setGame(this.game);
+            System.out.println("Loaded game");
+        } catch (IOException e) {
+            System.out.println("Unable to read");
+        }
     }
 
     public Game getGame() {

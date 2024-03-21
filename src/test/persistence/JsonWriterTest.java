@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonWriterTest {
-    // TODO: edit tests
     @Test
     void testWriterInvalidFile() {
         try {

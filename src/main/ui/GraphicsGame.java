@@ -43,7 +43,7 @@ public class GraphicsGame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
         game = new Game(SCREEN_WIDTH - BLOCK_SIZE, SCREEN_HEIGHT - 2 * BLOCK_SIZE);
-        gp = new GamePanel(game);
+        gp = new GamePanel(game, this);
         add(gp);
         addKeyListener(new KeyHandler());
         jsonReader = new JsonReader(JSON_STORE);
@@ -62,12 +62,10 @@ public class GraphicsGame extends JFrame {
         Timer t = new Timer(INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                // TODO: problem might be in here
                 if (!game.isPaused()) {
                     game.tick();
                 }
                 gp.repaint();
-                // actionPerformed is still being called normally after loading
             }
         });
 
@@ -82,6 +80,10 @@ public class GraphicsGame extends JFrame {
         setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
     }
 
+    public void setGame(Game g) {
+        this.game = g;
+    }
+
     /*
      * A key handler to respond to key events
      */
@@ -89,8 +91,10 @@ public class GraphicsGame extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (game.isPaused()) {
+                System.out.println("isPaused");
                 handleUserInputPaused(e.getKeyCode());
             } else {
+                System.out.println("Normal");
                 handleUserInput(e.getKeyCode());
             }
             // keyPressed is still being called and updates game normally after loading
@@ -125,40 +129,15 @@ public class GraphicsGame extends JFrame {
                 game.pause();
             }
             if (keyCode == 10) {
-                saveGame();
+//                saveGame();
+                gp.saveGame(jsonWriter);
             }
             if (keyCode == 32) {
-                loadGame();
+//                loadGame();
+                gp.loadGame(jsonReader);
+                addTimer();
             }
         }
     }
-
-    // EFFECTS: saves the game to file
-    private void saveGame() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(game);
-            jsonWriter.close();
-            System.out.println("Saved game to " + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-        } catch (IllegalStateException ended) {
-            System.out.println("Cannot save an ended game!");
-        }
-    }
-
-    // MODIFIES: game
-    // EFFECTS: load the game from file
-    private void loadGame() {
-        try {
-            // TODO: fix loading issue
-            this.game = jsonReader.read();
-            this.gp = new GamePanel(this.game);
-            System.out.println("Loaded game from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        }
-    }
-
 }
 

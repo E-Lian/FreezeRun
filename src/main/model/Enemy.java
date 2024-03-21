@@ -1,10 +1,6 @@
 package model;
 
-import ui.GraphicsGame;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.FileInputStream;
 
 // represents an Enemy in the game
 public class Enemy extends Character {
@@ -12,6 +8,8 @@ public class Enemy extends Character {
     public Enemy(int cx, int cy, int dx, int dy) {
         this.cx = cx;
         this.cy = cy;
+        this.width = 14;
+        this.height = 9;
         this.dx = dx;
         this.dy = dy;
         this.hp = 1;
@@ -21,22 +19,23 @@ public class Enemy extends Character {
 
     // MODIFIES: this
     // EFFECTS: change direction when touching bounds
-    @Override
-    public void inBound(int maxX, int maxY) {
-        if (cx > maxX) {
-            cx = maxX;
-            dx = -dx;
-        } else if (cx < 0) {
-            cx = 0;
-            dx = -dx;
-        }
-
-        if (cy > maxY) {
-            cy = maxY;
-        } else if (cy < 0) {
-            cy = 0;
-        }
-    }
+    // TODO: might delete later
+//    @Override
+//    public void inBound(int maxX, int maxY) {
+//        if (cx > maxX) {
+//            cx = maxX;
+//            dx = -dx;
+//        } else if (cx < 0) {
+//            cx = 0;
+//            dx = -dx;
+//        }
+//
+//        if (cy > maxY) {
+//            cy = maxY;
+//        } else if (cy < 0) {
+//            cy = 0;
+//        }
+//    }
 
     // MODIFIES: this
     // EFFECTS: loads the enemy image
@@ -47,8 +46,28 @@ public class Enemy extends Character {
     // MODIFIES: this
     // EFFECTS: set the bound
     @Override
-    public void makeBound() {
-        this.bound = new Rectangle(this.cx + scale * 3, this.cy + scale * 2,
-                scale * 14, scale * 9);
+    public void makeHitBox() {
+        this.hitBox = new Rectangle(this.cx + scale * 3, this.cy + scale * 2,
+                scale * width, scale * height);
+    }
+
+    @Override
+    public Rectangle getLeftBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getRightBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getTopBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getBottomBox() {
+        return null;
     }
 }

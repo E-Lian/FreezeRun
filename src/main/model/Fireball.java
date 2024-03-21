@@ -2,11 +2,8 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.GraphicsGame;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.FileInputStream;
 
 // a fireball shot by the player
 public class Fireball extends Block implements Writable {
@@ -24,6 +21,8 @@ public class Fireball extends Block implements Writable {
     public Fireball(int cx, int cy, boolean isRight) {
         this.cx = cx;
         this.cy = cy;
+        this.width = 11;
+        this.height = 7;
         this.isRight = isRight;
         if (!isRight) {
             this.speed = -SPEED;
@@ -70,8 +69,9 @@ public class Fireball extends Block implements Writable {
     // MODIFIES: this
     // EFFECTS: set the bound
     @Override
-    public void makeBound() {
-        this.bound = new Rectangle(this.cx + scale * 4, this.cy + scale * 4, scale * 11, scale * 7);
+    public void makeHitBox() {
+        this.hitBox = new Rectangle(this.cx + scale * 4, this.cy + scale * 4,
+                scale * width, scale * height);
     }
 
     public int getCx() {
@@ -80,6 +80,26 @@ public class Fireball extends Block implements Writable {
 
     public int getCy() {
         return cy;
+    }
+
+    @Override
+    public Rectangle getLeftBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getRightBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getTopBox() {
+        return null;
+    }
+
+    @Override
+    public Rectangle getBottomBox() {
+        return null;
     }
 
     public boolean isHit() {

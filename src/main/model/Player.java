@@ -1,12 +1,6 @@
 package model;
 
-import ui.GraphicsGame;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.nio.Buffer;
 
 // represents the Player in the game
 public class Player extends Character {
@@ -16,6 +10,8 @@ public class Player extends Character {
     public Player(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
+        this.width = 10;
+        this.height = 15;
         this.dx = 0;
         this.dy = 0;
         this.isRight = true;
@@ -34,13 +30,6 @@ public class Player extends Character {
         return new Fireball(getCx(), getCy(), getIsRight());
     }
 
-    // MODIFIES: this
-    // EFFECTS: reset the player's dx and dy
-    @Override
-    public void refresh(double gravity) {
-        this.dx = 0;
-        super.refresh(gravity);
-    }
 
     public double getPlayerDy() {
         return this.dy;
@@ -49,8 +38,34 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: set the bound
     @Override
-    public void makeBound() {
-        this.bound = new Rectangle(this.cx + scale * 4, this.cy + scale,
-                10 * scale, 15 * scale);
+    public void makeHitBox() {
+        this.hitBox = new Rectangle(this.cx + scale * 4, this.cy + scale,
+                width * scale, height * scale);
+    }
+
+    @Override
+    public Rectangle getLeftBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) hitBox.getX(), (int) hitBox.getY(), 4, height);
+    }
+
+    @Override
+    public Rectangle getRightBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) (hitBox.getX() + 6), (int) hitBox.getY(),
+                4, height);
+    }
+
+    @Override
+    public Rectangle getTopBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) (hitBox.getX() + 4), (int) hitBox.getY(), 2, height / 2);
+    }
+
+    @Override
+    public Rectangle getBottomBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle((int) (hitBox.getX() + 4), (int) (hitBox.getY() + height / 2),
+                2, (int) (hitBox.getHeight() / 2));
     }
 }

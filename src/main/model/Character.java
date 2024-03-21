@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.*;
+
 // represents blocks in game that can move and have some animation
 public abstract class Character extends Block implements Writable {
 
@@ -38,35 +40,24 @@ public abstract class Character extends Block implements Writable {
         } else if (this.dx > 0) {
             this.isRight = true;
         }
-
-        inBound(maxX, maxY);
-        refresh(gravity);
     }
 
-    // MODIFIES: this
-    // EFFECTS: keeps the character in bound
-    public void inBound(int maxX, int maxY) {
-        if (this.cx < 0) {
-            this.cx = 0;
-        } else if (this.cx > maxX) {
-            this.cx = maxX;
-        }
-
-        if (this.cy < 0) {
-            this.cy = 0;
-        } else if (this.cy > maxY) {
-            this.cy = maxY;
-            setDy(0);
-        }
+    // EFFECTS: return 1 if this collides with given BLock from up,
+    // 2 if from underneath, 3 if horizontally, 0 if they don't collide
+    public int collisionCheck(Block b) {
+        Rectangle r1 = getHitBox();
+        Rectangle r2 = b.getHitBox();
+        // TODO: finish collision detection
+        double bottom2 = r2.getY() + r2.getHeight();
+        double right2 = r2.getX() + r2.getWidth();
+//        if (!r1.intersects(r2)) {
+//             return 0;
+//        } else {
+//            if ()
+//        }
+        return 0;
     }
 
-    // MODIFIES: this
-    // EFFECTS: simulates gravity and pulls all characters to the ground
-    public void refresh(double gravity) {
-        if (this.dy != 0) {
-            this.dy += gravity;
-        }
-    }
 
     // EFFECT: returns true if hp <= 0
     public boolean isDead() {
@@ -79,6 +70,14 @@ public abstract class Character extends Block implements Writable {
 
     public void setDy(double dy) {
         this.dy = dy;
+    }
+
+    public double getDy() {
+        return this.dy;
+    }
+
+    public int getDx() {
+        return this.dx;
     }
 
     public boolean getIsRight() {

@@ -1,8 +1,6 @@
 package model;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.FileInputStream;
 
 public class Brick extends Block {
 
@@ -10,15 +8,43 @@ public class Brick extends Block {
     public Brick(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
+        this.width = 16;
+        this.height = 16;
         loadImg();
-        makeBound();
+        makeHitBox();
     }
 
     // MODIFIES: this
     // EFFECTS: set the bound
     @Override
-    public void makeBound() {
-        this.bound = new Rectangle(this.cx, this.cy, scale * 16, scale * 16);
+    public void makeHitBox() {
+        this.hitBox = new Rectangle(this.cx, this.cy,
+                scale * width, scale * height);
+    }
+
+    @Override
+    public Rectangle getLeftBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle(getCx(), getCy(), 6, (int) hitBox.getHeight());
+    }
+
+    @Override
+    public Rectangle getRightBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle(getCx() + 8, getCy(), 6, (int) hitBox.getHeight());
+    }
+
+    @Override
+    public Rectangle getTopBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle(getCx() + 6, getCy(), 2, (int) (hitBox.getHeight() / 2));
+    }
+
+    @Override
+    public Rectangle getBottomBox() {
+        Rectangle hitBox = getHitBox();
+        return new Rectangle(getCx() + 6, (int) (getCy() + hitBox.getHeight() / 2),
+                2, (int) (hitBox.getHeight() / 2));
     }
 
     // MODIFIES: this

@@ -10,14 +10,16 @@ import java.io.FileInputStream;
 public abstract class Block {
     protected BufferedImage img;
 
-    protected Rectangle bound;
+    protected Rectangle hitBox;
     protected int scale = GraphicsGame.SCALE;
 
     protected int cx;
     protected int cy;
+    protected int width;
+    protected int height;
     protected int hp;
 
-    public abstract void makeBound();
+    public abstract void makeHitBox();
 
     public int getCx() {
         return cx;
@@ -47,7 +49,16 @@ public abstract class Block {
         }
     }
 
-    public Rectangle getBound() {
-        return bound;
+    public Rectangle getHitBox() {
+        makeHitBox();
+        return hitBox;
     }
+
+    public abstract Rectangle getLeftBox();
+
+    public abstract Rectangle getRightBox();
+
+    public abstract Rectangle getTopBox();
+
+    public abstract Rectangle getBottomBox();
 }
