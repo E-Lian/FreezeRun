@@ -1,6 +1,6 @@
 package model;
 
-import java.lang.reflect.Array;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import static model.Game.GRAVITY;
@@ -8,15 +8,19 @@ import static ui.GraphicsGame.BLOCK_SIZE;
 
 public class CollisionChecker {
 
+    // EFFECTS: returns true if given enemy collides with given player
+    public boolean checkEnemyPlayerCollision(Enemy e, Player p) {
+        return e.getHitBox().intersects(p.getHitBox());
+    }
 
     // EFFECTS: returns true if given enemy is colliding with any one of the fireballs
-    public boolean checkEnemyFireballCollsion(Enemy e, ArrayList<Fireball> fireballs) {
+    public Fireball checkEnemyFireballCollsion(Enemy e, ArrayList<Fireball> fireballs) {
         for (Fireball f: fireballs) {
             if (f.getHitBox().intersects(e.getHitBox())) {
-                return true;
+                return f;
             }
         }
-        return false;
+        return null;
     }
 
     // MODIFIES: c
@@ -75,5 +79,15 @@ public class CollisionChecker {
             c.setDx(0);
             c.setCx(block.getCx() + BLOCK_SIZE - (c.getHitBox().x - c.getCx()));
         }
+    }
+
+    // EFFECTS: returns true if fireball touch any blocks, false otherwise
+    public boolean checkFireballBlocksCollision(Fireball f, ArrayList<Block> blocks) {
+        for (Block block: blocks) {
+            if (f.getHitBox().intersects(block.getHitBox())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

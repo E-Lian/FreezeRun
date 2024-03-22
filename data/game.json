@@ -3,18 +3,22 @@
     "frozen": false,
     "ground": 448,
     "enemies": [{
+        "falling": false,
         "isRight": true,
         "dx": 1,
-        "cx": 35,
+        "jumping": false,
+        "cx": 246,
         "dy": 0,
-        "cy": 22,
+        "cy": 160,
         "hp": 1
     }],
     "fireballs": [],
     "player": {
+        "falling": false,
         "isRight": true,
         "dx": 0,
-        "cx": 116,
+        "jumping": false,
+        "cx": 198,
         "dy": 0,
         "cy": 448,
         "hp": 3

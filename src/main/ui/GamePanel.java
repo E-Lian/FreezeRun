@@ -119,30 +119,7 @@ public class GamePanel extends JPanel {
         g.drawString(str, (SCREEN_WIDTH - width) / 2, y);
     }
 
-    public void saveGame(JsonWriter writer) {
-        try {
-            writer.open();
-            writer.write(this.game);
-            writer.close();
-            System.out.println("Saved game");
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write file");
-        } catch (IllegalStateException ended) {
-            System.out.println("Cannot save an ended game!");
-        }
-    }
-
-    public void loadGame(JsonReader reader) {
-        try {
-            this.game = reader.read();
-            this.gg.setGame(this.game);
-            System.out.println("Loaded game");
-        } catch (IOException e) {
-            System.out.println("Unable to read");
-        }
-    }
-
-    public Game getGame() {
-        return this.game;
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

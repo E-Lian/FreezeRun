@@ -84,6 +84,32 @@ public class GraphicsGame extends JFrame {
         this.game = g;
     }
 
+    // EFFECTS: reads the current game to a file
+    public void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this.game);
+            jsonWriter.close();
+            System.out.println("Saved game");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write file");
+        } catch (IllegalStateException ended) {
+            System.out.println("Cannot save an ended game!");
+        }
+    }
+
+    // MODIFIES: game, gp
+    // EFFECTS: load game from file
+    public void loadGame() {
+        try {
+            this.setGame(jsonReader.read());
+            this.gp.setGame(this.game);
+            System.out.println("Loaded game");
+        } catch (IOException e) {
+            System.out.println("Unable to read");
+        }
+    }
+
     /*
      * A key handler to respond to key events
      */
@@ -127,15 +153,13 @@ public class GraphicsGame extends JFrame {
                 game.pause();
             }
             if (keyCode == 10) {
-//                saveGame();
-                gp.saveGame(jsonWriter);
+                saveGame();
             }
             if (keyCode == 32) {
-//                loadGame();
-                gp.loadGame(jsonReader);
-                addTimer();
+                loadGame();
             }
         }
+
     }
 }
 

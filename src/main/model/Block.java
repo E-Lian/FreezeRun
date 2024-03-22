@@ -54,7 +54,6 @@ public abstract class Block {
         return hitBox;
     }
 
-    // TODO: change the boxes
     public Rectangle getLeftBox() {
         Rectangle hitBox = getHitBox();
         return new Rectangle((int) hitBox.x, (int) hitBox.y + hitBox.height / 4,

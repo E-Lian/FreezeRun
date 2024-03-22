@@ -158,19 +158,36 @@ public class Game implements Writable {
         checkCollisions();
     }
 
+    // TODO: player stops moving after firing
+
     // MODIFIES: this
     // EFFECTS: check all types of collisions
     public void checkCollisions() {
+        // TODO: - enemy collision with player
+        // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
+        // check enemies' collisions with blocks and fireballs
         // TODO: enemy is not falling naturally
         for (int i = 0; i < enemies.size(); i++) {
-            if (collisionChecker.checkEnemyFireballCollsion(enemies.get(i), fireballs)) {
+            Fireball f = collisionChecker.checkEnemyFireballCollsion(enemies.get(i), fireballs);
+            if (f != null) {
                 enemies.remove(i);
                 i--;
+                fireballs.remove(f);
+            } else if (collisionChecker.checkEnemyPlayerCollision(enemies.get(i), getPlayer())) {
+                player.decreasePlayerHp();
             } else {
                 collisionChecker.checkBlockCollision(enemies.get(i), blocks);
             }
         }
+        // check fireballs' collisions with blocks
+        for (int i = 0; i < fireballs.size(); i++) {
+            if (collisionChecker.checkFireballBlocksCollision(fireballs.get(i), blocks)) {
+                fireballs.remove(i);
+                i--;
+            }
+        }
+
     }
 
     public BufferedImage getPlayerImage() {

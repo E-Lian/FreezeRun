@@ -23,6 +23,7 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: make the player jump if applicable
     public void jump() {
+        // TODO: player can't jump
         if (!isJumping() && !isFalling()) {
             setJumping(true);
             setDy(jumpStrength);
@@ -51,6 +52,10 @@ public class Player extends Character {
     public void makeHitBox() {
         this.hitBox = new Rectangle(this.cx + scale * 4, this.cy + scale,
                 width * scale, height * scale);
+    }
+
+    public void decreasePlayerHp() {
+        this.hp--;
     }
 
 }
