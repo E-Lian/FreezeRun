@@ -17,7 +17,7 @@ public class Game implements Writable {
     // TODO: lots of stuff to tinker here
     private int maxX;
     private int ground;
-    public static final double GRAVITY = 0.5;
+    public static final double GRAVITY = 1.2;
 
     private ArrayList<Block> blocks;
 
@@ -130,6 +130,8 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
+        // check for collisions
+        checkCollisions();
         // update Characters
         player.update(maxX, ground, GRAVITY);
         player.setDx(0);
@@ -154,8 +156,7 @@ public class Game implements Writable {
         }
 
 
-        // check for collisions
-        checkCollisions();
+
     }
 
     // TODO: player stops moving after firing

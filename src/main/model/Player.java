@@ -5,7 +5,7 @@ import java.awt.*;
 // represents the Player in the game
 public class Player extends Character {
     final int playerHP = 3;
-    final double jumpStrength = 16;
+    final double jumpStrength = 20;
 
     // EFFECTS: instantiate a Player at set position, standing still, facing right, with desired hp
     public Player(int cx, int cy) {
@@ -23,10 +23,9 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: make the player jump if applicable
     public void jump() {
-        // TODO: player can't jump
         if (!isJumping() && !isFalling()) {
             setJumping(true);
-            setDy(jumpStrength);
+            setDy(-jumpStrength);
         }
     }
 

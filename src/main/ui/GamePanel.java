@@ -20,13 +20,11 @@ import static ui.GraphicsGame.*;
 public class GamePanel extends JPanel {
 
     private Game game;
-    private GraphicsGame gg;
 
-    public GamePanel(Game g, GraphicsGame gg) {
+    public GamePanel(Game g) {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setBackground(Color.DARK_GRAY);
         this.game = g;
-        this.gg = gg;
     }
 
     @Override
