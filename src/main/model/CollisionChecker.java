@@ -14,7 +14,7 @@ public class CollisionChecker {
     }
 
     // EFFECTS: returns the fireball that collides with given enemy, if any, otherwise returns null
-    public Fireball checkEnemyFireballCollsion(Enemy e, ArrayList<Fireball> fireballs) {
+    public Fireball checkEnemyFireballCollision(Enemy e, ArrayList<Fireball> fireballs) {
         for (Fireball f : fireballs) {
             if (f.getHitBox().intersects(e.getHitBox())) {
                 return f;
@@ -72,9 +72,8 @@ public class CollisionChecker {
         }
 
         if (c.getRightBox().intersects(block.getLeftBox())) {
-            // TODO: setCx needs to be fixed
             c.setDx(0);
-            c.setCx((int) (block.getCx() - BLOCK_SIZE + c.getCx() - (c.getHitBox().getX() + c.getHitBox().width)));
+            c.setCx((int) (block.getCx() + c.getCx() - c.getRightBox().getX() - c.getRightBox().getWidth()));
         } else if (c.getLeftBox().intersects(block.getRightBox())) {
             c.setDx(0);
             c.setCx(block.getCx() + BLOCK_SIZE - (c.getHitBox().x - c.getCx()));
