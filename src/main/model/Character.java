@@ -5,7 +5,7 @@ import persistence.Writable;
 
 import java.awt.*;
 
-// represents blocks in game that can move and have some animation
+// represents objects in game that can move and have some animation
 public abstract class Character extends Block implements Writable {
 
     // dx: negative - left
@@ -17,6 +17,7 @@ public abstract class Character extends Block implements Writable {
     protected boolean isRight;
     protected boolean jumping = false;
     protected boolean falling = true;
+    protected int hp;
 
     // EFFECTS: returns current fields as a JSONObject
     @Override
@@ -34,8 +35,8 @@ public abstract class Character extends Block implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECT: move the character by its dx and dy
-    public void update(int maxX, int maxY, double gravity) {
+    // EFFECT: move the character by its dx and dy, make the character fall if applicable
+    public void update(double gravity) {
         if (jumping && dy <= 0) {
             jumping = false;
             falling = true;

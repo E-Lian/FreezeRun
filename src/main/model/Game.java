@@ -7,14 +7,11 @@ import persistence.Writable;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static ui.GraphicsGame.*;
-
 // manages the inside of the game, changing and updating information
 // Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class Game implements Writable {
 
     public static final int TICKS_PER_SECOND = 30;
-    // TODO: lots of stuff to tinker here
     private int maxX;
     private int ground;
     public static final double GRAVITY = 1.2;
@@ -22,13 +19,11 @@ public class Game implements Writable {
     private ArrayList<Block> blocks;
 
     private Player player;
-    private static final int PLAYER_INIT_X = BLOCK_SIZE;
-    private static final int PLAYER_INIT_Y = SCREEN_HEIGHT - 2 * BLOCK_SIZE;
     private static final int PLAYER_SPEED = 2;
 
     // temp enemy variables for Phase 1
     private ArrayList<Enemy> enemies;
-    private static final int ENEMY_SPEED = 1;
+    public static final int ENEMY_SPEED = 1;
     private static final int ENEMY_MAX_X = 70;
 
     private ArrayList<Fireball> fireballs;
@@ -45,15 +40,13 @@ public class Game implements Writable {
     public Game(int maxX, int ground) {
         this.maxX = maxX;
         this.ground = ground;
-        this.player = new Player(PLAYER_INIT_X, PLAYER_INIT_Y);
         this.enemies = new ArrayList<Enemy>();
-        this.enemies.add(new Enemy(50, 22, ENEMY_SPEED, 0));
         this.fireballs = new ArrayList<Fireball>();
         this.frozen = false;
         this.paused = false;
         this.ended = false;
         this.collisionChecker = new CollisionChecker();
-        Level level = new Level();
+        Level level = new Level(this);
         this.blocks = level.realizeMap();
     }
 
@@ -103,7 +96,6 @@ public class Game implements Writable {
         }
     }
 
-    // REQUIRES: player.dy == 0
     // MODIFIES: player
     // EFFECTS: make the player jump
     public void playerJump() {
@@ -113,7 +105,6 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: create new Fireball and add it to fireballs
     public void playerFire() {
-        // store the Fireball created by Player and empty the enemies list
         this.fireballs.add(player.fire());
     }
 
@@ -133,7 +124,7 @@ public class Game implements Writable {
         // check for collisions
         checkCollisions();
         // update Characters
-        player.update(maxX, ground, GRAVITY);
+        player.update(GRAVITY);
         player.setDx(0);
 
         if (isFrozen()) {
@@ -144,19 +135,12 @@ public class Game implements Writable {
         }
 
         for (Enemy e : enemies) {
-            e.update(ENEMY_MAX_X, ground, GRAVITY);
+            e.update(GRAVITY);
         }
 
-        for (int i = 0; i < fireballs.size(); i++) {
-            fireballs.get(i).update(maxX);
-            if (fireballs.get(i).isOutOfBound()) {
-                fireballs.remove(i);
-                i--;
-            }
+        for (Fireball fireball : fireballs) {
+            fireball.update();
         }
-
-
-
     }
 
     // TODO: player stops moving after firing
@@ -165,9 +149,11 @@ public class Game implements Writable {
     // EFFECTS: check all types of collisions
     public void checkCollisions() {
         // TODO: - enemy collision with player
+        //  - player collision with fireballs
+
         // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
-        // check enemies' collisions with blocks and fireballs
+        // check enemies' collisions with fireballs, player, and blocks
         // TODO: enemy is not falling naturally
         for (int i = 0; i < enemies.size(); i++) {
             Fireball f = collisionChecker.checkEnemyFireballCollsion(enemies.get(i), fireballs);
@@ -267,7 +253,7 @@ public class Game implements Writable {
         return blocks;
     }
 
-    // TODO: delete later
+    // TODO: used for testing, delete later
     public Player getPlayer() {
         return player;
     }

@@ -1,11 +1,11 @@
 package model;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 import static model.Game.GRAVITY;
 import static ui.GraphicsGame.BLOCK_SIZE;
 
+// a tool for checking collision between different objects
 public class CollisionChecker {
 
     // EFFECTS: returns true if given enemy collides with given player
@@ -13,9 +13,9 @@ public class CollisionChecker {
         return e.getHitBox().intersects(p.getHitBox());
     }
 
-    // EFFECTS: returns true if given enemy is colliding with any one of the fireballs
+    // EFFECTS: returns the fireball that collides with given enemy, if any, otherwise returns null
     public Fireball checkEnemyFireballCollsion(Enemy e, ArrayList<Fireball> fireballs) {
-        for (Fireball f: fireballs) {
+        for (Fireball f : fireballs) {
             if (f.getHitBox().intersects(e.getHitBox())) {
                 return f;
             }
@@ -83,7 +83,7 @@ public class CollisionChecker {
 
     // EFFECTS: returns true if fireball touch any blocks, false otherwise
     public boolean checkFireballBlocksCollision(Fireball f, ArrayList<Block> blocks) {
-        for (Block block: blocks) {
+        for (Block block : blocks) {
             if (f.getHitBox().intersects(block.getHitBox())) {
                 return true;
             }

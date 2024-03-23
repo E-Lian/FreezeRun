@@ -3,16 +3,19 @@ package model;
 import ui.GamePanel;
 import ui.GraphicsGame;
 
-import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static model.Game.ENEMY_SPEED;
+
+// represents a level in game
 public class Level {
+    private Game game;
     private int[][] map;
 
-    public Level() {
+    public Level(Game game) {
+        this.game = game;
         map = new int[GraphicsGame.row][GraphicsGame.col];
         loadMap();
     }
@@ -39,7 +42,8 @@ public class Level {
         }
     }
 
-    // EFFECTS: make blocks based on the map
+    // MODIFIES: game
+    // EFFECTS: returns a list containing all blocks in this map
     public ArrayList<Block> realizeMap() {
         int x = 0;
         int y = 0;
@@ -48,8 +52,15 @@ public class Level {
 
         for (int[] ints : map) {
             for (int block : ints) {
-                if (block == 1) {
-                    blocks.add(new Brick(x, y));
+                switch (block) {
+                    case 1:
+                        blocks.add(new Brick(x, y));
+                        break;
+                    case 9:
+                        this.game.setPlayer(new Player(x, y));
+                        break;
+                    case 8:
+                        this.game.addEnemy(new Enemy(x, y, ENEMY_SPEED, 0));
                 }
                 x += GraphicsGame.BLOCK_SIZE;
             }

@@ -2,14 +2,17 @@ package model;
 
 import java.awt.*;
 
+import static ui.GraphicsGame.BLOCK_SIZE;
+
+// represents a brick in game, used as obstacles and platforms
 public class Brick extends Block {
 
     // EFFECTS: instantiate a Brick, load img and set bound
     public Brick(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
-        this.width = 16;
-        this.height = 16;
+        this.width = BLOCK_SIZE;
+        this.height = BLOCK_SIZE;
         loadImg();
         makeHitBox();
     }
@@ -19,7 +22,7 @@ public class Brick extends Block {
     @Override
     public void makeHitBox() {
         this.hitBox = new Rectangle(this.cx, this.cy,
-                scale * width, scale * height);
+                width, height);
     }
 
     // MODIFIES: this

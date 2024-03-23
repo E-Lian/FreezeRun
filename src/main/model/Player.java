@@ -46,13 +46,15 @@ public class Player extends Character {
     }
 
     // MODIFIES: this
-    // EFFECTS: set the bound
+    // EFFECTS: make player's hitbox
     @Override
     public void makeHitBox() {
         this.hitBox = new Rectangle(this.cx + scale * 4, this.cy + scale,
                 width * scale, height * scale);
     }
 
+    // MODIFIES: this
+    // EFFECTS: decrease hp by 1
     public void decreasePlayerHp() {
         this.hp--;
     }

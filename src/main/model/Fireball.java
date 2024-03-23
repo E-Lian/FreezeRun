@@ -5,15 +5,13 @@ import persistence.Writable;
 
 import java.awt.*;
 
-// a fireball shot by the player
+// represents a fireball shot by the player
 public class Fireball extends Block implements Writable {
 
     private int cx;
     private final int cy;
     private final boolean isRight;
     private final int speed;
-    private boolean hit;
-    private boolean outOfBound;
 
     private static final int SPEED = 1;
 
@@ -29,8 +27,6 @@ public class Fireball extends Block implements Writable {
         } else {
             this.speed = SPEED;
         }
-        this.hit = false;
-        this.outOfBound = false;
         loadImg();
     }
 
@@ -45,25 +41,15 @@ public class Fireball extends Block implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: update the bullet, detect if it hits bounds
-    public void update(int maxX) {
-        move();
-        if (getCx() <= 0 || getCx() >= maxX) {
-            outOfBound = true;
-        }
+    // EFFECTS: move the fireball
+    public void update() {
+        this.cx += this.speed;
     }
 
     // MODIFIES: this
     // EFFECTS: load fireball image
     protected void loadImg() {
         super.loadImg("./data/img/fireball/fireball1.png");
-    }
-
-    // REQUIRES: !isOutOfBound()
-    // MODIFIES: this
-    // EFFECTS: move the bullet
-    public void move() {
-        this.cx += this.speed;
     }
 
     // MODIFIES: this
@@ -80,34 +66,6 @@ public class Fireball extends Block implements Writable {
 
     public int getCy() {
         return cy;
-    }
-
-    @Override
-    public Rectangle getLeftBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getRightBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getTopBox() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getBottomBox() {
-        return null;
-    }
-
-    public boolean isHit() {
-        return hit;
-    }
-
-    public boolean isOutOfBound() {
-        return outOfBound;
     }
 
     public boolean getIsRight() {

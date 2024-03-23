@@ -7,15 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ui.GamePanel;
 
+import java.util.ArrayList;
+
 public class LevelTest {
     public Level level;
-    public GamePanel gp;
     public Game g;
 
     @BeforeEach
     public void setup() {
+        g = new Game(480, 448);
         try {
-            level = new Level();
+            level = new Level(g);
         } catch (Exception e) {
             fail();
         }
@@ -26,12 +28,10 @@ public class LevelTest {
         try {
             level.loadMap();
             int[][] map = level.getMap();
-            for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[i].length; j++) {
-                    if (i == 0 || i == map.length - 1 || j == 0 || j == map[i].length - 1) {
-                        assertEquals(1, map[i][j]); // edges have to be 1
-                    } else {
-                        assertEquals(0, map[i][j]);
+            for (int[] ints : map) {
+                for (int i : ints) {
+                    if (i != 0 && i != 1 && i != 8 && i != 9) {
+                        fail("file loaded incorrectly");
                     }
                 }
             }
@@ -41,5 +41,12 @@ public class LevelTest {
         }
     }
 
-    // TODO: finish other tests
+    @Test
+    public void testRealizeMap() {
+        ArrayList<Block> blocks = level.realizeMap();
+        assertEquals(73, blocks.size());
+        Player testPlayer = g.getPlayer();
+        assertEquals(64, testPlayer.getCx());
+        assertEquals(448, testPlayer.getCy());
+    }
 }
