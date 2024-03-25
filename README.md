@@ -2,9 +2,9 @@
 
 ## Description
 
-This will be a 2D platformer game where the protagonist (played by the player)
-needs to beat the boss and save their friend. Like most main characters, the protagonist
-has a superpower: chronostasis, the power to ***freeze the time***.
+This will be a 2D platformer game which the hero
+has a superpower: chronostasis, the power to ***freeze the time***. There's no story in the game because
+one, I don't have the time (due to MATH 101), and two, not every game has to have a story
 
 Unlike most main characters, their power is so weak that they can only stop time for 3 seconds.
 The player needs to use their new found superpower and intelligence to get pass the boss's
