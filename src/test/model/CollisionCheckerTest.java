@@ -84,7 +84,7 @@ public class CollisionCheckerTest {
         checker.checkBlockCollision(player, blocks);
         assertFalse(player.isFalling());
         assertEquals(0, player.getDy());
-        assertEquals(90 - BLOCK_SIZE, player.getCy());
+        assertEquals(90 - BLOCK_SIZE + 1, player.getCy());
         assertEquals(50, player.getCx());
     }
 
@@ -95,8 +95,7 @@ public class CollisionCheckerTest {
         blocks.add(new Brick(50, 35));
         checker.checkBlockCollision(player, blocks);
         assertTrue(player.isFalling());
-        assertFalse(player.isJumping());
-        assertEquals(GRAVITY, player.getDy());
+        assertEquals(0, player.getDy());
         assertEquals(35 + BLOCK_SIZE, player.getCy());
         assertEquals(50, player.getCx());
     }
@@ -131,8 +130,7 @@ public class CollisionCheckerTest {
         blocks.add(new Brick(40, 35));
         checker.checkBlockCollision(player, blocks);
         assertTrue(player.isFalling());
-        assertFalse(player.isJumping());
-        assertEquals(GRAVITY, player.getDy());
+        assertEquals(0, player.getDy());
         assertEquals(50, player.getCx());
         assertEquals(35 + BLOCK_SIZE, player.getCy());
     }
@@ -149,7 +147,7 @@ public class CollisionCheckerTest {
         assertEquals(50, player.getCx());
         assertFalse(player.isFalling());
         assertEquals(0, player.getDy());
-        assertEquals(80 - BLOCK_SIZE, player.getCy());
+        assertEquals(80 - BLOCK_SIZE + 1, player.getCy());
     }
 
     // no collision

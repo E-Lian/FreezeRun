@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static model.Game.GRAVITY;
@@ -26,57 +27,62 @@ public class CollisionChecker {
     // MODIFIES: c
     // EFFECTS: check for collision with solid blocks, reset dx/dy and cx/cy if character does collide with block
     public void checkBlockCollision(Character c, ArrayList<Block> blocks) {
-        for (Block block : blocks) {
-            if (c.getHitBox().intersects(block.getHitBox())) {
-                checkBottomCollision(c, block);
-                checkTopCollision(c, block);
-                checkHorizontalCollision(c, block);
-            }
+        checkBottomCollision(c, blocks);
+        checkTopCollision(c, blocks);
+        checkHorizontalCollision(c, blocks);
+        if (c instanceof Player) {
+            System.out.println("jumping: " + c.isJumping() + "  falling: " + c.isFalling());
+
         }
     }
 
     // MODIFIES: c
-    // EFFECTS: set c.dy to 0 and correct c.cy if its bottom hits the block's top
-    private void checkBottomCollision(Character c, Block block) {
+    // EFFECTS: set c.dy to 0 and correct c.cy if its bottom hits any block's top
+    private void checkBottomCollision(Character c, ArrayList<Block> blocks) {
         if (!c.isJumping()) {
             c.setFalling(true);
         }
 
-        if (c.getBottomBox().intersects(block.getTopBox())) {
-            c.setDy(0);
-            c.setCy(block.getCy() - BLOCK_SIZE);
-            c.setFalling(false);
-        }
-    }
-
-    // MODIFIES: c
-    // EFFECTS: set c.dy to gravity and correct c.cy if its top hits the block's bottom
-    private void checkTopCollision(Character c, Block block) {
-        if (c.getTopBox().intersects(block.getBottomBox())) {
-            c.setDy(GRAVITY);
-            c.setCy(block.getCy() + BLOCK_SIZE);
-            c.setFalling(true);
-            c.setJumping(false);
-        }
-    }
-
-    // MODIFIES: c
-    // EFFECTS: set c.dx to 0 and correct c.cx if its left/right box hits the block's left/right box
-    // if c is an Enemy, then simply reverse its dx direction
-    private void checkHorizontalCollision(Character c, Block block) {
-        if (c instanceof Enemy) {
-            if (c.getRightBox().intersects(block.getLeftBox()) || c.getLeftBox().intersects(block.getRightBox())) {
-                c.setDx(-c.getDx());
-                return;
+        for (Block block : blocks) {
+            Rectangle blockTopBox = block.getTopBox();
+            if (c.getBottomBox().intersects(blockTopBox)) {
+                c.setCy(block.getCy() - BLOCK_SIZE + 1);
+                c.setFalling(false);
+                c.setDy(0);
             }
         }
+    }
 
-        if (c.getRightBox().intersects(block.getLeftBox())) {
-            c.setDx(0);
-            c.setCx((int) (block.getCx() + c.getCx() - c.getRightBox().getX() - c.getRightBox().getWidth()));
-        } else if (c.getLeftBox().intersects(block.getRightBox())) {
-            c.setDx(0);
-            c.setCx(block.getCx() + BLOCK_SIZE - (c.getHitBox().x - c.getCx()));
+    // MODIFIES: c
+    // EFFECTS: set c.dy to gravity and correct c.cy if its top hits any block's bottom
+    private void checkTopCollision(Character c, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            Rectangle blockBottomBox = block.getBottomBox();
+            if (c.getTopBox().intersects(blockBottomBox)) {
+                c.setDy(0);
+                c.setCy(block.getCy() + BLOCK_SIZE);
+            }
+        }
+    }
+
+    // MODIFIES: c
+    // EFFECTS: set c.dx to 0 and correct c.cx if its left/right box hits any block's left/right box
+    // if c is an Enemy, then simply reverse its dx direction
+    private void checkHorizontalCollision(Character c, ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            if (c instanceof Enemy) {
+                if (c.getRightBox().intersects(block.getLeftBox()) || c.getLeftBox().intersects(block.getRightBox())) {
+                    c.setDx(-c.getDx());
+                    return;
+                }
+            }
+            if (c.getRightBox().intersects(block.getLeftBox())) {
+                c.setDx(0);
+                c.setCx((int) (block.getCx() + c.getCx() - c.getRightBox().getX() - c.getRightBox().getWidth()));
+            } else if (c.getLeftBox().intersects(block.getRightBox())) {
+                c.setDx(0);
+                c.setCx(block.getCx() + BLOCK_SIZE - (c.getHitBox().x - c.getCx()));
+            }
         }
     }
 
