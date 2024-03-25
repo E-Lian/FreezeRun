@@ -10,6 +10,7 @@ import java.util.ArrayList;
 // manages the inside of the game, changing and updating information
 // Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class Game implements Writable {
+    // TODO: - player save when game has ended
 
     public static final int TICKS_PER_SECOND = 30;
     private int maxX;
@@ -19,7 +20,7 @@ public class Game implements Writable {
     private ArrayList<Block> blocks;
 
     private Player player;
-    private static final int PLAYER_SPEED = 2;
+    private static final int PLAYER_SPEED = 4;
 
     // temp enemy variables for Phase 1
     private ArrayList<Enemy> enemies;
@@ -105,7 +106,7 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: create new Fireball and add it to fireballs
     public void playerFire() {
-        this.fireballs.add(player.fire());
+        addFireball(player.fire());
     }
 
     // REQUIRES: System.currentTimeMillis() - timeOfFreeze > 80000
@@ -121,8 +122,6 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
-        // check for collisions
-        checkCollisions();
         // update Characters
         player.update(GRAVITY);
         player.setDx(0);
@@ -141,6 +140,9 @@ public class Game implements Writable {
         for (Fireball fireball : fireballs) {
             fireball.update();
         }
+
+        // check for collisions
+        checkCollisions();
     }
 
     // TODO: player stops moving after firing
@@ -154,18 +156,18 @@ public class Game implements Writable {
         // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
         // check enemies' collisions with fireballs, player, and blocks
-        // TODO: enemy is not falling naturally
         for (int i = 0; i < enemies.size(); i++) {
-            Fireball f = collisionChecker.checkEnemyFireballCollsion(enemies.get(i), fireballs);
+            Fireball f = collisionChecker.checkEnemyFireballCollision(enemies.get(i), fireballs);
             if (f != null) {
                 enemies.remove(i);
                 i--;
                 fireballs.remove(f);
-            } else if (collisionChecker.checkEnemyPlayerCollision(enemies.get(i), getPlayer())) {
-                player.decreasePlayerHp();
-            } else {
-                collisionChecker.checkBlockCollision(enemies.get(i), blocks);
             }
+            if (collisionChecker.checkEnemyPlayerCollision(enemies.get(i), getPlayer())) {
+                player.decreasePlayerHp();
+            }
+            collisionChecker.checkBlockCollision(enemies.get(i), blocks);
+
         }
         // check fireballs' collisions with blocks
         for (int i = 0; i < fireballs.size(); i++) {
@@ -174,11 +176,6 @@ public class Game implements Writable {
                 i--;
             }
         }
-
-    }
-
-    public BufferedImage getPlayerImage() {
-        return this.player.getImg();
     }
 
     // MODIFIES: this
@@ -239,6 +236,10 @@ public class Game implements Writable {
 
     public boolean isEnded() {
         return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 
     public boolean isFrozen() {

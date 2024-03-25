@@ -9,7 +9,7 @@ public class Enemy extends Character {
         this.cx = cx;
         this.cy = cy;
         this.width = 14;
-        this.height = 9;
+        this.height = 15;
         this.dx = dx;
         this.dy = dy;
         this.hp = 1;

@@ -40,11 +40,6 @@ public class Player extends Character {
         return new Fireball(getCx(), getCy(), getIsRight());
     }
 
-
-    public double getPlayerDy() {
-        return this.dy;
-    }
-
     // MODIFIES: this
     // EFFECTS: make player's hitbox
     @Override

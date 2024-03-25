@@ -7,20 +7,24 @@
         "isRight": true,
         "dx": 1,
         "jumping": false,
-        "cx": 246,
+        "cx": 115,
         "dy": 0,
-        "cy": 160,
+        "cy": 161,
         "hp": 1
     }],
-    "fireballs": [],
+    "fireballs": [{
+        "isRight": true,
+        "cx": 120,
+        "cy": 449
+    }],
     "player": {
         "falling": false,
         "isRight": true,
         "dx": 0,
         "jumping": false,
-        "cx": 198,
+        "cx": 64,
         "dy": 0,
-        "cy": 448,
+        "cy": 449,
         "hp": 3
     }
 }

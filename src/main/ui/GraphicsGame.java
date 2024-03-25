@@ -28,7 +28,7 @@ public class GraphicsGame extends JFrame {
     public static final int SCREEN_HEIGHT = BLOCK_SIZE * col;
 
 
-    private static final int INTERVAL = 10;
+    private static final int INTERVAL = 25;
     private Game game;
     private GamePanel gp;
 
@@ -104,6 +104,7 @@ public class GraphicsGame extends JFrame {
         try {
             this.setGame(jsonReader.read());
             this.gp.setGame(this.game);
+            this.game.load();
             System.out.println("Loaded game");
         } catch (IOException e) {
             System.out.println("Unable to read");

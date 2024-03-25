@@ -33,8 +33,8 @@ public class BlockTest {
     }
 
     @Test
-    public void testImgMethods() {
-        // TODO: test getImg and loadImg
+    public void testGetImg() {
+        assertEquals(16, block.getImg().getHeight());
     }
 
     @Test

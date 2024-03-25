@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static ui.GraphicsGame.BLOCK_SIZE;
 
 public class BrickTest {
-    // TODO: finish tests for Brick
     public Brick brick;
 
     @BeforeEach
@@ -24,10 +23,5 @@ public class BrickTest {
         assertEquals(0, hitBox.getY());
         assertEquals(BLOCK_SIZE, hitBox.getWidth());
         assertEquals(BLOCK_SIZE, hitBox.getHeight());
-    }
-
-    @Test
-    public void testLoadImg() {
-        // TODO: test loadImg
     }
 }

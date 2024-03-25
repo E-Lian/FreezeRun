@@ -41,21 +41,21 @@ public abstract class Character extends Block implements Writable {
             jumping = false;
             falling = true;
         } else if (jumping) {
-            dy = dy - gravity;
-            cy += dy;
+            dy -= gravity;
+            cy -= dy;
         }
 
         if (falling) {
             cy += dy;
-            dy += gravity;
+            dy = dy + gravity;
         }
 
         cx += dx;
 
-        if (this.dx < 0) {
-            this.isRight = false;
-        } else if (this.dx > 0) {
-            this.isRight = true;
+        if (dx < 0) {
+            setIsRight(false);
+        } else if (dx > 0) {
+            setIsRight(true);
         }
     }
 

@@ -57,7 +57,7 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the player onto g
     private void drawPlayer(Graphics g) {
-        BufferedImage playerImg = this.game.getPlayerImage();
+        BufferedImage playerImg = this.game.getPlayer().getImg();
         g.drawImage(playerImg, this.game.getPlayerX(), this.game.getPlayerY(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 

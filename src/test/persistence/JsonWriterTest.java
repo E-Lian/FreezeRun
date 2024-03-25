@@ -36,7 +36,7 @@ public class JsonWriterTest {
             assertEquals(448, g.getGround());
             assertFalse(g.isFrozen());
             assertEquals(2, g.getEnemies().size());
-            assertEquals(32, g.getPlayerX());
+            assertEquals(64, g.getPlayerX());
             assertEquals(448, g.getPlayerY());
             assertTrue(g.getFireballs().isEmpty());
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class JsonWriterTest {
     void testWriterNoEnemies() {
         try {
             Game g = new Game(480, 448);
-            g.playerFire();
+            g.getEnemies().clear();
             g.tick();
             assertTrue(g.getEnemies().isEmpty());
 
@@ -64,9 +64,9 @@ public class JsonWriterTest {
             assertEquals(480, g.getMaxX());
             assertEquals(448, g.getGround());
             assertFalse(g.isFrozen());
-            assertEquals(32, g.getPlayerX());
+            assertEquals(64, g.getPlayerX());
             assertEquals(448, g.getPlayerY());
-            assertFalse(g.getFireballs().isEmpty());
+            assertTrue(g.getFireballs().isEmpty());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");
         }
@@ -90,7 +90,7 @@ public class JsonWriterTest {
             assertEquals(480, g.getMaxX());
             assertEquals(448, g.getGround());
             assertTrue(g.isFrozen());
-            assertEquals(32, g.getPlayerX());
+            assertEquals(64, g.getPlayerX());
             assertEquals(448, g.getPlayerY());
             assertTrue(g.getFireballs().isEmpty());
 

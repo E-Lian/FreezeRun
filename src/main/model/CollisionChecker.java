@@ -30,10 +30,6 @@ public class CollisionChecker {
         checkBottomCollision(c, blocks);
         checkTopCollision(c, blocks);
         checkHorizontalCollision(c, blocks);
-        if (c instanceof Player) {
-            System.out.println("jumping: " + c.isJumping() + "  falling: " + c.isFalling());
-
-        }
     }
 
     // MODIFIES: c
