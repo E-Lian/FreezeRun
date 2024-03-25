@@ -127,6 +127,7 @@ public class Game implements Writable {
         player.setDx(0);
 
         if (isFrozen()) {
+            checkCollisions();
             if (System.currentTimeMillis() - timeOfFreeze >= 3000) {
                 this.frozen = false;
             }
@@ -145,16 +146,15 @@ public class Game implements Writable {
         checkCollisions();
     }
 
-    // TODO: player stops moving after firing
+    // TODO: player stops moving after pressing other keys
 
     // MODIFIES: this
     // EFFECTS: check all types of collisions
     public void checkCollisions() {
-        // TODO: - enemy collision with player
-        //  - player collision with fireballs
 
         // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
+        collisionChecker.checkBottomCollision(player, fireballs);
         // check enemies' collisions with fireballs, player, and blocks
         for (int i = 0; i < enemies.size(); i++) {
             Fireball f = collisionChecker.checkEnemyFireballCollision(enemies.get(i), fireballs);
@@ -162,12 +162,12 @@ public class Game implements Writable {
                 enemies.remove(i);
                 i--;
                 fireballs.remove(f);
+                continue;
             }
             if (collisionChecker.checkEnemyPlayerCollision(enemies.get(i), getPlayer())) {
                 player.decreasePlayerHp();
             }
             collisionChecker.checkBlockCollision(enemies.get(i), blocks);
-
         }
         // check fireballs' collisions with blocks
         for (int i = 0; i < fireballs.size(); i++) {
@@ -254,8 +254,11 @@ public class Game implements Writable {
         return blocks;
     }
 
-    // TODO: used for testing, delete later
     public Player getPlayer() {
         return player;
+    }
+
+    public int getPlayerHp() {
+        return player.playerHP;
     }
 }

@@ -32,6 +32,19 @@ public class CollisionChecker {
         checkHorizontalCollision(c, blocks);
     }
 
+    // MODIFIES: player
+    // EFFECTS: set
+    public void checkBottomCollision(Player player, ArrayList<Fireball> fireballs) {
+        for (Fireball fireball : fireballs) {
+            Rectangle blockTopBox = fireball.getTopBox();
+            if (player.getBottomBox().intersects(blockTopBox)) {
+                player.setCy(fireball.getCy() - BLOCK_SIZE + 1);
+                player.setFalling(false);
+                player.setDy(0);
+            }
+        }
+    }
+
     // MODIFIES: c
     // EFFECTS: set c.dy to 0 and correct c.cy if its bottom hits any block's top
     private void checkBottomCollision(Character c, ArrayList<Block> blocks) {
@@ -91,4 +104,5 @@ public class CollisionChecker {
         }
         return false;
     }
+
 }

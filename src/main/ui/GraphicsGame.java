@@ -122,7 +122,6 @@ public class GraphicsGame extends JFrame {
             } else {
                 handleUserInput(e.getKeyCode());
             }
-            // keyPressed is still being called and updates game normally after loading
         }
 
         // MODIFIES: game
