@@ -33,6 +33,7 @@ public class Game implements Writable {
 
     private long timeOfFreeze;
     private long timeOfFire;
+    private long timeOfHit;
 
     private int levelNum = 1;
 
@@ -128,6 +129,9 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: progress the game
     public void tick() {
+        if (getPlayerHp() <= 0) {
+            setEnded(true);
+        }
         // update Characters
         player.update(GRAVITY);
         player.setDx(0);
@@ -168,7 +172,7 @@ public class Game implements Writable {
                 continue;
             }
             if (collisionChecker.checkEnemyPlayerCollision(enemies.get(i), getPlayer())) {
-                player.decreasePlayerHp();
+                enemyHitPlayer(enemies.get(i));
             }
             collisionChecker.checkBlockCollision(enemies.get(i), blocks);
         }
@@ -177,6 +181,21 @@ public class Game implements Writable {
             if (collisionChecker.checkFireballBlocksCollision(fireballs.get(i), blocks)) {
                 fireballs.remove(i);
                 i--;
+            }
+        }
+    }
+
+    // MODIFIES: player
+    // EFFECTS: do player hit effects if it has been >= 1 sec than last time player got hit
+    private void enemyHitPlayer(Enemy enemy) {
+        if (System.currentTimeMillis() - timeOfHit >= 1000) {
+            this.timeOfHit = System.currentTimeMillis();
+            player.decreasePlayerHp();
+            playerJump();
+            if (player.getIsRight()) {
+                player.setDx(-20);
+            } else {
+                player.setDx(20);
             }
         }
     }

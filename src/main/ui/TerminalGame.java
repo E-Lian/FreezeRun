@@ -9,7 +9,9 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import model.*;
+import model.Enemy;
+import model.Fireball;
+import model.Game;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 

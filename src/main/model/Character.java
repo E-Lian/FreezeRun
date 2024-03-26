@@ -3,8 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.awt.*;
-
 // represents objects in game that can move and have some animation
 public abstract class Character extends Block implements Writable {
 

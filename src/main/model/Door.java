@@ -8,12 +8,15 @@ import static ui.GraphicsGame.BLOCK_SIZE;
 // represents a door in game
 public class Door extends Block {
 
+    private boolean open;
+
     // EFFECTS: initiates a door at given coordinates
     public Door(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
         this.width = BLOCK_SIZE;
         this.height = BLOCK_SIZE;
+        this.open = false;
         loadImg();
         makeHitBox();
     }
@@ -29,5 +32,9 @@ public class Door extends Block {
     // EFFECTS: load door image
     public void loadImg() {
         super.loadImg("./data/img/map/door_closed.png");
+    }
+
+    public boolean getOpen() {
+        return this.open;
     }
 }

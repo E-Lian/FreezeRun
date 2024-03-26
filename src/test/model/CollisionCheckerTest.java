@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static model.Game.GRAVITY;
 import static org.junit.jupiter.api.Assertions.*;
 import static ui.GraphicsGame.BLOCK_SIZE;
 

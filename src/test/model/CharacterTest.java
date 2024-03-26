@@ -4,8 +4,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterTest {

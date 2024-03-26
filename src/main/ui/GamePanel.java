@@ -8,7 +8,6 @@ import model.Game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static ui.GraphicsGame.*;
@@ -37,6 +36,11 @@ public class GamePanel extends JPanel {
         // this method isn't getting the right data
         super.paintComponent(g);
 
+        if (game.isEnded()) {
+            gameOver(g);
+            return;
+        }
+
         if (game.isPaused()) {
             drawGame(g);
             drawPauseScreen(g);
@@ -44,10 +48,6 @@ public class GamePanel extends JPanel {
             drawFrozenGame(g);
         } else {
             drawGame(g);
-        }
-
-        if (game.isEnded()) {
-            gameOver(g);
         }
     }
 
@@ -148,17 +148,14 @@ public class GamePanel extends JPanel {
         g.drawImage(fireballImg, f.getCx(), f.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 
-    // Draws the "game over" message and replay instructions
     // modifies: g
-    // effects:  draws "game over" and replay instructions onto g
+    // effects:  draws "game over" onto g
     private void gameOver(Graphics g) {
         Color saved = g.getColor();
         g.setColor(new Color(0, 0, 0));
-        g.setFont(new Font("Arial", 20, 20));
+        g.setFont(new Font(Font.DIALOG, Font.CENTER_BASELINE, 20));
         FontMetrics fm = g.getFontMetrics();
-//        centreString(OVER, g, fm, Game.HEIGHT / 2);
-//        centreString(REPLAY, g, fm, Game.HEIGHT / 2 + 50);
-        g.setColor(saved);
+        centreString("GAME OVER", g, fm, game.getGround() / 2);
     }
 
     // Centres a string on the screen

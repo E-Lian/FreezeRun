@@ -1,15 +1,17 @@
 package persistence;
 
+import model.Enemy;
+import model.Fireball;
+import model.Game;
+import model.Player;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-
-import model.*;
-import org.json.*;
-
-import static ui.GraphicsGame.*;
 
 // Reference: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads game data from JSON file

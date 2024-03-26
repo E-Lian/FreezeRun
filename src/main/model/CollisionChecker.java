@@ -3,7 +3,6 @@ package model;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static model.Game.GRAVITY;
 import static ui.GraphicsGame.BLOCK_SIZE;
 
 // a tool for checking collision between different objects

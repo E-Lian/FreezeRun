@@ -1,6 +1,6 @@
 package ui;
 
-import model.*;
+import model.Game;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,8 +66,6 @@ public class GraphicsGame extends JFrame {
                 handleActions();
                 if (!game.isPaused()) {
                     game.tick();
-                } else {
-                    actionList.clear();
                 }
                 gp.repaint();
             }
