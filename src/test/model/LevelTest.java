@@ -17,7 +17,7 @@ public class LevelTest {
     public void setup() {
         g = new Game(480, 448);
         try {
-            level = new Level(g);
+            level = new Level(g, 1);
         } catch (Exception e) {
             fail();
         }

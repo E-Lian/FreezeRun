@@ -1,10 +1,8 @@
 package model;
 
-import ui.GamePanel;
 import ui.GraphicsGame;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,9 +12,11 @@ import static model.Game.ENEMY_SPEED;
 public class Level {
     private Game game;
     private int[][] map;
+    private int levelNum;
 
-    public Level(Game game) {
+    public Level(Game game, int levelNum) {
         this.game = game;
+        this.levelNum = levelNum;
         map = new int[GraphicsGame.row][GraphicsGame.col];
         loadMap();
     }
@@ -25,7 +25,7 @@ public class Level {
     // EFFECTS: load level 1's map from its corresponding file
     public void loadMap() {
         try {
-            File file = new File("./data/maps/level1.txt");
+            File file = new File("./data/maps/level" + levelNum + ".txt");
             Scanner reader = new Scanner(file);
 
             for (int i = 0; i < map.length; i++) {

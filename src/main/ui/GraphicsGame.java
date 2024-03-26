@@ -12,6 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // represents the main window which the game is drawn and played
 // Reference: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase/
@@ -31,6 +32,7 @@ public class GraphicsGame extends JFrame {
     private static final int INTERVAL = 25;
     private Game game;
     private GamePanel gp;
+    private ArrayList<String> actionList;
 
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
@@ -45,7 +47,8 @@ public class GraphicsGame extends JFrame {
         game = new Game(SCREEN_WIDTH - BLOCK_SIZE, SCREEN_HEIGHT - 2 * BLOCK_SIZE);
         gp = new GamePanel(game);
         add(gp);
-        addKeyListener(new KeyHandler());
+        addKeyListener(new InputListener(this));
+        actionList = new ArrayList<>();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
         pack();
@@ -62,14 +65,43 @@ public class GraphicsGame extends JFrame {
         Timer t = new Timer(INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                handleActions();
                 if (!game.isPaused()) {
                     game.tick();
+                } else {
+                    actionList.clear();
                 }
                 gp.repaint();
             }
         });
 
         t.start();
+    }
+
+    // MODIFIES: game
+    // EFFECTS: execute all actions in the actionList
+    private void handleActions() {
+        for (String action : actionList) {
+            if (action.equals("pause")) {
+                game.pause();
+                actionList.clear();
+                return;
+            } else if (action.equals("walkLeft")) {
+                game.playerWalk(false);
+            } else if (action.equals("walkRight")) {
+                game.playerWalk(true);
+            } else if (action.equals("jump")) {
+                game.playerJump();
+            } else if (action.equals("freeze")) {
+                game.freeze();
+            } else if (action.equals("fire")) {
+                game.playerFire();
+            } else if (action.equals("save")) {
+                saveGame();
+            } else if (action.equals("load")) {
+                loadGame();
+            }
+        }
     }
 
     // Centres frame on desktop
@@ -111,55 +143,22 @@ public class GraphicsGame extends JFrame {
         }
     }
 
-    /*
-     * A key handler to respond to key events
-     */
-    private class KeyHandler extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (game.isPaused()) {
-                handleUserInputPaused(e.getKeyCode());
-            } else {
-                handleUserInput(e.getKeyCode());
-            }
+    // MODIFIES: this
+    // EFFECTS: adds the given action to the actionList
+    public void addToActionList(String action) {
+        if (!actionList.contains(action)) {
+            actionList.add(action);
         }
+    }
 
-        // MODIFIES: game
-        // EFFECTS: handles user input
-        public void handleUserInput(int keyCode) {
-            if (keyCode == 27) {
-                game.pause();
-                return;
-            }
-            if (keyCode == 65 || keyCode == 68) {
-                game.playerWalk(keyCode == 68);
-            }
-            if (keyCode == 87) {
-                game.playerJump();
-            }
-            if (keyCode == 70) {
-                game.freeze();
-            }
-            if (keyCode == 32) {
-                game.playerFire();
-            }
-        }
+    // MODIFIES: this
+    // EFFECTS: removes the given action from the actionList
+    public void removeFromActionList(String action) {
+        actionList.remove(action);
+    }
 
-
-        // MODIFIES: game
-        // EFFECTS: same as keyPressed, but behaves slightly differently since game is on pause
-        public void handleUserInputPaused(int keyCode) {
-            if (keyCode == 27) {
-                game.pause();
-            }
-            if (keyCode == 10) {
-                saveGame();
-            }
-            if (keyCode == 32) {
-                loadGame();
-            }
-        }
-
+    public Game getGame() {
+        return game;
     }
 }
 

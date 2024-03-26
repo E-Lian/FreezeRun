@@ -32,6 +32,9 @@ public class Game implements Writable {
     private CollisionChecker collisionChecker;
 
     private long timeOfFreeze;
+    private long timeOfFire;
+
+    private int levelNum = 1;
 
     private boolean frozen;
     private boolean paused;
@@ -41,13 +44,13 @@ public class Game implements Writable {
     public Game(int maxX, int ground) {
         this.maxX = maxX;
         this.ground = ground;
-        this.enemies = new ArrayList<Enemy>();
-        this.fireballs = new ArrayList<Fireball>();
+        this.enemies = new ArrayList<>();
+        this.fireballs = new ArrayList<>();
         this.frozen = false;
         this.paused = false;
         this.ended = false;
         this.collisionChecker = new CollisionChecker();
-        Level level = new Level(this);
+        Level level = new Level(this, levelNum);
         level.realizeMap();
     }
 
@@ -106,7 +109,10 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: create new Fireball and add it to fireballs
     public void playerFire() {
-        addFireball(player.fire());
+        if (System.currentTimeMillis() - timeOfFire >= 1000) {
+            addFireball(player.fire());
+            this.timeOfFire = System.currentTimeMillis();
+        }
     }
 
     // REQUIRES: System.currentTimeMillis() - timeOfFreeze > 80000
@@ -146,14 +152,9 @@ public class Game implements Writable {
         checkCollisions();
     }
 
-    // TODO: player stops moving after pressing other keys
-    //  ps: create a class implements KeyListener
-    //  add key to pressed list when pressed, remove from list when key released
-
     // MODIFIES: this
     // EFFECTS: check all types of collisions
     public void checkCollisions() {
-
         // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
         collisionChecker.checkBottomCollision(player, fireballs);
@@ -265,7 +266,7 @@ public class Game implements Writable {
     }
 
     public int getPlayerHp() {
-        return player.playerHP;
+        return player.hp;
     }
 
     public void setBlocks(ArrayList<Block> blocks) {
