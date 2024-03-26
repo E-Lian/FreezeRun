@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 // manages the inside of the game, changing and updating information
@@ -18,6 +17,7 @@ public class Game implements Writable {
     public static final double GRAVITY = 1.2;
 
     private ArrayList<Block> blocks;
+    private ArrayList<Block> interactables;
 
     private Player player;
     private static final int PLAYER_SPEED = 4;
@@ -48,7 +48,7 @@ public class Game implements Writable {
         this.ended = false;
         this.collisionChecker = new CollisionChecker();
         Level level = new Level(this);
-        this.blocks = level.realizeMap();
+        level.realizeMap();
     }
 
     // EFFECTS: put game information into JSON representation and return it
@@ -256,11 +256,23 @@ public class Game implements Writable {
         return blocks;
     }
 
+    public ArrayList<Block> getInteractables() {
+        return interactables;
+    }
+
     public Player getPlayer() {
         return player;
     }
 
     public int getPlayerHp() {
         return player.playerHP;
+    }
+
+    public void setBlocks(ArrayList<Block> blocks) {
+        this.blocks = blocks;
+    }
+
+    public void setInteractables(ArrayList<Block> interactables) {
+        this.interactables = interactables;
     }
 }

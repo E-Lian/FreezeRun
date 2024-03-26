@@ -1,14 +1,15 @@
 package model;
 
+
 import java.awt.*;
 
 import static ui.GraphicsGame.BLOCK_SIZE;
 
-// represents a brick in game, used as obstacles and platforms
-public class Brick extends Block {
+// represents a door in game
+public class Door extends Block {
 
-    // EFFECTS: instantiate a Brick, load img and set bound
-    public Brick(int cx, int cy) {
+    // EFFECTS: initiates a door at given coordinates
+    public Door(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
         this.width = BLOCK_SIZE;
@@ -18,16 +19,15 @@ public class Brick extends Block {
     }
 
     // MODIFIES: this
-    // EFFECTS: set the bound
+    // EFFECTS: makes hitbox
     @Override
     public void makeHitBox() {
         this.hitBox = new Rectangle(this.cx, this.cy, width, height);
     }
 
     // MODIFIES: this
-    // EFFECTS: load image
+    // EFFECTS: load door image
     public void loadImg() {
-        super.loadImg("./data/img/map/brick.png");
+        super.loadImg("./data/img/map/door_closed.png");
     }
-
 }

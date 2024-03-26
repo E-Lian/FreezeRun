@@ -8,6 +8,7 @@ import model.Game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static ui.GraphicsGame.*;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game g) {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.LIGHT_GRAY);
         this.game = g;
     }
 
@@ -94,10 +95,16 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the map
     private void drawMap(Graphics g) {
-        ArrayList<Block> map = this.game.getBlocks();
-        for (Block b : map) {
+        ArrayList<Block> blocks = this.game.getBlocks();
+        ArrayList<Block> interactables = this.game.getInteractables();
+        for (Block b : blocks) {
             BufferedImage blockImg = b.getImg();
             g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+        }
+
+        for (Block b : interactables) {
+            BufferedImage interactableImg = b.getImg();
+            g.drawImage(interactableImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }
     }
 

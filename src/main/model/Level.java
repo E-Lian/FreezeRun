@@ -4,6 +4,7 @@ import ui.GamePanel;
 import ui.GraphicsGame;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -44,23 +45,23 @@ public class Level {
 
     // MODIFIES: game
     // EFFECTS: returns a list containing all blocks in this map
-    public ArrayList<Block> realizeMap() {
+    public void realizeMap() {
         int x = 0;
         int y = 0;
 
         ArrayList<Block> blocks = new ArrayList<>();
+        ArrayList<Block> interactables = new ArrayList<>();
 
         for (int[] ints : map) {
             for (int block : ints) {
-                switch (block) {
-                    case 1:
-                        blocks.add(new Brick(x, y));
-                        break;
-                    case 9:
-                        this.game.setPlayer(new Player(x, y));
-                        break;
-                    case 8:
-                        this.game.addEnemy(new Enemy(x, y, ENEMY_SPEED, 0));
+                if (block == 1) {
+                    blocks.add(new Brick(x, y));
+                } else if (block == 2) {
+                    interactables.add(new Door(x, y));
+                } else if (block == 8) {
+                    game.addEnemy(new Enemy(x, y, ENEMY_SPEED, 0));
+                } else if (block == 9) {
+                    game.setPlayer(new Player(x, y));
                 }
                 x += GraphicsGame.BLOCK_SIZE;
             }
@@ -68,7 +69,8 @@ public class Level {
             y += GraphicsGame.BLOCK_SIZE;
         }
 
-        return blocks;
+        game.setBlocks(blocks);
+        game.setInteractables(interactables);
     }
 
     public int[][] getMap() {
