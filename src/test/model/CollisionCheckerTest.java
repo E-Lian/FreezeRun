@@ -80,11 +80,12 @@ public class CollisionCheckerTest {
     // bottom collision
     @Test
     public void testCheckBlockCollisionBottom() {
-        blocks.add(new Brick(50, 90));
+        player.setFalling(true);
+        blocks.add(new Brick(50, 80));
         checker.checkBlockCollision(player, blocks);
         assertFalse(player.isFalling());
         assertEquals(0, player.getDy());
-        assertEquals(90 - BLOCK_SIZE + 1, player.getCy());
+        assertEquals(80 - BLOCK_SIZE + 1, player.getCy());
         assertEquals(50, player.getCx());
     }
 
@@ -178,5 +179,15 @@ public class CollisionCheckerTest {
     public void testCheckFireballBlockCollisionRight() {
         Fireball f = new Fireball(190, 210, true);
         assertTrue(checker.checkFireballBlocksCollision(f, blocks));
+    }
+
+    @Test
+    public void testCheckBottomCollisionFireball() {
+        Fireball f = new Fireball(45, 80, true);
+        fireballs.add(f);
+        checker.checkBottomCollision(player, fireballs);
+        assertEquals(49, player.getCy());
+        assertFalse(player.isFalling());
+        assertEquals(0, player.getDy());
     }
 }

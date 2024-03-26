@@ -3,13 +3,13 @@
     "frozen": true,
     "ground": 448,
     "enemies": [{
-        "falling": true,
+        "falling": false,
         "isRight": true,
         "dx": 1,
         "jumping": false,
         "cx": 64,
         "dy": 0,
-        "cy": 160,
+        "cy": 161,
         "hp": 1
     }],
     "fireballs": [],

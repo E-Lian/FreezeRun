@@ -51,6 +51,16 @@ public class CharacterTest {
     }
 
     @Test
+    public void testUpdateJumpingDown() {
+        character.setFalling(true);
+        character.setJumping(true);
+        character.setDy(10);
+        character.update(1.0);
+        assertEquals(10, character.getDy());
+        assertEquals(0, character.getCy());
+    }
+
+    @Test
     public void testUpdateWalkingLeft() {
         character.setDx(-10);
         character.update(1.0);

@@ -25,6 +25,7 @@ public class GameTest {
         assertFalse(game.isPaused());
         assertFalse(game.isEnded());
         assertFalse(game.getBlocks().isEmpty());
+        assertEquals(3, game.getPlayerHp());
     }
 
     @Test
@@ -135,7 +136,7 @@ public class GameTest {
         assertEquals(64, game.getPlayerX());
         assertEquals(448, game.getPlayerY());
         assertEquals(64, game.getEnemies().get(0).getCx());
-        assertEquals(160, game.getEnemies().get(0).getCy());
+        assertEquals(161, game.getEnemies().get(0).getCy());
         Thread.sleep(4000L);
         game.tick();
         assertFalse(game.isFrozen());

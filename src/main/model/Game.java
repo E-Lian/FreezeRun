@@ -147,6 +147,8 @@ public class Game implements Writable {
     }
 
     // TODO: player stops moving after pressing other keys
+    //  ps: create a class implements KeyListener
+    //  add key to pressed list when pressed, remove from list when key released
 
     // MODIFIES: this
     // EFFECTS: check all types of collisions

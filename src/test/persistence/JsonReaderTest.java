@@ -54,7 +54,7 @@ public class JsonReaderTest {
 
             Enemy enemy = g.getEnemies().get(1);
             assertEquals(64, enemy.getCx());
-            assertEquals(160, enemy.getCy());
+            assertEquals(161, enemy.getCy());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");
         }
