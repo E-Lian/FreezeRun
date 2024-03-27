@@ -29,12 +29,23 @@ public class Door extends Block {
     }
 
     // MODIFIES: this
-    // EFFECTS: load door image
+    // EFFECTS: load door image accordingly
     public void loadImg() {
-        super.loadImg("./data/img/map/door_closed.png");
+        if (open) {
+            super.loadImg("./data/img/map/door_open.png");
+        } else {
+            super.loadImg("./data/img/map/door_closed.png");
+        }
     }
 
     public boolean getOpen() {
         return this.open;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set open to given value and load door image
+    public void setOpen(boolean open) {
+        this.open = open;
+        loadImg();
     }
 }

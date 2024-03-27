@@ -1,9 +1,6 @@
 package ui;
 
-import model.Block;
-import model.Enemy;
-import model.Fireball;
-import model.Game;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,16 +93,14 @@ public class GamePanel extends JPanel {
     // EFFECTS: draws the map
     private void drawMap(Graphics g) {
         ArrayList<Block> blocks = this.game.getBlocks();
-        ArrayList<Block> interactables = this.game.getInteractables();
         for (Block b : blocks) {
             BufferedImage blockImg = b.getImg();
             g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }
 
-        for (Block b : interactables) {
-            BufferedImage interactableImg = b.getImg();
-            g.drawImage(interactableImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
-        }
+        Door door = game.getDoor();
+        BufferedImage doorImg = door.getImg();
+        g.drawImage(doorImg, door.getCx(), door.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 
     // MODIFIES: g

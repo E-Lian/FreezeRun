@@ -104,4 +104,9 @@ public class CollisionChecker {
         return false;
     }
 
+    // MODIFIES: door
+    // EFFECTS: set door to open if player is at door
+    public void checkPlayerDoor(Player player, Door door) {
+        door.setOpen(player.getHitBox().intersects(door.getHitBox()));
+    }
 }

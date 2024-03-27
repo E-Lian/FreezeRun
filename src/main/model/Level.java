@@ -50,14 +50,13 @@ public class Level {
         int y = 0;
 
         ArrayList<Block> blocks = new ArrayList<>();
-        ArrayList<Block> interactables = new ArrayList<>();
 
         for (int[] ints : map) {
             for (int block : ints) {
                 if (block == 1) {
                     blocks.add(new Brick(x, y));
                 } else if (block == 2) {
-                    interactables.add(new Door(x, y));
+                    game.setDoor(new Door(x, y));
                 } else if (block == 8) {
                     game.addEnemy(new Enemy(x, y, ENEMY_SPEED, 0));
                 } else if (block == 9) {
@@ -70,7 +69,6 @@ public class Level {
         }
 
         game.setBlocks(blocks);
-        game.setInteractables(interactables);
     }
 
     public int[][] getMap() {

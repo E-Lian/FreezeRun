@@ -17,15 +17,13 @@ public class Game implements Writable {
     public static final double GRAVITY = 1.2;
 
     private ArrayList<Block> blocks;
-    private ArrayList<Block> interactables;
+    private Door door;
 
     private Player player;
     private static final int PLAYER_SPEED = 4;
 
-    // temp enemy variables for Phase 1
     private ArrayList<Enemy> enemies;
     public static final int ENEMY_SPEED = 1;
-    private static final int ENEMY_MAX_X = 70;
 
     private ArrayList<Fireball> fireballs;
 
@@ -162,6 +160,7 @@ public class Game implements Writable {
         // check player's collisions with blocks
         collisionChecker.checkBlockCollision(player, blocks);
         collisionChecker.checkBottomCollision(player, fireballs);
+        collisionChecker.checkPlayerDoor(player, door);
         // check enemies' collisions with fireballs, player, and blocks
         for (int i = 0; i < enemies.size(); i++) {
             Fireball f = collisionChecker.checkEnemyFireballCollision(enemies.get(i), fireballs);
@@ -198,6 +197,16 @@ public class Game implements Writable {
                 player.setDx(20);
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: increments level and load new map
+    public void enterNextLevel() {
+        enemies.clear();
+        fireballs.clear();
+        levelNum++;
+        Level level = new Level(this, levelNum);
+        level.realizeMap();
     }
 
     // MODIFIES: this
@@ -276,9 +285,6 @@ public class Game implements Writable {
         return blocks;
     }
 
-    public ArrayList<Block> getInteractables() {
-        return interactables;
-    }
 
     public Player getPlayer() {
         return player;
@@ -292,7 +298,20 @@ public class Game implements Writable {
         this.blocks = blocks;
     }
 
-    public void setInteractables(ArrayList<Block> interactables) {
-        this.interactables = interactables;
+    public Door getDoor() {
+        return door;
     }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
+
+    public boolean isCanEnter() {
+        return door.getOpen();
+    }
+
+    public void setCanEnter(boolean canEnter) {
+        door.setOpen(canEnter);
+    }
+
 }

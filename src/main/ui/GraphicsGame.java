@@ -96,13 +96,23 @@ public class GraphicsGame extends JFrame {
                 saveGame();
             } else if (action.equals("load")) {
                 loadGame();
+            } else if (action.equals("enter")) {
+                enterNextLevel();
             }
         }
     }
 
+    // MODIFIES: game
+    // EFFECTS: increments game's level if player is at door
+    public void enterNextLevel() {
+        if (game.isCanEnter()) {
+            game.enterNextLevel();
+        }
+    }
+
     // Centres frame on desktop
-    // modifies: this
-    // effects: location of frame is set so frame is centred on desktop
+    // MODIFIES: this
+    // EFFECTS: location of frame is set so frame is centred on desktop
     private void centreOnScreen() {
         Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);

@@ -38,6 +38,8 @@ public class InputListener extends KeyAdapter {
             addAction("freeze");
         } else if (keyCode == 32) {
             addAction("fire");
+        } else if (keyCode == 10) {
+            addAction("enter");
         }
     }
 
@@ -81,6 +83,8 @@ public class InputListener extends KeyAdapter {
             removeAction("freeze");
         } else if (keyCode == 32) {
             removeAction("fire");
+        } else if (keyCode == 10) {
+            removeAction("enter");
         }
     }
 
