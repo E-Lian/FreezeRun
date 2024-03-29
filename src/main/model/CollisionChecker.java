@@ -109,4 +109,54 @@ public class CollisionChecker {
     public void checkPlayerDoor(Player player, Door door) {
         door.setOpen(player.getHitBox().intersects(door.getHitBox()));
     }
+
+    // MODIFIES: c, items
+    // EFFECTS: check c's collisions with items, set dx/dy and cx/cy if applicable
+    public void checkItemsCollision(Character c, ArrayList<Item> items) {
+        // TODO
+        checkBottomCollisionItem(c, items);
+//        checkTopCollisionItem(c, items);
+        checkHorizontalCollisionItem(c, items);
+    }
+
+//    // MODIFIES: c, items
+//    // EFFECTS: set dy and cy if c's top collides with item's bottom
+//    public void checkTopCollisionItem(Character c, ArrayList<Item> items) {
+//
+//    }
+
+    // MODIFIES: c< items
+    // EFFECTS: set dx and cx if c's left/right collides with item
+    public void checkHorizontalCollisionItem(Character c, ArrayList<Item> items) {
+        for (Block item : items) {
+            if (c instanceof Enemy) {
+                if (c.getRightBox().intersects(item.getLeftBox()) || c.getLeftBox().intersects(item.getRightBox())) {
+                    c.setDx(-c.getDx());
+                    return;
+                }
+            }
+            if (c.getRightBox().intersects(item.getLeftBox())) {
+                c.setDx(0);
+                c.setCx((int) (item.getCx() + c.getCx() - c.getRightBox().getX() - c.getRightBox().getWidth()));
+            } else if (c.getLeftBox().intersects(item.getRightBox())) {
+                c.setDx(0);
+                c.setCx(item.getCx() + BLOCK_SIZE - (c.getHitBox().x - c.getCx()));
+            }
+        }
+    }
+
+    // MODIFIES: c, items
+    // EFFECTS: set dy and cy if c's bottom touches item's top
+    public void checkBottomCollisionItem(Character c, ArrayList<Item> items) {
+        for (Block item : items) {
+            if (c.getBottomBox().intersects(item.getTopBox())) {
+                if (item instanceof Trampoline && !((Trampoline) item).isActivated()) {
+                    ((Trampoline) item).activate();
+                    c.setDy(-20);
+                    c.setCy(item.getCy() - BLOCK_SIZE);
+                    c.setJumping(true);
+                }
+            }
+        }
+    }
 }

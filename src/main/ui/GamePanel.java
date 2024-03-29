@@ -94,13 +94,15 @@ public class GamePanel extends JPanel {
     private void drawMap(Graphics g) {
         ArrayList<Block> blocks = this.game.getBlocks();
         for (Block b : blocks) {
-            BufferedImage blockImg = b.getImg();
-            g.drawImage(blockImg, b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+            g.drawImage(b.getImg(), b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+        }
+        ArrayList<Item> items = this.game.getItems();
+        for (Item b: items) {
+            g.drawImage(b.getImg(), b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }
 
         Door door = game.getDoor();
-        BufferedImage doorImg = door.getImg();
-        g.drawImage(doorImg, door.getCx(), door.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
+        g.drawImage(door.getImg(), door.getCx(), door.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
     }
 
     // MODIFIES: g

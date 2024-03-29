@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 // manages the inside of the game, changing and updating information
@@ -17,6 +18,8 @@ public class Game implements Writable {
     public static final double GRAVITY = 1.2;
 
     private ArrayList<Block> blocks;
+
+    private ArrayList<Item> items;
     private Door door;
 
     private Player player;
@@ -150,6 +153,10 @@ public class Game implements Writable {
             fireball.update();
         }
 
+        for (Item item: items) {
+            item.update();
+        }
+
         // check for collisions
         checkCollisions();
     }
@@ -161,6 +168,7 @@ public class Game implements Writable {
         collisionChecker.checkBlockCollision(player, blocks);
         collisionChecker.checkBottomCollision(player, fireballs);
         collisionChecker.checkPlayerDoor(player, door);
+        collisionChecker.checkItemsCollision(player, items);
         // check enemies' collisions with fireballs, player, and blocks
         for (int i = 0; i < enemies.size(); i++) {
             Fireball f = collisionChecker.checkEnemyFireballCollision(enemies.get(i), fireballs);
@@ -213,6 +221,13 @@ public class Game implements Writable {
     // EFFECTS: removes the first enemy in enemies that was initialised in constructor since the game loads from a file
     public void load() {
         enemies.remove(0);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the blocks and items
+    public void setMap(ArrayList<Block> blocks, ArrayList<Item> items) {
+        setBlocks(blocks);
+        setItems(items);
     }
 
     // MODIFIES: this
@@ -310,8 +325,12 @@ public class Game implements Writable {
         return door.getOpen();
     }
 
-    public void setCanEnter(boolean canEnter) {
-        door.setOpen(canEnter);
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 
 }
