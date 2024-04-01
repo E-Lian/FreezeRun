@@ -1,12 +1,12 @@
 package model;
 
-import static ui.GraphicsGame.BLOCK_SIZE;
-
+// represents an interactable item in game
 public abstract class Item extends Block {
     protected boolean activated;
     protected long timeOfActivate;
     protected long period;
 
+    // EFFECTS: instantiates an item at given coordinates and set time of activate to current time
     public Item(int cx, int cy) {
         this.cx = cx;
         this.cy = cy;
@@ -20,7 +20,7 @@ public abstract class Item extends Block {
     public abstract void loadImg();
 
     // MODIFIES: this
-    // EFFECTS: reset activate if possible
+    // EFFECTS: reset item if possible
     public void update() {
         if (System.currentTimeMillis() - timeOfActivate >= period) {
             activated = false;

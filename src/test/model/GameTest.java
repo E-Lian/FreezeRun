@@ -26,6 +26,9 @@ public class GameTest {
         assertFalse(game.isEnded());
         assertFalse(game.getBlocks().isEmpty());
         assertEquals(3, game.getPlayerHp());
+        assertTrue(game.getDoor() instanceof Door);
+        assertFalse(game.isCanEnter());
+        assertEquals(0, game.getItems().size());
     }
 
     @Test
@@ -135,14 +138,38 @@ public class GameTest {
         game.tick();
         assertEquals(64, game.getPlayerX());
         assertEquals(448, game.getPlayerY());
-        assertEquals(64, game.getEnemies().get(0).getCx());
+        assertEquals(32, game.getEnemies().get(0).getCx());
         assertEquals(161, game.getEnemies().get(0).getCy());
         Thread.sleep(4000L);
         game.tick();
         assertFalse(game.isFrozen());
         game.tick();
-        assertEquals(65, game.getEnemies().get(0).getCx());
+        assertEquals(33, game.getEnemies().get(0).getCx());
         assertEquals(161, game.getEnemies().get(0).getCy());
+    }
+
+    @Test
+    public void testTickGameOver() throws InterruptedException {
+        Player player = game.getPlayer();
+        Enemy enemy = game.getEnemies().get(0);
+        player.setCx(enemy.getCx());
+        player.setCy(enemy.getCy());
+        game.tick();
+        Thread.sleep(1000L);
+        player.setCx(enemy.getCx());
+        player.setCy(enemy.getCy());
+        game.tick();
+        Thread.sleep(1000L);
+        player.setCx(enemy.getCx());
+        player.setCy(enemy.getCy());
+        game.tick();
+        Thread.sleep(1000L);
+        player.setCx(enemy.getCx());
+        player.setCy(enemy.getCy());
+        game.tick();
+        assertEquals(0, game.getPlayerHp());
+        game.tick();
+        assertTrue(game.isEnded());
     }
 
     @Test
@@ -151,18 +178,25 @@ public class GameTest {
         testConstructor();
     }
 
-    // enemy hit fireball test
-
     @Test
-    public void testCheckCollisionEnemyHitPlayer() {
+    public void testCheckCollisionEnemyHitPlayer() throws InterruptedException {
         Enemy e = game.getEnemies().get(0);
         Player p = game.getPlayer();
         p.setCx(e.getCx());
         p.setCy(e.getCy());
         game.checkCollisions();
+        assertEquals(-20, p.getDx());
+        assertEquals(2, game.getPlayerHp());
+        p.setIsRight(false);
+        p.update(1.0);
+        Thread.sleep(1000L);
+        p.setCx(e.getCx());
+        p.setCy(e.getCy());
         game.checkCollisions();
-        game.checkCollisions();
-        assertTrue(p.isDead());
+        assertEquals(20, p.getDx());
+        assertEquals(1, game.getPlayerHp());
+
+
     }
 
     @Test
@@ -172,5 +206,22 @@ public class GameTest {
         assertTrue(game.isPaused());
         game.pause();
         assertFalse(game.isPaused());
+    }
+
+    @Test
+    public void testEnterNextLevelGeneral() {
+        Door door = game.getDoor();
+        game.enterNextLevel();
+        assertNotEquals(door, game.getDoor());
+    }
+
+    @Test
+    public void testEnterNextLevelEnd() {
+        game.enterNextLevel();
+        assertFalse(game.isEnded());
+        game.enterNextLevel();
+        assertTrue(game.isEnded());
+        assertEquals(0, game.getEnemies().size());
+        assertEquals(0, game.getFireballs().size());
     }
 }

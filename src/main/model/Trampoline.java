@@ -4,12 +4,14 @@ import java.awt.*;
 
 import static ui.GraphicsGame.BLOCK_SIZE;
 
+// represents a trampoline in game
 public class Trampoline extends Item {
 
+    // EFFECTS: instantiates a trampoline at given location and set its period
     public Trampoline(int cx, int cy) {
         super(cx, cy);
         this.width = BLOCK_SIZE;
-        this.height = 9;
+        this.height = 16;
         this.period = 500;
     }
 
@@ -17,7 +19,7 @@ public class Trampoline extends Item {
     // EFFECTS: makes the hitbox according to activated
     @Override
     public void makeHitBox() {
-        if (activated) {
+        if (!activated) {
             this.hitBox = new Rectangle(this.cx, this.cy, width, height);
         } else {
             this.hitBox = new Rectangle(this.cx, this.cy, width, BLOCK_SIZE);

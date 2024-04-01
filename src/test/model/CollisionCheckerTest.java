@@ -14,6 +14,8 @@ public class CollisionCheckerTest {
     public Player player;
     public Block block;
     public ArrayList<Block> blocks;
+    public Item item;
+    public ArrayList<Item> items;
     public ArrayList<Fireball> fireballs;
 
     @BeforeEach
@@ -24,7 +26,10 @@ public class CollisionCheckerTest {
         fireballs = new ArrayList<>();
         block = new Brick(200, 200);
         blocks = new ArrayList<>();
+        item = new Trampoline(100, 100);
+        items = new ArrayList<>();
         blocks.add(block);
+        items.add(item);
     }
 
     @Test
@@ -188,5 +193,45 @@ public class CollisionCheckerTest {
         assertEquals(49, player.getCy());
         assertFalse(player.isFalling());
         assertEquals(0, player.getDy());
+    }
+
+    @Test
+    public void testCheckItemCollisionNoCollision() {
+        player.setCx(0);
+        player.setCy(0);
+        checker.checkItemsCollision(player, items);
+        assertFalse(item.isActivated());
+        assertEquals(0, player.getCx());
+        assertEquals(0, player.getCy());
+        assertFalse(player.isJumping());
+        assertEquals(0, player.getDx());
+    }
+
+    @Test
+    public void testCheckBottomItemCollision() {
+        player.setCx(item.getCx() + 5);
+        player.setCy(item.getCy() - 30);
+        checker.checkItemsCollision(player, items);
+        assertTrue(item.isActivated());
+        assertEquals(-20, player.getDy());
+        assertEquals(item.getCy() - BLOCK_SIZE, player.getCy());
+        assertTrue(player.isJumping());
+    }
+
+    @Test
+    public void testCheckHorizontalItemCollision() {
+        player.setCx(item.getCx() - 20);
+        player.setCy(item.getCy());
+        player.setDx(10);
+        checker.checkItemsCollision(player, items);
+        assertFalse(item.isActivated());
+        assertEquals(0, player.getDx());
+        assertEquals(72, player.getCx());
+        player.setCx(item.getCx() + 20);
+        player.setDx(-10);
+        checker.checkItemsCollision(player, items);
+        assertFalse(item.isActivated());
+        assertEquals(0, player.getDx());
+        assertEquals(124, player.getCx());
     }
 }

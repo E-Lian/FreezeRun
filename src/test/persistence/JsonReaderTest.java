@@ -53,7 +53,7 @@ public class JsonReaderTest {
             assertTrue(g.getFireballs().isEmpty());
 
             Enemy enemy = g.getEnemies().get(1);
-            assertEquals(64, enemy.getCx());
+            assertEquals(32, enemy.getCx());
             assertEquals(161, enemy.getCy());
         } catch (Exception e) {
             fail("Shouldn't catch exception here");
@@ -65,8 +65,9 @@ public class JsonReaderTest {
         try {
             JsonReader reader = new JsonReader("./data/testWriterNoEnemies.json");
             Game g = reader.read();
+            g.load();
 
-            assertEquals(1, g.getEnemies().size());
+            assertEquals(0, g.getEnemies().size());
             assertEquals(480, g.getMaxX());
             assertEquals(448, g.getGround());
             assertFalse(g.isFrozen());

@@ -7,7 +7,7 @@
         "isRight": true,
         "dx": 1,
         "jumping": false,
-        "cx": 64,
+        "cx": 32,
         "dy": 0,
         "cy": 160,
         "hp": 1

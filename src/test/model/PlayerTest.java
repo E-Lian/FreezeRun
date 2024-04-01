@@ -50,7 +50,7 @@ public class PlayerTest {
         player.setJumping(false);
         player.setFalling(false);
         player.jump();
-        assertEquals(-20, player.getDy());
+        assertEquals(-15, player.getDy());
         assertTrue(player.isJumping());
     }
 

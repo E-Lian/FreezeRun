@@ -10,7 +10,6 @@ import java.util.ArrayList;
 // manages the inside of the game, changing and updating information
 // Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
 public class Game implements Writable {
-    // TODO: - player save when game has ended
 
     public static final int TICKS_PER_SECOND = 30;
     private int maxX;
@@ -36,6 +35,7 @@ public class Game implements Writable {
     private long timeOfFire;
     private long timeOfHit;
 
+    private final int totalLevel = 2;
     private int levelNum = 1;
 
     private boolean frozen;
@@ -117,7 +117,6 @@ public class Game implements Writable {
         }
     }
 
-    // REQUIRES: System.currentTimeMillis() - timeOfFreeze > 80000
     // MODIFIES: this
     // EFFECTS: freeze the game
     public void freeze() {
@@ -133,6 +132,7 @@ public class Game implements Writable {
         if (getPlayerHp() <= 0) {
             setEnded(true);
         }
+
         // update Characters
         player.update(GRAVITY);
         player.setDx(0);
@@ -213,6 +213,10 @@ public class Game implements Writable {
         enemies.clear();
         fireballs.clear();
         levelNum++;
+        if (levelNum > totalLevel) {
+            setEnded(true);
+            return;
+        }
         Level level = new Level(this, levelNum);
         level.realizeMap();
     }
@@ -299,7 +303,6 @@ public class Game implements Writable {
     public ArrayList<Block> getBlocks() {
         return blocks;
     }
-
 
     public Player getPlayer() {
         return player;

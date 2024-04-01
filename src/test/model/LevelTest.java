@@ -29,7 +29,7 @@ public class LevelTest {
             int[][] map = level.getMap();
             for (int[] ints : map) {
                 for (int i : ints) {
-                    if (i != 0 && i != 1 && i != 8 && i != 9 && i != 2) {
+                    if (i != 0 && i != 1 && i != 8 && i != 9 && i != 2 && i != 3) {
                         fail("file loaded incorrectly");
                     }
                 }
@@ -44,7 +44,7 @@ public class LevelTest {
     public void testRealizeMap() {
         level.realizeMap();
         ArrayList<Block> blocks = g.getBlocks();
-        assertEquals(73, blocks.size());
+        assertEquals(82, blocks.size());
         Player testPlayer = g.getPlayer();
         assertEquals(64, testPlayer.getCx());
         assertEquals(448, testPlayer.getCy());

@@ -55,6 +55,7 @@ public abstract class Character extends Block implements Writable {
         } else if (dx > 0) {
             setIsRight(true);
         }
+
     }
 
     // EFFECT: returns true if hp <= 0

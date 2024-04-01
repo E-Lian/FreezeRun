@@ -2,29 +2,16 @@
     "maxX": 480,
     "frozen": false,
     "ground": 448,
-    "enemies": [{
-        "falling": true,
-        "isRight": true,
-        "dx": 1,
-        "jumping": false,
-        "cx": 206,
-        "dy": 0,
-        "cy": 161,
-        "hp": 1
-    }],
-    "fireballs": [{
-        "isRight": true,
-        "cx": 302,
-        "cy": 449
-    }],
+    "enemies": [],
+    "fireballs": [],
     "player": {
-        "falling": true,
-        "isRight": true,
+        "falling": false,
+        "isRight": false,
         "dx": 0,
         "jumping": false,
-        "cx": 96,
+        "cx": 184,
         "dy": 0,
-        "cy": 449,
+        "cy": 321,
         "hp": 3
     }
 }
