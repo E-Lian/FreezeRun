@@ -195,8 +195,6 @@ public class GameTest {
         game.checkCollisions();
         assertEquals(20, p.getDx());
         assertEquals(1, game.getPlayerHp());
-
-
     }
 
     @Test

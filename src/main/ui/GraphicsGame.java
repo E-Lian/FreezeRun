@@ -46,6 +46,7 @@ public class GraphicsGame extends JFrame {
         gp = new GamePanel(game);
         add(gp);
         addKeyListener(new InputListener(this));
+        addWindowListener(new GameWindowListener());
         actionList = new ArrayList<>();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);

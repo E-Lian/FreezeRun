@@ -97,7 +97,7 @@ public class GamePanel extends JPanel {
             g.drawImage(b.getImg(), b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }
         ArrayList<Item> items = this.game.getItems();
-        for (Item b: items) {
+        for (Item b : items) {
             g.drawImage(b.getImg(), b.getCx(), b.getCy(), BLOCK_SIZE, BLOCK_SIZE, null);
         }
 

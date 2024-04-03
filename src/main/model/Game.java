@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 // manages the inside of the game, changing and updating information
@@ -114,6 +113,8 @@ public class Game implements Writable {
         if (System.currentTimeMillis() - timeOfFire >= 1000) {
             addFireball(player.fire());
             this.timeOfFire = System.currentTimeMillis();
+            EventLog.getInstance().logEvent(new Event("Fireball created at (" + player.getCx() + ","
+                    + player.getCy() + ")"));
         }
     }
 
@@ -121,7 +122,7 @@ public class Game implements Writable {
     // EFFECTS: freeze the game
     public void freeze() {
         if (System.currentTimeMillis() - timeOfFreeze >= 8000) {
-            this.frozen = true;
+            setFrozen(true);
             this.timeOfFreeze = System.currentTimeMillis();
         }
     }
@@ -131,6 +132,7 @@ public class Game implements Writable {
     public void tick() {
         if (getPlayerHp() <= 0) {
             setEnded(true);
+            EventLog.getInstance().logEvent(new Event("Game has ended because player has no life left"));
         }
 
         // update Characters
@@ -140,7 +142,7 @@ public class Game implements Writable {
         if (isFrozen()) {
             checkCollisions();
             if (System.currentTimeMillis() - timeOfFreeze >= 3000) {
-                this.frozen = false;
+                setFrozen(false);
             }
             return;
         }
@@ -153,7 +155,7 @@ public class Game implements Writable {
             fireball.update();
         }
 
-        for (Item item: items) {
+        for (Item item : items) {
             item.update();
         }
 
@@ -186,6 +188,7 @@ public class Game implements Writable {
         // check fireballs' collisions with blocks
         for (int i = 0; i < fireballs.size(); i++) {
             if (collisionChecker.checkFireballBlocksCollision(fireballs.get(i), blocks)) {
+                // TODO: test this if
                 fireballs.remove(i);
                 i--;
             }
@@ -196,6 +199,7 @@ public class Game implements Writable {
     // EFFECTS: do player hit effects if it has been >= 1 sec than last time player got hit
     private void enemyHitPlayer(Enemy enemy) {
         if (System.currentTimeMillis() - timeOfHit >= 1000) {
+            EventLog.getInstance().logEvent(new Event("Player HP - 1"));
             this.timeOfHit = System.currentTimeMillis();
             player.decreasePlayerHp();
             playerJump();
@@ -215,15 +219,18 @@ public class Game implements Writable {
         levelNum++;
         if (levelNum > totalLevel) {
             setEnded(true);
+            EventLog.getInstance().logEvent(new Event("Player has passed all levels!"));
             return;
         }
         Level level = new Level(this, levelNum);
         level.realizeMap();
+        EventLog.getInstance().logEvent(new Event("Player has entered Level " + levelNum));
     }
 
     // MODIFIES: this
     // EFFECTS: removes the first enemy in enemies that was initialised in constructor since the game loads from a file
     public void load() {
+        EventLog.getInstance().logEvent(new Event("Game loaded"));
         enemies.remove(0);
     }
 
@@ -298,6 +305,12 @@ public class Game implements Writable {
 
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
+        if (frozen) {
+            EventLog.getInstance().logEvent(new Event("Player froze the game"));
+        } else {
+            EventLog.getInstance().logEvent(new Event("Game unfroze"));
+
+        }
     }
 
     public ArrayList<Block> getBlocks() {

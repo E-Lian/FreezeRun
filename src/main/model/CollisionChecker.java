@@ -17,6 +17,7 @@ public class CollisionChecker {
     public Fireball checkEnemyFireballCollision(Enemy e, ArrayList<Fireball> fireballs) {
         for (Fireball f : fireballs) {
             if (f.getHitBox().intersects(e.getHitBox())) {
+                EventLog.getInstance().logEvent(new Event("Fireball hits an enemy"));
                 return f;
             }
         }
