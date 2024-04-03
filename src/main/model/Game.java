@@ -62,6 +62,7 @@ public class Game implements Writable {
             throw new IllegalStateException();
         }
         JSONObject json = new JSONObject();
+        json.put("levelNum", levelNum);
         json.put("maxX", maxX);
         json.put("ground", ground);
         json.put("frozen", frozen);
@@ -188,7 +189,6 @@ public class Game implements Writable {
         // check fireballs' collisions with blocks
         for (int i = 0; i < fireballs.size(); i++) {
             if (collisionChecker.checkFireballBlocksCollision(fireballs.get(i), blocks)) {
-                // TODO: test this if
                 fireballs.remove(i);
                 i--;
             }
@@ -347,6 +347,13 @@ public class Game implements Writable {
 
     public ArrayList<Item> getItems() {
         return items;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set current level to given number and load its map
+    public void setLevel(int levelNum) {
+        Level level = new Level(this, levelNum);
+        level.realizeMap();
     }
 
 }

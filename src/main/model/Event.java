@@ -44,7 +44,6 @@ public class Event {
 
     @Override
     public boolean equals(Object other) {
-        // TODO: test these two ifs
         if (other == null) {
             return false;
         }

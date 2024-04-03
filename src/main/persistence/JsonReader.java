@@ -46,10 +46,12 @@ public class JsonReader {
     private Game parseGame(JSONObject gameData) {
         Game game = new Game(gameData.getInt("maxX"), gameData.getInt("ground"));
         game.pause();
+        game.setLevel(gameData.getInt("levelNum"));
         game.setFrozen(gameData.getBoolean("frozen"));
         addPlayer(game, gameData);
         addFireballs(game, gameData);
         addEnemies(game, gameData);
+        game.load();
 
         return game;
     }
