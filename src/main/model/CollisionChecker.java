@@ -38,7 +38,7 @@ public class CollisionChecker {
         for (Fireball fireball : fireballs) {
             Rectangle blockTopBox = fireball.getTopBox();
             if (player.getBottomBox().intersects(blockTopBox)) {
-                player.setCy(fireball.getCy() - BLOCK_SIZE + 1);
+                player.setCy((int) (blockTopBox.getY() - BLOCK_SIZE + 1));
                 player.setFalling(false);
                 player.setDy(0);
             }
@@ -118,7 +118,7 @@ public class CollisionChecker {
         checkHorizontalCollisionItem(c, items);
     }
 
-    // MODIFIES: c< items
+    // MODIFIES: c, items
     // EFFECTS: set dx and cx if c's left/right collides with item
     private void checkHorizontalCollisionItem(Character c, ArrayList<Item> items) {
         for (Block item : items) {

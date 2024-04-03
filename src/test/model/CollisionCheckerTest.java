@@ -190,7 +190,7 @@ public class CollisionCheckerTest {
         Fireball f = new Fireball(45, 80, true);
         fireballs.add(f);
         checker.checkBottomCollision(player, fireballs);
-        assertEquals(49, player.getCy());
+        assertEquals(57, player.getCy());
         assertFalse(player.isFalling());
         assertEquals(0, player.getDy());
     }
@@ -233,5 +233,16 @@ public class CollisionCheckerTest {
         assertFalse(item.isActivated());
         assertEquals(0, player.getDx());
         assertEquals(124, player.getCx());
+    }
+
+    @Test
+    public void testPlayerHitDoor() {
+        Door door = new Door(100, 100);
+        checker.checkPlayerDoor(player, door);
+        assertFalse(door.getOpen());
+        player.setCx(90);
+        player.setCy(90);
+        checker.checkPlayerDoor(player, door);
+        assertTrue(door.getOpen());
     }
 }
