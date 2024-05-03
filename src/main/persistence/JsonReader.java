@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// Reference: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads game data from JSON file
 public class JsonReader {
     private final String source;

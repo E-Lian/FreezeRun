@@ -6,8 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-// manages the inside of the game, changing and updating information
-// Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
+// manages the inside of the game, changing and updating informationF
 public class Game implements Writable {
 
     public static final int TICKS_PER_SECOND = 30;
@@ -140,6 +139,10 @@ public class Game implements Writable {
         player.update(GRAVITY);
         player.setDx(0);
 
+        for (Item item : items) {
+            item.update();
+        }
+
         if (isFrozen()) {
             checkCollisions();
             if (System.currentTimeMillis() - timeOfFreeze >= 3000) {
@@ -156,9 +159,6 @@ public class Game implements Writable {
             fireball.update();
         }
 
-        for (Item item : items) {
-            item.update();
-        }
 
         // check for collisions
         checkCollisions();
@@ -352,6 +352,7 @@ public class Game implements Writable {
     // MODIFIES: this
     // EFFECTS: set current level to given number and load its map
     public void setLevel(int levelNum) {
+        this.levelNum = levelNum;
         Level level = new Level(this, levelNum);
         level.realizeMap();
     }

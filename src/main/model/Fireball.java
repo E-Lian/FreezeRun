@@ -13,7 +13,7 @@ public class Fireball extends Block implements Writable {
     private final boolean isRight;
     private final int speed;
 
-    private static final int SPEED = 2;
+    private static final int SPEED = 4;
 
     // EFFECTS: instantiates a Fireball at given position facing given direction and sets its speed accordingly
     public Fireball(int cx, int cy, boolean isRight) {

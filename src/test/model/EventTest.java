@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Event class
- * Reference: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
  */
+
 public class EventTest {
     private Event e;
     private Date d;

@@ -22,7 +22,7 @@ import java.util.Objects;
 
 // the system that present info to user
 // accepts user inputs and change data in game accordingly
-// Reference: https://github.students.cs.ubc.ca/CPSC210/SnakeConsole-Lanterna
+
 public class TerminalGame {
     private Game game;
     private Screen screen;

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 // represents the main window which the game is drawn and played
-// Reference: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase/
+
 public class GraphicsGame extends JFrame {
     // screen fields
     static final int ORIGINAL_BLOCK_SIZE = 16; // 16 pixel block

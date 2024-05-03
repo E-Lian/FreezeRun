@@ -1,5 +1,5 @@
 {
-    "levelNum": 1,
+    "levelNum": 2,
     "maxX": 480,
     "frozen": false,
     "ground": 448,
@@ -8,22 +8,18 @@
         "isRight": true,
         "dx": 1,
         "jumping": false,
-        "cx": 77,
+        "cx": 237,
         "dy": 0,
-        "cy": 161,
+        "cy": 449,
         "hp": 1
     }],
-    "fireballs": [{
-        "isRight": true,
-        "cx": 112,
-        "cy": 449
-    }],
+    "fireballs": [],
     "player": {
         "falling": false,
         "isRight": true,
         "dx": 0,
         "jumping": false,
-        "cx": 64,
+        "cx": 108,
         "dy": 0,
         "cy": 449,
         "hp": 3

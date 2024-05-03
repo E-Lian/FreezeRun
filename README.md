@@ -1,4 +1,4 @@
-# 210 Personal Project - Freeze Runner
+# Personal Project - Freeze Runner
 
 ## Description
 
