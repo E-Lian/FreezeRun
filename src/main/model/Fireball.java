@@ -49,7 +49,11 @@ public class Fireball extends Block implements Writable {
     // MODIFIES: this
     // EFFECTS: load fireball image
     protected void loadImg() {
-        super.loadImg("./data/img/fireball/fireball1.png");
+        if (isRight) {
+            super.loadImg("./data/img/fireball/fireball_right.png");
+        } else {
+            super.loadImg("./data/img/fireball/fireball_left.png");
+        }
     }
 
     // MODIFIES: this

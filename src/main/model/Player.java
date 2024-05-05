@@ -38,10 +38,18 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: load player's image
     private void loadImg() {
+        if (isJumping() || isFalling()) {
+            if (isRight) {
+                super.loadImg("./data/img/player/player_jump_right.png");
+            } else {
+                super.loadImg("./data/img/player/player_jump_left.png");
+            }
+            return;
+        }
         if (isRight) {
-            super.loadImg("./data/img/player/player_still_right.png");
+            super.loadImg("./data/img/player/player_still_right1.png");
         } else {
-            super.loadImg("./data/img/player/player_still_left.png");
+            super.loadImg("./data/img/player/player_still_left1.png");
         }
     }
 

@@ -17,6 +17,8 @@ public abstract class Character extends Block implements Writable {
     protected boolean falling = true;
     protected int hp;
 
+    protected int imgIndex = 1;
+
     // EFFECTS: returns current fields as a JSONObject
     @Override
     public JSONObject toJson() {
@@ -55,6 +57,8 @@ public abstract class Character extends Block implements Writable {
         } else if (dx > 0) {
             setIsRight(true);
         }
+
+        incrementIndex();
     }
 
     // EFFECT: returns true if hp <= 0
@@ -100,6 +104,18 @@ public abstract class Character extends Block implements Writable {
 
     public void setJumping(boolean jumping) {
         this.jumping = jumping;
+    }
+
+    // saved for later animation implementation
+    public int getImgIndex() {
+        return imgIndex;
+    }
+
+    public void incrementIndex() {
+        imgIndex++;
+        if (imgIndex > 30) {
+            imgIndex = 1;
+        }
     }
 
 }

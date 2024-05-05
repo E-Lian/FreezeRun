@@ -1,8 +1,9 @@
 # Personal Project - Freeze Runner
 
 ## Description
+This is a personal project for a university CS class.
 
-This will be a 2D platformer game which the hero
+It is a 2D platformer game which the hero
 has a superpower: chronostasis, the power to ***freeze the time***. 
 
 Unlike most main characters, their power is so weak that they can only stop time for 3 seconds.
