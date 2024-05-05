@@ -20,6 +20,12 @@ public class Player extends Character {
         loadImg();
     }
 
+    @Override
+    public void update(double gravity) {
+        super.update(gravity);
+        loadImg();
+    }
+
     // MODIFIES: this
     // EFFECTS: make the player jump if applicable
     public void jump() {
@@ -32,7 +38,11 @@ public class Player extends Character {
     // MODIFIES: this
     // EFFECTS: load player's image
     private void loadImg() {
-        super.loadImg("./data/img/player/player_still1.png");
+        if (isRight) {
+            super.loadImg("./data/img/player/player_still_right.png");
+        } else {
+            super.loadImg("./data/img/player/player_still_left.png");
+        }
     }
 
     // EFFECTS: create a new Fireball at player's position, and returns the Fireball
