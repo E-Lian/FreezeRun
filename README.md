@@ -9,8 +9,10 @@ has a superpower: chronostasis, the power to ***freeze time***.
 Unlike most main characters, their power is so weak that they can only stop time for 3 seconds.
 The player needs to use their newfound superpower and intelligence to get past 2 levels to finish the game.
 
+Here's a short [video](https://youtu.be/QYp-vuIAfQk?si=_sgeADQQtBKaBU4i) I made demonstrating the features of the game.  
 
-## Stuff for project grading below:
+
+# Stuff for project grading below (not too relevant to the game itself):
 ## User Stories
 
 - As a user, I want to be able to move up, down, left, and right in the game.
