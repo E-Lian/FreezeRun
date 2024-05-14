@@ -1,13 +1,13 @@
 # Personal Project - Freeze Runner
 
 ## Description
-This is a personal project for a university CS class that I am not allowed to name.
+This is a personal project for a university CS class (which I cannot name due to class policy).
 
 It is a 2D platformer game in which the hero
 has a superpower: chronostasis, the power to ***freeze time***. 
 
 Unlike most main characters, their power is so weak that they can only stop time for 3 seconds.
-The player needs to use their new found superpower and intelligence to get past 2 levels to finish the game.
+The player needs to use their newfound superpower and intelligence to get past 2 levels to finish the game.
 
 
 ## Stuff for project grading below:
@@ -17,7 +17,7 @@ The player needs to use their new found superpower and intelligence to get past 
 - As a user, I want to be able to shoot a fireball and make my enemies disappear.
 - As a user, I want to be able to stop time (in the game) for 3 seconds.
 - As a user, I want to be able to pause the game and resume.
-- As a user, I want to be able to save my progress in game to file(if I so choose).
+- As a user, I want to be able to save my progress in the game to file(if I so choose).
 - As a user, I want to be able to load my progress from a file (if I so choose).
 
 
@@ -43,9 +43,9 @@ Window closed
 
 ## Phase 4 Task 3
 - refactor the association between Game and Level so that the direction of the arrow is reversed,
-from Game to Level. That way none of the classes in model will have a field of Game.
+from Game to Level. That way none of the classes in the model will have a field of Game.
 - redesign Fireball's fields and methods so that it extends the abstract class Character.
-Initially Character class is meant to represent the living beings in the game: Player and Enemy.
+Initially, the Character class is meant to represent the living beings in the game: Player and Enemy.
 As the game gets bigger and more objects are added, Character came to represent objects
 in game that may change coordinates, which means it should also include Fireball.
 - refactor so that each object has a detectCollision method to simplify the process of checking collision between 
